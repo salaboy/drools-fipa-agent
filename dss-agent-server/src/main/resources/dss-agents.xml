@@ -54,8 +54,8 @@
         <constructor-arg ref="agent1-configuration"/>
     </bean>
     
-    <bean id="syncAgent1" class="org.drools.dssagentserver.SyncrhonousDroolsAgent" depends-on="agent1">
+    <!--bean id="syncAgent1" class="org.drools.dssagentserver.SyncrhonousDroolsAgent" depends-on="agent1">
         <property name="agent" ref="agent1"/>
-    </bean>
+    </bean-->
 
 </beans>

@@ -4,3 +4,4 @@
 .project
 /dss-agent-core/target/
 /dss-agent-server/target/
+.DS_Store

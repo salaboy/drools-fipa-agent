@@ -6,7 +6,7 @@ import org.kmr2.mock.MockFact;
 
 
 query ageOfPatient( MockFact $mock, String $patientName, int $age )
-    $mock : MockFact( $patientName : name, $age :age )
+    $mock := MockFact( $patientName := name, $age := age )
 end
 
 rule "Log"

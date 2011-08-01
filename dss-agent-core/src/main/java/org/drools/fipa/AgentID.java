@@ -8,6 +8,7 @@ import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 
 
@@ -29,7 +30,12 @@ public class AgentID implements Comparable, Serializable, Cloneable {
     protected List<AgentID> resolvers;
     protected Properties userDefinedProperties;
 
+    public AgentID() {
+        this(UUID.randomUUID().toString(), false);
+    }
 
+   
+    
     public AgentID(String name) {
         this(name,false);
     }

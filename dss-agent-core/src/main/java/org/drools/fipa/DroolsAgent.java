@@ -34,6 +34,8 @@ public class DroolsAgent {
      */
     private final DroolsAgentResponseInformer responseInformer;
 
+    
+    
 
     /**
      * Main constructor

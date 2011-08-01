@@ -1,7 +1,6 @@
 package org.drools.fipa;
 
 import com.jayway.jsonpath.JsonPath;
-import org.drools.fipa.body.acts.ACLMessageBody;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -19,6 +18,11 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import org.drools.fipa.body.acts.AbstractMessageBody;
+
 
 
 /**
@@ -30,6 +34,7 @@ import java.util.Set;
  * Other than that, the message will contain sender and receiver references, in addition to
  * context and metadata information
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ACLMessage implements Serializable {
 
     public static final String DEFAULT_FIPA_MESSAGE_TYPE = "DEFAULT_FIPA_MESSAGE_TYPE";
@@ -90,36 +95,39 @@ public class ACLMessage implements Serializable {
 
     }
 
-
-
-
-
     private String id;
     private String version;
 
     private String messageType = DEFAULT_FIPA_MESSAGE_TYPE;
 
 
-
+    @XmlElement(required = true) 
     private String protocol;
+    @XmlElement(required = true) 
     private String conversationId;
+    @XmlElement(required = true) 
     private String replyWith;
+    @XmlElement(required = true) 
     private String inReplyTo;
+    @XmlElement(required = true) 
     private long replyBy;
 
-
+    @XmlElement(required = true) 
     private String ontology = KMR2;
+    @XmlElement(required = true) 
     private String language = DROOLS_DRL;
+    @XmlElement(required = true) 
     private ACLMessageFactory.Encodings encoding;
-
+    @XmlElement(required = true) 
     private AgentID sender;
+    @XmlElement(required = true) 
     private Set<AgentID> receiver;
+    @XmlElement(required = true) 
     private Set<AgentID> replyTo;
-
+    @XmlElement(required = true) 
     private Act performative;
-
-
-    private ACLMessageBody body;
+    @XmlElement(required = true) 
+    private AbstractMessageBody body;
 
 
     ACLMessage() {
@@ -309,11 +317,11 @@ public class ACLMessage implements Serializable {
     }
 
 
-    public ACLMessageBody getBody() {
+    public AbstractMessageBody getBody() {
         return body;
     }
 
-    public void setBody(ACLMessageBody body) {
-        this.body = body;
+    public void setBody(AbstractMessageBody body) {
+        this.body =  body;
     }
 }
