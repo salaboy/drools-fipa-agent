@@ -3,3 +3,4 @@
 .classpath
 .project
 /dss-agent-core/target/
+/dss-agent-server/target/
