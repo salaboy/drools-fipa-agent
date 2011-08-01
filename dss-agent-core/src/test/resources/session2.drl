@@ -1,0 +1,97 @@
+package org.drools.test;
+
+import org.kmr2.mock.MockFact;
+import org.drools.fipa.body.content.Action;
+
+
+
+rule "Call Interface"
+when
+    $p : MockFact( $a : age )
+then
+    double $x = Math.sqrt($a);
+    insert( new Double($x*$x) );
+end
+
+
+
+
+declare LocalTrigger
+    x : int
+end
+
+rule "Call rules"
+when
+    $p : MockFact( $a : age )
+then
+    insert( new LocalTrigger($a) );
+end
+
+
+rule "Rule Op"
+when
+    $lt : LocalTrigger( $x : x )
+then
+    retract($lt);
+    insert( new Integer($x*$x) );
+end
+
+
+
+
+declare MathResponse
+    x : Double
+    y : Double
+    z : Double
+end
+
+rule "Action_Request : squareRoot"
+when
+    $a : Action( actionName == "squareRoot",
+                 $x : args["x"] )
+
+then
+    retract($a);
+    System.out.println("Executing square root");
+    insert( new MathResponse((Double) $x, Math.sqrt( (Double) $x), 0.0) );
+end
+
+query squareRoot( Double $x, Double $return  )
+    MathResponse( $x, $return ;)
+end
+
+
+
+
+
+
+
+rule "Action_Request : randomSum"
+when
+    $a : Action( actionName == "randomSum",
+                 $x : args["x"] )
+
+then
+    retract($a);
+    Double x = (Double) $x;
+    Double z = Math.random();
+    System.out.println("ACTING II " + x + "   " +z + "  " );
+    insert( new MathResponse(x, x+z, z ) );
+end
+
+query randomSum( Double $x, Double $return, Double $z  )
+    MathResponse( $x, $return, $z;)
+end
+
+
+
+
+
+
+rule "Log"
+when
+    $o : Object()
+then
+    System.out.println("SESSION #2 >>> " + $o);
+end
+

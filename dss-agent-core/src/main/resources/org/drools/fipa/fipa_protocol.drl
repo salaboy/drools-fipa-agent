@@ -1,0 +1,252 @@
+/*
+    Protocol Management rules
+    Uses expectations to verify that the sequences of messages exchanged during a conversation
+    between two agents are conformant to the FIPA standards
+*/
+
+package org.drools.fipa;
+
+import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.ACLMessage.Act;
+import org.drools.fipa.AgentID;
+import org.drools.fipa.body.content.*;
+import org.drools.fipa.body.acts.*;
+import org.drools.fipa.DroolsAgentResponseInformer;
+
+
+global DroolsAgentResponseInformer responseInformer;
+
+
+
+rule "Inform"
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.INFORM || performative == Act.CONFIRM || performative == Act.DISCONFIRM)
+then
+   System.out.println("PROTOCOL : RECEIVED ONE-WAY MESSAGE " + $msg);
+   // DO nothing
+end
+
+rule "Inform_Resp"
+salience -100
+when
+    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.INFORM )
+    $cont : ResponseContent( messageId == $msgId )
+then
+    System.err.println("PROTOCOL : INFORM PROCESSING COMPLETE, CLEANUP");
+    retract( $msg );
+    retract( $cont );
+end
+
+
+
+
+
+rule "Query_Ref_Agree"
+salience 100
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.QUERY_REF)
+then
+   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, new Action(((QueryRef)$content).getQuery().getQueryName(),null), new Rule(""));
+   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+   responseInformer.informResponse($msg,ans);
+end
+
+/*
+rule "Query_Ref_Agree"
+salience 100
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.QUERY_IF)
+then
+   //TODO: $content is a QueryIf and not a Query. The following line will fail
+   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, new Action(((Query)$content).getQueryName(),null), new Rule(""));
+   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+   responseInformer.informResponse($msg,ans);
+end
+*/
+
+rule "Query_If_Resp"
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.QUERY_IF )
+    $resp : ResponseContent( messageId == $msgId, $data : data != null)
+then
+    ACLMessage ans = aclFactory.newReplyWithInformIfMessage($msg, agentName, $data);
+    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+    System.out.println("\t"+$msg.hashCode()+", "+ $msg);
+    responseInformer.informResponse($msg,ans);
+
+
+    retract($resp);
+    retract($msg);
+end
+
+
+rule "Query_Ref_Resp"
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.QUERY_REF)
+    $resp : ResponseContent( messageId == $msgId, $data : data != null)
+then
+    System.err.println("sxxx " + $data.getClass());
+    ACLMessage ans = aclFactory.newReplyWithInformRefMessage($msg, agentName, (Ref) $data);
+    System.out.println("PROTOCOL RULES QUERYREF RESP: " + agentName + " >>>> " + ans);
+    responseInformer.informResponse($msg,ans);
+
+    retract($resp);
+    retract($msg);
+end
+
+
+rule "Query_Fail"
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.QUERY_REF || performative == Act.QUERY_IF)
+    $resp : ResponseContent( messageId == $msgId, $data : data == null)
+then
+    retract($resp);
+    ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName, new Action(((Query)$content).getQueryName(),null), "Query Error - TODO improve diagnostics");
+    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+    responseInformer.informResponse($msg,ans);
+
+    retract($msg);
+    retract($resp);
+end
+
+
+
+
+
+
+
+rule "Request_Agree"
+salience 100
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.REQUEST )
+then
+   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, new Action( ((Request) $content).getAction() ), new Rule(""));
+   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+   responseInformer.informResponse($msg,ans);
+end
+
+
+
+
+
+rule "Request_Success_simpleReturn"
+dialect "mvel"
+salience -100
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.REQUEST )
+    $resp : ResponseContent( messageId == $msgId, $data : data != null )
+            Ref( $ret : references["?return"] != null ) from $data
+            // Action.RETURN
+then
+   ACLMessage ans = aclFactory.newReplyWithInformMessage($msg, agentName, $ret);
+   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+   responseInformer.informResponse($msg,ans);
+
+   retract($msg);
+   retract($resp);
+end
+
+rule "Request_Success_complexReturn"
+dialect "mvel"
+salience -100
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.REQUEST )
+    $resp : ResponseContent( messageId == $msgId, $data : data != null )
+            Ref( references["?return"] == null ) from $data
+            // Action.RETURN
+then
+   ACLMessage ans = aclFactory.newReplyWithInformRefMessage($msg, agentName, (Ref) $data);
+   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+   responseInformer.informResponse($msg,ans);
+   retract($msg);
+   retract($resp);
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+rule "Log"
+salience 999
+when
+    $msg : ACLMessage()
+then
+    System.out.println("PROTOCOL RULES : " + agentName + " <<<< " + $msg);
+end

@@ -1,0 +1,15 @@
+/**
+  This mock rule-based agent file mimics the remote services calling the DSA
+  It is used to trigger the test-cases for the communication protocols
+*/
+
+
+package org.drools.test;
+
+import org.kmr2.mock.MockFact;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.content.*;
+
+
+
+
