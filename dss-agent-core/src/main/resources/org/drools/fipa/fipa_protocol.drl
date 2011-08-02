@@ -130,8 +130,8 @@ then
     retract($msg);
 end
 
-//Comment this rule to make it work or fix it!
-/*rule "Query_Fail"
+
+rule "Query_Ref_Fail"
 when
     $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
                        $msgId : id,
@@ -140,18 +140,42 @@ when
                        $sender : sender,
                        $receiver : receiver,
                        $content : body,
-                       performative == Act.QUERY_REF || performative == Act.QUERY_IF)
+                       performative == Act.QUERY_REF )
     $resp : ResponseContent( messageId == $msgId, $data : data == null)
 then
     retract($resp);
-    ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName, new Action(((Query)$content).getQueryName(),null), "Query Error - TODO improve diagnostics");
+    ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName,
+                                                           new Action(((QueryRef)$content).getQuery().getQueryName(),null),
+                                                           "Query Error - TODO improve diagnostics");
     System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
     responseInformer.informResponse($msg,ans);
 
     retract($msg);
     retract($resp);
-end*/
+end
 
+rule "Query_If_Fail"
+when
+    $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
+                       $msgId : id,
+                       $convoId : conversationId,
+                       $inReplyTo : inReplyTo,
+                       $sender : sender,
+                       $receiver : receiver,
+                       $content : body,
+                       performative == Act.QUERY_IF)
+    $resp : ResponseContent( messageId == $msgId, $data : data == null)
+then
+    retract($resp);
+    ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName,
+                                                           new Action(((QueryIf)$content).getProposition().toString(),null),
+                                                           "Query Error - TODO improve diagnostics");
+    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+    responseInformer.informResponse($msg,ans);
+
+    retract($msg);
+    retract($resp);
+end
 
 
 
