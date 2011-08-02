@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="SynchronousDroolsAgentServiceService" targetNamespace="http://dssagentserver.drools.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://dssagentserver.drools.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://dssagentserver.drools.org/" version="1.0" xmlns:tns="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="tell" type="tns:tell"/>
+<xs:element name="tellResponse" type="tns:tellResponse"/>
+<xs:complexType name="tell">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:aclMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="aclMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="version" type="xs:string"/>
+      <xs:element minOccurs="0" name="messageType" type="xs:string"/>
+      <xs:element name="protocol" type="xs:string"/>
+      <xs:element name="conversationId" type="xs:string"/>
+      <xs:element name="replyWith" type="xs:string"/>
+      <xs:element name="inReplyTo" type="xs:string"/>
+      <xs:element name="replyBy" type="xs:long"/>
+      <xs:element name="ontology" type="xs:string"/>
+      <xs:element name="language" type="xs:string"/>
+      <xs:element name="encoding" type="tns:encodings"/>
+      <xs:element name="sender" type="tns:agentID"/>
+      <xs:element maxOccurs="unbounded" name="receiver" type="tns:agentID"/>
+      <xs:element maxOccurs="unbounded" name="replyTo" type="tns:agentID"/>
+      <xs:element name="performative" type="tns:act"/>
+      <xs:element name="body" type="tns:abstractMessageBody"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="agentID">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="localName" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractMessageBody">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="tellResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:aclMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:simpleType name="encodings">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="XML"/>
+      <xs:enumeration value="JSON"/>
+      <xs:enumeration value="GSON"/>
+      <xs:enumeration value="BYTE"/>
+      <xs:enumeration value="NONE"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="act">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACCEPT"/>
+      <xs:enumeration value="AGREE"/>
+      <xs:enumeration value="CANCEL"/>
+      <xs:enumeration value="CALL_FOR_PROPOSAL"/>
+      <xs:enumeration value="CONFIRM"/>
+      <xs:enumeration value="DISCONFIRM"/>
+      <xs:enumeration value="FAILURE"/>
+      <xs:enumeration value="INFORM"/>
+      <xs:enumeration value="INFORM_IF"/>
+      <xs:enumeration value="INFORM_REF"/>
+      <xs:enumeration value="NOT_UNDERSTOOD"/>
+      <xs:enumeration value="PROPOSE"/>
+      <xs:enumeration value="QUERY_IF"/>
+      <xs:enumeration value="QUERY_REF"/>
+      <xs:enumeration value="REFUSE"/>
+      <xs:enumeration value="REJECT"/>
+      <xs:enumeration value="REQUEST"/>
+      <xs:enumeration value="REQUEST_WHEN"/>
+      <xs:enumeration value="REQUEST_WHENEVER"/>
+      <xs:enumeration value="SUBSCRIBE"/>
+      <xs:enumeration value="PROXY"/>
+      <xs:enumeration value="PROPAGATE"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="tellResponse">
+    <wsdl:part element="tns:tellResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tell">
+    <wsdl:part element="tns:tell" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SynchronousDroolsAgentService">
+    <wsdl:operation name="tell">
+      <wsdl:input message="tns:tell" name="tell">
+    </wsdl:input>
+      <wsdl:output message="tns:tellResponse" name="tellResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SynchronousDroolsAgentServiceServiceSoapBinding" type="tns:SynchronousDroolsAgentService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="tell">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="tell">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="tellResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SynchronousDroolsAgentServiceService">
+    <wsdl:port binding="tns:SynchronousDroolsAgentServiceServiceSoapBinding" name="SynchronousDroolsAgentServicePort">
+      <soap:address location="http://localhost:8080/dss-agent-server/service/SynchronousDroolsAgentService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

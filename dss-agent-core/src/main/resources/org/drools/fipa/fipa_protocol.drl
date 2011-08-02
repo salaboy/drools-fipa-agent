@@ -131,7 +131,7 @@ then
 end
 
 //Comment this rule to make it work or fix it!
-rule "Query_Fail"
+/*rule "Query_Fail"
 when
     $msg : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
                        $msgId : id,
@@ -150,7 +150,7 @@ then
 
     retract($msg);
     retract($resp);
-end
+end*/
 
 
 
