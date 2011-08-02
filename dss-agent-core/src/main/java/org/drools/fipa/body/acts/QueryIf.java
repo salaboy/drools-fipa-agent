@@ -13,7 +13,12 @@ public class QueryIf extends AbstractMessageBody {
 
     private Info proposition;
 
+    public QueryIf() {
+    }
 
+
+    
+    
     public QueryIf(Info proposition) {
         this.proposition = proposition;
     }

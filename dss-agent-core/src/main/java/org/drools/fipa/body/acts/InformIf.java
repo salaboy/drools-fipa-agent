@@ -13,6 +13,10 @@ public class InformIf extends AbstractMessageBody {
 
     private Info proposition;
 
+    public InformIf() {
+    }
+
+    
 
     public InformIf(Info proposition) {
         this.proposition = proposition;

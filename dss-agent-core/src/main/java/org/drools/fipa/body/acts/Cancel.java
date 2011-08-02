@@ -17,7 +17,12 @@ public class Cancel extends AbstractMessageBody {
 
     private Action action;
 
+    public Cancel() {
+    }
 
+
+    
+    
     public Cancel(Action action) {
         this.action = action;
     }

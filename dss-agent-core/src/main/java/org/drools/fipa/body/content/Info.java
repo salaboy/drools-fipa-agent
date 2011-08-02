@@ -11,7 +11,9 @@ public class Info extends AbstractMessageContent  {
 
     private transient Object data;
 
-
+    public Info() {
+    }
+    
     public Info(Object data) {
         this.data = data;
     }

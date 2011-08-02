@@ -21,7 +21,11 @@ public class Agree extends AbstractMessageBody {
     private Action action;
     private Rule condition;
 
+    public Agree() {
+    }
 
+
+    
     public Agree(Action action, Rule condition) {
         this.action = action;
         this.condition = condition;

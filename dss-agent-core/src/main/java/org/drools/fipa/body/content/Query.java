@@ -22,7 +22,10 @@ public class Query extends AbstractMessageContent  {
     private Map<Integer, String> references;
     private Object[] args;
 
+    public Query() {
+    }
 
+    
     public Query(String queryName) {
         this.queryName = queryName;
         this.args = new Object[0];

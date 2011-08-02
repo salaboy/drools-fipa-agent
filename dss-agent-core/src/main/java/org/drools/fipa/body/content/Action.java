@@ -24,6 +24,9 @@ public class Action extends AbstractMessageContent {
     private Map<Integer, String> references;
     private Map<String,Object> args;
 
+    public Action() {
+    }
+
 
 
     public Action(String name, Map<String,Object> args) {

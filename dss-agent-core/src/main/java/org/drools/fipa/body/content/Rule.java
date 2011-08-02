@@ -11,6 +11,11 @@ public class Rule extends AbstractMessageContent {
 
     private String drl;
 
+    public Rule() {
+    }
+
+    
+    
     public Rule(String drl) {
         this.drl = drl;
     }

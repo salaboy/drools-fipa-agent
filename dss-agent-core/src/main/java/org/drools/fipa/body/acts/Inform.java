@@ -13,7 +13,11 @@ public class Inform extends AbstractMessageBody {
 
     private Info proposition;
 
+    public Inform() {
+    }
 
+
+    
     public Inform(Info proposition) {
         this.proposition = proposition;
     }

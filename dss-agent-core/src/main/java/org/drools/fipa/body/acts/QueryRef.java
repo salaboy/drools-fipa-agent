@@ -13,7 +13,12 @@ public class QueryRef extends AbstractMessageBody {
 
     private Query query;
 
+    public QueryRef() {
+    }
 
+
+    
+    
     public QueryRef(Query query) {
         this.query = query;
     }

@@ -42,6 +42,118 @@
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:aclMessage"/>
     </xs:sequence>
   </xs:complexType>
+<xs:complexType name="queryRef">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageBody">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="query" type="tns:query"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="query">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageContent">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="args" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="queryName" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractMessageContent">
+    <xs:sequence>
+      <xs:element name="encoded" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="encodedContent" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="queryIf">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageBody">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="proposition" type="tns:info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="info">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="data" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="cancel">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageBody">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="action" type="tns:action"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="action">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="actionName" type="xs:string"/>
+          <xs:element name="args">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="key" type="xs:string"/>
+                      <xs:element minOccurs="0" name="value" type="xs:anyType"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="inform">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageBody">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="proposition" type="tns:info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="informIf">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageBody">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="proposition" type="tns:info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="agree">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageBody">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="action" type="tns:action"/>
+          <xs:element minOccurs="0" name="condition" type="tns:rule"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="rule">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractMessageContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="drl" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 <xs:simpleType name="encodings">
     <xs:restriction base="xs:string">
       <xs:enumeration value="XML"/>
