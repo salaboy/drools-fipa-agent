@@ -26,7 +26,7 @@ public class SynchronousDroolsAgentResponseInformer implements DroolsAgentRespon
         
         responses.get(originalMessage).add(reponse);
     }
-    
+     
     public synchronized List<ACLMessage> retrieveResponses(ACLMessage originalMessage){
         return this.responses.remove(originalMessage);
     }

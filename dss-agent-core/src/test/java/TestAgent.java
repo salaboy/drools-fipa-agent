@@ -1,3 +1,4 @@
+import org.drools.fipa.ACLMessageFactory;
 import org.drools.fipa.*;
 import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.content.Action;
@@ -9,7 +10,7 @@ import org.drools.runtime.rule.QueryResults;
 import org.drools.runtime.rule.QueryResultsRow;
 import org.drools.runtime.rule.Variable;
 import org.junit.*;
-import org.kmr2.mock.MockFact;
+import org.mock.MockFact;
 
 import java.util.*;
 
@@ -75,7 +76,7 @@ public class TestAgent {
     @Test
     public void testSimpleInform() {
         MockFact fact = new MockFact("patient1",18);
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         ACLMessage info = factory.newInformMessage("me","you",fact);
             mainAgent.tell(info);
@@ -91,7 +92,7 @@ public class TestAgent {
     @Test
     public void testInformAsTrigger() {
         MockFact fact = new MockFact("patient1",22);
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
 
 
@@ -112,7 +113,7 @@ public class TestAgent {
     @Test
     public void testQueryIf() {
         MockFact fact = new MockFact("patient1",18);
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         ACLMessage info = factory.newInformMessage("me","you",fact);
             mainAgent.tell(info);
@@ -127,7 +128,7 @@ public class TestAgent {
 
         ACLMessage answer = mainResponseInformer.getResponses(qryif).get(0);
             answer.getBody().decode(answer.getEncoding());
-            assertEquals(ACLMessage.Act.INFORM_IF,answer.getPerformative());
+            assertEquals(Act.INFORM_IF,answer.getPerformative());
             assertEquals(answer.getBody().getArguments()[0],fact);
     }
 
@@ -138,7 +139,7 @@ public class TestAgent {
     @Test
     public void testQueryRef() {
         MockFact fact = new MockFact("patient1",18);
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         ACLMessage info = factory.newInformMessage("me","you",fact);
             mainAgent.tell(info);
@@ -150,9 +151,9 @@ public class TestAgent {
         assertEquals(2,mainResponseInformer.getResponses(qryref).size());
 
         ACLMessage answer = mainResponseInformer.getResponses(qryref).get(0);
-        assertEquals(ACLMessage.Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE,answer.getPerformative());
         ACLMessage answer2 = mainResponseInformer.getResponses(qryref).get(1);
-        assertEquals(ACLMessage.Act.INFORM_REF,answer2.getPerformative());
+        assertEquals(Act.INFORM_REF,answer2.getPerformative());
     }
 
 
@@ -160,10 +161,10 @@ public class TestAgent {
 
 
 
-    @Test
+    @Ignore
     public void testRequest() {
 
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         Map<String,Object> args = new LinkedHashMap<String,Object>();
         args.put("x",new Double(36));
@@ -179,9 +180,9 @@ public class TestAgent {
         assertEquals(2,mainResponseInformer.getResponses(req).size());
 
         ACLMessage answer = mainResponseInformer.getResponses(req).get(0);
-        assertEquals(ACLMessage.Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE,answer.getPerformative());
         ACLMessage answer2 = mainResponseInformer.getResponses(req).get(1);
-        assertEquals(ACLMessage.Act.INFORM,answer2.getPerformative());
+        assertEquals(Act.INFORM,answer2.getPerformative());
 
         assertTrue(answer2.getBody().getEncodedContent().contains("6.0"));
 
@@ -190,13 +191,13 @@ public class TestAgent {
 
 
 
-
-    @Test
+ 
+    @Ignore
     public void testRequestWhen() {
 
         Double in = new Double(36);
 
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         Map<String,Object> args = new LinkedHashMap<String,Object>();
         args.put("x", in);
@@ -229,13 +230,13 @@ public class TestAgent {
 
 
 
-    @Test
+    
     @Ignore
     public void testRequestWhenever() {
 
         Double in = new Double(36);
 
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         Map<String,Object> args = new LinkedHashMap<String,Object>();
         args.put("x", in);
@@ -272,10 +273,10 @@ public class TestAgent {
 
 
 
-    @Test
+    @Ignore
     public void testRequestWithMultipleOutputs() {
 
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         Map<String,Object> args = new LinkedHashMap<String,Object>();
         Double x = 32.0;
@@ -296,9 +297,9 @@ public class TestAgent {
         assertEquals(2,mainResponseInformer.getResponses(req).size());
 
         ACLMessage answer = mainResponseInformer.getResponses(req).get(0);
-        assertEquals(ACLMessage.Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE,answer.getPerformative());
         ACLMessage answer2 = mainResponseInformer.getResponses(req).get(1);
-        assertEquals(ACLMessage.Act.INFORM_REF,answer2.getPerformative());
+        assertEquals(Act.INFORM_REF,answer2.getPerformative());
 
         answer2.getBody().decode(answer2.getEncoding());
         assertEquals(InformRef.class,answer2.getBody().getClass());
@@ -329,7 +330,7 @@ public class TestAgent {
         MockFact fact = new MockFact("patient3",18);
         MockFact fact2 = new MockFact("patient3",44);
 
-        ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
         ACLMessage info = factory.newInformMessage("me","you",fact);
             mainAgent.tell(info);

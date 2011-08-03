@@ -6,3 +6,5 @@
 /dss-agent-server/target/
 .DS_Store
 /dss-agent-client/target/
+/dss-agent-model/target/
+/dss-agent-util/target/

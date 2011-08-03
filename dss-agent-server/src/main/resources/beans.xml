@@ -31,7 +31,7 @@
   <!--import resource="classpath:camel-server.xml" /-->
     <jaxws:endpoint 
 	  id="SynchronousDroolsAgentService" 
-	  implementor="org.drools.dssagentserver.SynchronousDroolsAgentService" 
+	  implementor="org.drools.dssagentserver.SynchronousDroolsAgentServiceImpl" 
 	  address="/SynchronousDroolsAgentService" />
   
   <!--import resource="classpath:dss-agents.xml" /-->

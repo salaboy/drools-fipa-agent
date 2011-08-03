@@ -14,10 +14,9 @@ package org.drools.fipa;
 
 import org.drools.fipa.ACLMessage;
 import org.drools.fipa.ACLMessageFactory;
-import org.drools.fipa.ACLMessageFactory.Encodings;
 import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.content.Info;
-import org.kmr2.mock.MockFact;
+import org.mock.MockFact;
 
 // ACL message factory, to generate responses
 global ACLMessageFactory aclFactory;
@@ -61,7 +60,7 @@ rule "Patients of age go to session #2"
 dialect "mvel"
 salience -1
 when
-    $msg : ACLMessage( $msgId : id, $body : body, performative == ACLMessage.Act.INFORM  )
+    $msg : ACLMessage( $msgId : id, $body : body, performative == Act.INFORM  )
     Inform( $prop : proposition ) from $body
     MockFact( age > 18 ) from $prop.getData()
 then

@@ -8,7 +8,6 @@ package org.drools.fipa;
 
 import org.drools.fipa.ACLMessageFactory;
 import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessage.Act;
 import org.drools.fipa.AgentID;
 import org.drools.fipa.body.content.*;
 import org.drools.fipa.body.acts.*;
@@ -37,7 +36,7 @@ end
 rule "Inform_Resp"
 salience -100
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.INFORM )
+    $msg : ACLMessage( $msgId : id, performative == Act.INFORM )
     $cont : ResponseContent( messageId == $msgId )
 then
     System.err.println("PROTOCOL : INFORM PROCESSING COMPLETE, CLEANUP");

@@ -1,26 +1,7 @@
 package org.drools.fipa;
 
-import org.drools.*;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.conf.EventProcessingOption;
-import org.drools.grid.*;
-import org.drools.io.ResourceFactory;
-import org.drools.runtime.KnowledgeSessionConfiguration;
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.conf.ClockTypeOption;
 
-import org.drools.grid.conf.GridPeerServiceConfiguration;
-import org.drools.grid.conf.impl.GridPeerConfiguration;
-import org.drools.grid.impl.GridImpl;
-import org.drools.grid.impl.MultiplexSocketServerImpl;
-import org.drools.grid.io.impl.MultiplexSocketServiceCongifuration;
-import org.drools.grid.remote.mina.MinaAcceptorFactoryService;
-import org.drools.grid.service.directory.WhitePages;
-import org.drools.grid.service.directory.impl.CoreServicesLookupConfiguration;
-import org.drools.grid.service.directory.impl.WhitePagesLocalConfiguration;
-import org.drools.grid.timer.impl.CoreServicesSchedulerConfiguration;
 
 
 import java.util.HashMap;
@@ -49,9 +30,7 @@ public class DroolsAgentFactory {
         }
         return singleton;
     }
-
-
-
+ 
 
     private DroolsAgentFactory() {
 
@@ -62,7 +41,7 @@ public class DroolsAgentFactory {
         AgentID aid = new AgentID(config.getAgentId());
 
         try {
-            ACLMessageFactory factory = new ACLMessageFactory(ACLMessageFactory.Encodings.XML);
+            ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
             StatefulKnowledgeSession mind = SessionManager.create(config.getAgentId(),config.getChangeset()).getStatefulKnowledgeSession();
 
             Map<String,StatefulKnowledgeSession> proxies = new HashMap<String,StatefulKnowledgeSession>();

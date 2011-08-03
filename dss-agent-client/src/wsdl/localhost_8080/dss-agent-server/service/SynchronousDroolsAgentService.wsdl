@@ -1,14 +1,8 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="SynchronousDroolsAgentServiceService" targetNamespace="http://dssagentserver.drools.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://dssagentserver.drools.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="SynchronousDroolsAgentServiceImplService" targetNamespace="http://dssagentserver.drools.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://dssagentserver.drools.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
-<xs:schema elementFormDefault="unqualified" targetNamespace="http://dssagentserver.drools.org/" version="1.0" xmlns:tns="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-<xs:element name="tell" type="tns:tell"/>
-<xs:element name="tellResponse" type="tns:tellResponse"/>
-<xs:complexType name="tell">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="arg0" type="tns:aclMessage"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="aclMessage">
+<xs:schema targetNamespace="http://fipa.drools.org/" version="1.0" xmlns:ns1="http://acts.body.fipa.drools.org/" xmlns:tns="http://fipa.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://acts.body.fipa.drools.org/"/>
+<xs:complexType name="ACLMessage">
     <xs:sequence>
       <xs:element minOccurs="0" name="id" type="xs:string"/>
       <xs:element minOccurs="0" name="version" type="xs:string"/>
@@ -20,141 +14,21 @@
       <xs:element name="replyBy" type="xs:long"/>
       <xs:element name="ontology" type="xs:string"/>
       <xs:element name="language" type="xs:string"/>
-      <xs:element name="encoding" type="tns:encodings"/>
-      <xs:element name="sender" type="tns:agentID"/>
-      <xs:element maxOccurs="unbounded" name="receiver" type="tns:agentID"/>
-      <xs:element maxOccurs="unbounded" name="replyTo" type="tns:agentID"/>
-      <xs:element name="performative" type="tns:act"/>
-      <xs:element name="body" type="tns:abstractMessageBody"/>
+      <xs:element name="encoding" type="tns:Encodings"/>
+      <xs:element name="sender" type="tns:AgentID"/>
+      <xs:element maxOccurs="unbounded" name="receiver" type="tns:AgentID"/>
+      <xs:element maxOccurs="unbounded" name="replyTo" type="tns:AgentID"/>
+      <xs:element name="performative" type="tns:Act"/>
+      <xs:element name="body" type="ns1:AbstractMessageBody"/>
     </xs:sequence>
   </xs:complexType>
-<xs:complexType name="agentID">
+<xs:complexType name="AgentID">
     <xs:sequence>
       <xs:element minOccurs="0" name="localName" type="xs:string"/>
       <xs:element minOccurs="0" name="name" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-<xs:complexType abstract="true" name="abstractMessageBody">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="tellResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:aclMessage"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="queryRef">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageBody">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="query" type="tns:query"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="query">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageContent">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="args" nillable="true" type="xs:anyType"/>
-          <xs:element minOccurs="0" name="queryName" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType abstract="true" name="abstractMessageContent">
-    <xs:sequence>
-      <xs:element name="encoded" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="encodedContent" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="queryIf">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageBody">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="proposition" type="tns:info"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="info">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageContent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="data" type="xs:anyType"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="cancel">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageBody">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="action" type="tns:action"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="action">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageContent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="actionName" type="xs:string"/>
-          <xs:element name="args">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
-                  <xs:complexType>
-                    <xs:sequence>
-                      <xs:element minOccurs="0" name="key" type="xs:string"/>
-                      <xs:element minOccurs="0" name="value" type="xs:anyType"/>
-                    </xs:sequence>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="inform">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageBody">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="proposition" type="tns:info"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="informIf">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageBody">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="proposition" type="tns:info"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="agree">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageBody">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="action" type="tns:action"/>
-          <xs:element minOccurs="0" name="condition" type="tns:rule"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="rule">
-    <xs:complexContent>
-      <xs:extension base="tns:abstractMessageContent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="drl" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:simpleType name="encodings">
+<xs:simpleType name="Encodings">
     <xs:restriction base="xs:string">
       <xs:enumeration value="XML"/>
       <xs:enumeration value="JSON"/>
@@ -163,7 +37,7 @@
       <xs:enumeration value="NONE"/>
     </xs:restriction>
   </xs:simpleType>
-<xs:simpleType name="act">
+<xs:simpleType name="Act">
     <xs:restriction base="xs:string">
       <xs:enumeration value="ACCEPT"/>
       <xs:enumeration value="AGREE"/>
@@ -190,6 +64,124 @@
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
+<xs:schema elementFormDefault="unqualified" targetNamespace="http://dssagentserver.drools.org/" version="1.0" xmlns:ns1="http://fipa.drools.org/" xmlns:tns="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://fipa.drools.org/"/>
+<xs:element name="tell" type="tns:tell"/>
+<xs:element name="tellResponse" type="tns:tellResponse"/>
+<xs:complexType name="tell">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="ns1:ACLMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="tellResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns1:ACLMessage"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractMessageContent">
+    <xs:sequence>
+      <xs:element name="encoded" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="encodedContent" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+<xs:schema targetNamespace="http://content.body.fipa.drools.org/" version="1.0" xmlns:ns1="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://dssagentserver.drools.org/"/>
+<xs:complexType name="Info">
+    <xs:complexContent>
+      <xs:extension base="ns1:abstractMessageContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="data" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Action">
+    <xs:complexContent>
+      <xs:extension base="ns1:abstractMessageContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="actionName" type="xs:string"/>
+          <xs:element name="args">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element minOccurs="0" name="key" type="xs:string"/>
+                      <xs:element minOccurs="0" name="value" type="xs:anyType"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Rule">
+    <xs:complexContent>
+      <xs:extension base="ns1:abstractMessageContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="drl" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
+<xs:schema targetNamespace="http://acts.body.fipa.drools.org/" version="1.0" xmlns:ns1="http://content.body.fipa.drools.org/" xmlns:tns="http://acts.body.fipa.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://content.body.fipa.drools.org/"/>
+<xs:complexType abstract="true" name="AbstractMessageBody">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="InformIf">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="proposition" type="ns1:Info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="QueryIf">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="proposition" type="ns1:Info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Inform">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="proposition" type="ns1:Info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Failure">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="action" type="ns1:Action"/>
+          <xs:element name="cause" type="ns1:Info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Agree">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="action" type="ns1:Action"/>
+          <xs:element name="condition" type="ns1:Rule"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>
   </wsdl:types>
   <wsdl:message name="tellResponse">
     <wsdl:part element="tns:tellResponse" name="parameters">
@@ -199,7 +191,7 @@
     <wsdl:part element="tns:tell" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:portType name="SynchronousDroolsAgentService">
+  <wsdl:portType name="SynchronousDroolsAgentServiceImpl">
     <wsdl:operation name="tell">
       <wsdl:input message="tns:tell" name="tell">
     </wsdl:input>
@@ -207,7 +199,7 @@
     </wsdl:output>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="SynchronousDroolsAgentServiceServiceSoapBinding" type="tns:SynchronousDroolsAgentService">
+  <wsdl:binding name="SynchronousDroolsAgentServiceImplServiceSoapBinding" type="tns:SynchronousDroolsAgentServiceImpl">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="tell">
       <soap:operation soapAction="" style="document"/>
@@ -219,8 +211,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="SynchronousDroolsAgentServiceService">
-    <wsdl:port binding="tns:SynchronousDroolsAgentServiceServiceSoapBinding" name="SynchronousDroolsAgentServicePort">
+  <wsdl:service name="SynchronousDroolsAgentServiceImplService">
+    <wsdl:port binding="tns:SynchronousDroolsAgentServiceImplServiceSoapBinding" name="SynchronousDroolsAgentServiceImplPort">
       <soap:address location="http://localhost:8080/dss-agent-server/service/SynchronousDroolsAgentService"/>
     </wsdl:port>
   </wsdl:service>

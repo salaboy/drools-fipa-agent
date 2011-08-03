@@ -4,16 +4,13 @@
  */
 package org.drools.fipa;
 
-import org.drools.dssagentserver.Info;
-import org.drools.dssagentserver.Inform;
+import org.drools.dssagentserver.SynchronousDroolsAgentServiceImpl;
+import org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService;
+
+import org.drools.fipa.body.acts.Inform;
+import org.drools.fipa.body.acts.QueryIf;
+import org.drools.fipa.body.content.Info;
 import java.util.List;
-import org.drools.dssagentserver.AclMessage;
-import org.drools.dssagentserver.Act;
-import org.drools.dssagentserver.AgentID;
-import org.drools.dssagentserver.Encodings;
-import org.drools.dssagentserver.QueryIf;
-import org.drools.dssagentserver.SynchronousDroolsAgentService;
-import org.drools.dssagentserver.SynchronousDroolsAgentServiceService;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -80,9 +77,9 @@ public class SynchronousDroolsAgentServiceServiceTest {
     
     @Test
     public void hello() {
-        SynchronousDroolsAgentService synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceService().getSynchronousDroolsAgentServicePort();
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
         
-        AclMessage informMessage = new AclMessage();
+        ACLMessage informMessage = new ACLMessage();
         informMessage.setId("0");
         informMessage.setPerformative(Act.INFORM);
         informMessage.setMessageType("DEFAULT_FIPA_MESSAGE_TYPE");
@@ -94,21 +91,24 @@ public class SynchronousDroolsAgentServiceServiceTest {
         AgentID sender = new AgentID();
         sender.setName("me@org.DROOLS");
         informMessage.setSender(sender);
-        //Receiver???
+        
         Inform inform = new Inform();
         Info info = new Info();
-        info.setEncodedContent("{\"org.kmr2.mock.MockFact\":{\"name\":\"patient1\",\"age\":18}}");
+        info.setEncodedContent("{\"org.mock.MockFact\":{\"name\":\"patient1\",\"age\":18}}");
         info.setEncoded(true);
         inform.setProposition(info);
         informMessage.setBody(inform);
-        List<AgentID> receivers = informMessage.getReceiver();
+        
         AgentID receiver = new AgentID();
         receiver.setName("you@org.DROOLS");
+        
+        List<AgentID> receivers = informMessage.getReceiver();
         receivers.add(receiver);
-        List<AclMessage> answers = synchronousDroolsAgentServicePort.tell(informMessage);
+        
+        List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(informMessage);
         
         
-        AclMessage queryIfMessage = new AclMessage();
+        ACLMessage queryIfMessage = new ACLMessage();
         queryIfMessage.setId("1");
         queryIfMessage.setPerformative(Act.QUERY_IF);
         queryIfMessage.setMessageType("DEFAULT_FIPA_MESSAGE_TYPE");
@@ -124,12 +124,13 @@ public class SynchronousDroolsAgentServiceServiceTest {
         QueryIf queryIf = new QueryIf();
         info = new Info();
         //info.setEncodedContent("{&quot;org.kmr2.mock.MockFact&quot;:{&quot;name&quot;:&quot;patient1&quot;,&quot;age&quot;:18}}");
-        info.setEncodedContent("{\"org.kmr2.mock.MockFact\":{\"name\":\"patient1\",\"age\":18}}");
+        info.setEncodedContent("{\"org.mock.MockFact\":{\"name\":\"patient1\",\"age\":18}}");
         info.setEncoded(true);
         queryIf.setProposition(info);
         queryIfMessage.setBody(queryIf);
-        receivers = queryIfMessage.getReceiver();
+        
         //I'm using the same receiver
+        receivers = queryIfMessage.getReceiver();
         receivers.add(receiver);
         answers = synchronousDroolsAgentServicePort.tell(queryIfMessage);
         

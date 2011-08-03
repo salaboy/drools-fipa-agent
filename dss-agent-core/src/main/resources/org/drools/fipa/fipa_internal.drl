@@ -8,7 +8,6 @@ package org.drools.fipa;
 
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessage.Act;
 import org.drools.command.CommandFactory;
 import org.drools.command.BatchExecutionCommand;
 import org.drools.runtime.rule.QueryResults;
@@ -79,7 +78,7 @@ end
 
 rule "Process_Inform"
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.INFORM )
+    $msg : ACLMessage( $msgId : id, performative == Act.INFORM )
     Inform( $info : proposition ) from $msg.body
     $dst : Destination( $msgId ; )
 then
@@ -98,7 +97,7 @@ end
 
 rule "Process_QueryIf"
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.QUERY_IF )
+    $msg : ACLMessage( $msgId : id, performative == Act.QUERY_IF )
     QueryIf( $info : proposition ) from $msg.body
     $dst : Destination( $msgId ; )
 then
@@ -115,7 +114,7 @@ rule "Fix_QueryIf_Results"
 salience 9999
 no-loop
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.QUERY_IF )
+    $msg : ACLMessage( $msgId : id, performative == Act.QUERY_IF )
     $cont : ResponseContent( messageId == $msgId, $data : data )
 then
     $cont.setData(((QueryResults) $data).iterator().next().get("$queryIf"));
@@ -129,7 +128,7 @@ end
 
 rule "Process_QueryRef"
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.QUERY_REF )
+    $msg : ACLMessage( $msgId : id, performative == Act.QUERY_REF )
     QueryRef( $query : query ) from $msg.body
     $dst : Destination( $msgId ; )
 then
@@ -146,7 +145,7 @@ rule "Fix_QueryRef_Results"
 salience 9999
 no-loop
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.QUERY_REF )
+    $msg : ACLMessage( $msgId : id, performative == Act.QUERY_REF )
     QueryRef( $query : query ) from $msg.body
     $cont : ResponseContent( messageId == $msgId, $data : data )
 then
@@ -167,7 +166,7 @@ end
 
 rule "Process_Request"
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.REQUEST )
+    $msg : ACLMessage( $msgId : id, performative == Act.REQUEST )
     $req : Request( $act : action, $actName : action.actionName ) from $msg.body
     $dst : Destination( $msgId ; )
 then
@@ -186,7 +185,7 @@ rule "Fix_Request_Results"
 salience 9999
 no-loop
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.REQUEST )
+    $msg : ACLMessage( $msgId : id, performative == Act.REQUEST )
     $req : Request( $act : action, $actName : action.actionName ) from $msg.body
     $cont : ResponseContent( messageId == $msgId, $data : data )
 then
@@ -201,7 +200,7 @@ end
 
 rule "Process_Request_When"
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.REQUEST_WHEN )
+    $msg : ACLMessage( $msgId : id, performative == Act.REQUEST_WHEN )
     $req : RequestWhen( $act : action, $actName : action.actionName, $condition : condition.drl ) from $msg.body
     $dst : Destination( $msgId ; )
 then
@@ -222,7 +221,7 @@ end
 
 rule "Process_Request_Whenever"
 when
-    $msg : ACLMessage( $msgId : id, performative == ACLMessage.Act.REQUEST_WHENEVER )
+    $msg : ACLMessage( $msgId : id, performative == Act.REQUEST_WHENEVER )
     $req : RequestWhenever( $act : action, $actName : action.actionName, $condition : condition.drl ) from $msg.body
     $dst : Destination( $msgId ; )
 then

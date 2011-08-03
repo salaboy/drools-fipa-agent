@@ -1,6 +1,6 @@
 package org.drools.test;
 
-import org.kmr2.mock.MockFact;
+import org.mock.MockFact;
 import org.drools.fipa.body.content.Action;
 
 
