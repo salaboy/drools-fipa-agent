@@ -1,4 +1,4 @@
-package org.kmr2.mock;
+package org.mock;
 
 import java.io.Serializable;
 

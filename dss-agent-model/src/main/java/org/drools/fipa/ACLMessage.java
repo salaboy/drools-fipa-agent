@@ -15,12 +15,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.body.acts.AbstractMessageBody;
 
 
@@ -35,6 +34,7 @@ import org.drools.fipa.body.acts.AbstractMessageBody;
  * context and metadata information
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "ACLMessage", namespace="http://fipa.drools.org/")
 public class ACLMessage implements Serializable {
 
     public static final String DEFAULT_FIPA_MESSAGE_TYPE = "DEFAULT_FIPA_MESSAGE_TYPE";
@@ -42,58 +42,6 @@ public class ACLMessage implements Serializable {
     public static final String KMR2 = "KMR2";
 
 
-    public enum Act {
-        ACCEPT              ("accept-proposal"),
-        AGREE               ("agree"),
-        CANCEL              ("cancel"),
-        CALL_FOR_PROPOSAL   ("cfp"),
-        CONFIRM             ("confirm"),
-        DISCONFIRM          ("disconfirm"),
-        FAILURE             ("failure"),
-        INFORM              ("inform"),
-        INFORM_IF           ("inform-if"),
-        INFORM_REF          ("inform-ref"),
-        NOT_UNDERSTOOD      ("not-understood"),
-        PROPOSE             ("propose"),
-        QUERY_IF            ("query-if"),
-        QUERY_REF           ("query-ref"),
-        REFUSE              ("refuse"),
-        REJECT              ("reject-proposal"),
-        REQUEST             ("request"),
-        REQUEST_WHEN        ("request-when"),
-        REQUEST_WHENEVER    ("request-whenever"),
-        SUBSCRIBE           ("subscribe"),
-        PROXY               ("proxy"),
-        PROPAGATE           ("propagate");
-
-        private String name;
-
-        private Act(String name) {
-            this.name = name;
-        }
-
-        public String toString() {
-            return name;
-        }
-
-        public static Act getPerformative(String name) {
-            return map.get(name);
-        }
-
-        private static Map<String, Act> map;
-        static {
-            map = new HashMap<String, Act>();
-            for (Act performative : Act.values()) {
-                map.put(performative.toString(), performative);
-            }
-        }
-
-        Set<String> getPerformativeNames() {
-            return map.keySet();
-        }
-
-
-    }
 
     private String id;
     private String version;
@@ -117,7 +65,7 @@ public class ACLMessage implements Serializable {
     @XmlElement(required = true) 
     private String language = DROOLS_DRL;
     @XmlElement(required = true) 
-    private ACLMessageFactory.Encodings encoding;
+    private Encodings encoding;
     @XmlElement(required = true) 
     private AgentID sender;
     @XmlElement(required = true) 
@@ -130,11 +78,11 @@ public class ACLMessage implements Serializable {
     private AbstractMessageBody body;
 
 
-    ACLMessage() {
+    public ACLMessage() {
 
     }
 
-    ACLMessage(String id) {
+    public ACLMessage(String id) {
         this.id = id;
     }
 
@@ -276,11 +224,11 @@ public class ACLMessage implements Serializable {
         this.language = language;
     }
 
-    public ACLMessageFactory.Encodings getEncoding() {
+    public Encodings getEncoding() {
         return encoding;
     }
 
-    public void setEncoding(ACLMessageFactory.Encodings encoding) {
+    public void setEncoding(Encodings encoding) {
         this.encoding = encoding;
     }
 

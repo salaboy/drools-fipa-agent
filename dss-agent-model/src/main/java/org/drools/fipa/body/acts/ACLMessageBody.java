@@ -1,8 +1,7 @@
 package org.drools.fipa.body.acts;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 
 /**
  * Interface for ACL Message body types, i.e. communicative acts
@@ -13,7 +12,7 @@ public interface ACLMessageBody {
     // Predicate-style representation of the message body, e.g. inform( fact ), request-when( action, condition )
 
     // functor
-    public ACLMessage.Act getPerformative();
+    public Act getPerformative();
     // args
     public Object[] getArguments();
 
@@ -24,9 +23,9 @@ public interface ACLMessageBody {
 
     public boolean isEncoded();
 
-    public void encode(ACLMessageFactory.Encodings enc);
+    public void encode(Encodings enc);
 
-    public void decode(ACLMessageFactory.Encodings enc);
+    public void decode(Encodings enc);
 
 
 

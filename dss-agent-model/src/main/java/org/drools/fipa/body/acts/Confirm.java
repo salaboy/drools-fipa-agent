@@ -1,15 +1,15 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Info;
 
 
 public class Confirm extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.CONFIRM;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.CONFIRM;
+    public Act getPerformative() { return performative; }
 
     private Info proposition;
 
@@ -59,11 +59,11 @@ public class Confirm extends AbstractMessageBody {
         return proposition.isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         proposition.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         proposition.decode(encoding);
     }
 

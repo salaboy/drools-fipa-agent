@@ -1,15 +1,16 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Query;
 
-
+@XmlType(name = "QueryRef", namespace="http://acts.body.fipa.drools.org/")
 public class QueryRef extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.QUERY_REF;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.QUERY_REF;
+    public Act getPerformative() { return performative; }
 
     private Query query;
 
@@ -65,11 +66,11 @@ public class QueryRef extends AbstractMessageBody {
         return query.isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         query.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         query.decode(encoding);
     }
 

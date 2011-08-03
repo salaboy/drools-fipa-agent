@@ -1,7 +1,7 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Info;
 
@@ -13,8 +13,8 @@ import org.drools.fipa.body.content.Info;
 public class Reject extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.REJECT;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.REJECT;
+    public Act getPerformative() { return performative; }
 
     private Action call;
     private Action proposal;
@@ -91,13 +91,13 @@ public class Reject extends AbstractMessageBody {
         return proposal.isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         proposal.encode(encoding);
         cause.encode(encoding);
         call.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         proposal.decode(encoding);
         cause.decode(encoding);
         call.decode(encoding);

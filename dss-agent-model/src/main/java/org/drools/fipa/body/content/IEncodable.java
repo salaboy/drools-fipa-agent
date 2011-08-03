@@ -1,6 +1,6 @@
 package org.drools.fipa.body.content;
 
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Encodings;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,9 +9,9 @@ import org.drools.fipa.ACLMessageFactory;
  */
 public interface IEncodable {
 
-    public void encode(ACLMessageFactory.Encodings encoding);
+    public void encode(Encodings encoding);
 
-    public void decode(ACLMessageFactory.Encodings encoding);
+    public void decode(Encodings encoding);
 
     public String getEncodedContent();
 

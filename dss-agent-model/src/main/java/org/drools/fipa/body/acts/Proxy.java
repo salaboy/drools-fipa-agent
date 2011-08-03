@@ -1,18 +1,19 @@
 package org.drools.fipa.body.acts;
 
 import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
 import org.drools.fipa.AgentID;
 import org.drools.fipa.body.content.Rule;
 
 import java.util.Arrays;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 
 
 public class Proxy extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.PROXY;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.PROXY;
+    public Act getPerformative() { return performative; }
 
     private AgentID[] targets;
     private ACLMessage message;
@@ -88,11 +89,11 @@ public class Proxy extends AbstractMessageBody {
         return message.getBody().isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         message.getBody().encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         message.getBody().decode(encoding);
     }
 

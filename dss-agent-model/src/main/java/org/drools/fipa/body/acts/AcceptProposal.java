@@ -1,20 +1,16 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Rule;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 8:03 PM
- */
+
 public class AcceptProposal extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.ACCEPT;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.ACCEPT;
+    public Act getPerformative() { return performative; }
 
     private Action action;
     private Rule condition;
@@ -79,12 +75,12 @@ public class AcceptProposal extends AbstractMessageBody {
         return action.isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         action.encode(encoding);
         condition.encode(encoding);
     }
 
-     public void decode(ACLMessageFactory.Encodings encoding) {
+     public void decode(Encodings encoding) {
         action.decode(encoding);
         condition.decode(encoding);
     }

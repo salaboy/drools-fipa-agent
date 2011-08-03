@@ -1,18 +1,28 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Ref;
 
-
+@XmlType(name = "InformRef", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class InformRef extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.INFORM_REF;
-    public ACLMessage.Act getPerformative() { return performative; }
-
+    public static final Act performative = Act.INFORM_REF;
+    public Act getPerformative() { return performative; }
+    
+    @XmlElement(required = true)
     private Ref references;
 
+    public InformRef() {
+    }
+
+    
 
     public InformRef(Ref references) {
         this.references = references;
@@ -61,11 +71,11 @@ public class InformRef extends AbstractMessageBody {
     }
 
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         references.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         references.decode(encoding);
     }
 

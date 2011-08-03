@@ -3,9 +3,9 @@ package org.drools.fipa.body.content;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-import org.drools.fipa.ACLMessageFactory;
 
 import java.io.*;
+import org.drools.fipa.Encodings;
 
 /**
  * Actual mesasge content, i.e. the object of an ACL communicative act.
@@ -44,7 +44,7 @@ public abstract class AbstractMessageContent implements IEncodable, Serializable
         this.encoded = encoded;
     }
 
-    protected String encode(Object obj, ACLMessageFactory.Encodings encoding)  {
+    protected String encode(Object obj, Encodings encoding)  {
 
         switch (encoding) {
             case BYTE :
@@ -95,7 +95,7 @@ public abstract class AbstractMessageContent implements IEncodable, Serializable
     }
 
 
-    protected Object decodeContent(String encodedContent, ACLMessageFactory.Encodings encoding)  {
+    protected Object decodeContent(String encodedContent, Encodings encoding)  {
 
         switch (encoding) {
             case BYTE :

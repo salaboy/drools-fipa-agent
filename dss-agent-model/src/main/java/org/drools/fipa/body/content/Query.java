@@ -1,25 +1,26 @@
 package org.drools.fipa.body.content;
 
-import org.drools.QueryResult;
-import org.drools.base.ArrayElements;
+
+
+
+
 import org.drools.base.DroolsQuery;
-import org.drools.fipa.ACLMessageFactory;
-import org.drools.rule.Declaration;
 import org.drools.runtime.rule.QueryResults;
-import org.drools.runtime.rule.Variable;
 import org.drools.runtime.rule.impl.NativeQueryResults;
 
 import java.util.*;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Encodings;
+import org.drools.runtime.rule.Variable;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 10:32 PM
- */
+@XmlType(name = "Query", namespace="http://content.body.fipa.drools.org/")
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class Query extends AbstractMessageContent  {
-
+  //  @XmlElement(required = true)
     private String queryName;
+   // @XmlElement(required = true)
     private Map<Integer, String> references;
+   // @XmlElement(required = true)
     private Object[] args;
 
     public Query() {
@@ -106,7 +107,7 @@ public class Query extends AbstractMessageContent  {
         return full;
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         if (! isEncoded()) {
             setEncodedContent(encode(this,encoding));
 //            args = null;
@@ -114,7 +115,7 @@ public class Query extends AbstractMessageContent  {
         }
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         if (isEncoded()) {
             Query q = (Query) decodeContent(getEncodedContent(),encoding);
             queryName = q.getQueryName();

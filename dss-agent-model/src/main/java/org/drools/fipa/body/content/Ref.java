@@ -1,18 +1,20 @@
 package org.drools.fipa.body.content;
 
-import org.drools.fipa.ACLMessageFactory;
 
 import java.util.Map;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Encodings;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/9/11
- * Time: 2:29 AM
- */
+@XmlType(name = "Ref", namespace="http://content.body.fipa.drools.org/")
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class Ref extends AbstractMessageContent {
-
+  //  @XmlElement(required = true)
     private Map<String,Object> references;
 
+    public Ref() {
+    }
+
+    
     public Ref(Map<String, Object> references) {
         this.references = references;
     }
@@ -50,7 +52,7 @@ public class Ref extends AbstractMessageContent {
         this.references = references;
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         if (! isEncoded()) {
             setEncodedContent(encode(references,encoding));
             references = null;
@@ -58,7 +60,7 @@ public class Ref extends AbstractMessageContent {
         }
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         if (isEncoded()) {
             references = (Map<String,Object>) decodeContent(getEncodedContent(),encoding);
 //            setEncodedContent(null);

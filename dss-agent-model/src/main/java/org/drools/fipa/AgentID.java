@@ -9,12 +9,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
+import javax.xml.bind.annotation.XmlType;
 
 
 
 /**
  * Simple agent identifier, according to FIPA standard
  */
+@XmlType(name = "AgentID", namespace="http://fipa.drools.org/")
 public class AgentID implements Comparable, Serializable, Cloneable {
 
 

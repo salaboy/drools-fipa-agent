@@ -1,7 +1,7 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 
 /**
@@ -12,8 +12,8 @@ import org.drools.fipa.body.content.Action;
 public class Request extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.REQUEST;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.REQUEST;
+    public Act getPerformative() { return performative; }
 
     private Action action;
 
@@ -65,11 +65,11 @@ public class Request extends AbstractMessageBody {
     }
 
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         action.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         action.decode(encoding);
     }
 

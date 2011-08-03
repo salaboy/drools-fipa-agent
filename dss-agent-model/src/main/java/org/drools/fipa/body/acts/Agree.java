@@ -1,24 +1,27 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Rule;
 
-import java.util.Arrays;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 8:03 PM
- */
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Agree", namespace = "http://acts.body.fipa.drools.org/")
 public class Agree extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.AGREE;
-    public ACLMessage.Act getPerformative() { return performative; }
-
+    public static final Act performative = Act.AGREE;
+    public Act getPerformative() { return performative; }
+    
+    @XmlElement(required = true)
     private Action action;
+    @XmlElement(required = true)
     private Rule condition;
 
     public Agree() {
@@ -85,12 +88,12 @@ public class Agree extends AbstractMessageBody {
     }
 
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         action.encode(encoding);
         condition.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         action.decode(encoding);
         condition.decode(encoding);
     }

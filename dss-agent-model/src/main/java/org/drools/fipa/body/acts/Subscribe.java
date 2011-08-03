@@ -1,15 +1,15 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Query;
 
 
 public class Subscribe extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.SUBSCRIBE;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.SUBSCRIBE;
+    public Act getPerformative() { return performative; }
 
     private Query query;
 
@@ -60,11 +60,11 @@ public class Subscribe extends AbstractMessageBody {
     }
 
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         query.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         query.decode(encoding);
     }
 

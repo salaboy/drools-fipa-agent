@@ -1,7 +1,7 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Info;
 
@@ -13,8 +13,8 @@ import org.drools.fipa.body.content.Info;
 public class NotUnderstood extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.NOT_UNDERSTOOD;
-    public ACLMessage.Act getPerformative() { return performative; }
+    public static final Act performative = Act.NOT_UNDERSTOOD;
+    public Act getPerformative() { return performative; }
 
     private Action action;
     private Info cause;
@@ -78,12 +78,12 @@ public class NotUnderstood extends AbstractMessageBody {
         return action.isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         action.encode(encoding);
         cause.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         action.decode(encoding);
         cause.decode(encoding);
     }

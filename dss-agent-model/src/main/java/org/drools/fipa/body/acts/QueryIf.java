@@ -1,16 +1,22 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Info;
 
-
+@XmlType(name = "QueryIf", namespace="http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class QueryIf extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.QUERY_IF;
-    public ACLMessage.Act getPerformative() { return performative; }
-
+    public static final Act performative = Act.QUERY_IF;
+    public Act getPerformative() { return performative; }
+    
+    @XmlElement(required = true) 
     private Info proposition;
 
     public QueryIf() {
@@ -64,11 +70,11 @@ public class QueryIf extends AbstractMessageBody {
         return proposition.isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         proposition.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         proposition.decode(encoding);
     }
 

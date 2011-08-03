@@ -1,12 +1,9 @@
 package org.drools.fipa.body.content;
 
-import org.drools.fipa.ACLMessageFactory;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Encodings;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/9/11
- * Time: 1:43 AM
- */
+@XmlType(name = "Info", namespace="http://content.body.fipa.drools.org/")
 public class Info extends AbstractMessageContent  {
 
     private transient Object data;
@@ -28,7 +25,7 @@ public class Info extends AbstractMessageContent  {
     }
 
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         if (! isEncoded()) {
             setEncodedContent(encode(data,encoding));
             data = null;
@@ -36,7 +33,7 @@ public class Info extends AbstractMessageContent  {
         }
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         if (isEncoded()) {
             data = decodeContent(getEncodedContent(),encoding);
 //            setEncodedContent(null);

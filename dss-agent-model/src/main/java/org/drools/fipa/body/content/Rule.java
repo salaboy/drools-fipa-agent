@@ -1,14 +1,12 @@
 package org.drools.fipa.body.content;
 
-import org.drools.fipa.ACLMessageFactory;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Encodings;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 8:04 PM
- */
+@XmlType(name = "Rule", namespace="http://content.body.fipa.drools.org/")
+//@XmlAccessorType(XmlAccessType.FIELD)
 public class Rule extends AbstractMessageContent {
-
+  //  @XmlElement(required = true)
     private String drl;
 
     public Rule() {
@@ -52,12 +50,12 @@ public class Rule extends AbstractMessageContent {
         this.drl = drl;
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
 
     }
 
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
 
     }
 

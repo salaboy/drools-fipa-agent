@@ -1,25 +1,31 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Info;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 8:03 PM
- */
+@XmlType(name = "Failure", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Failure extends AbstractMessageBody {
 
 
-    public static final ACLMessage.Act performative = ACLMessage.Act.FAILURE;
-    public ACLMessage.Act getPerformative() { return performative; }
-
+    public static final Act performative = Act.FAILURE;
+    public Act getPerformative() { return performative; }
+    @XmlElement(required = true)
     private Action action;
+    @XmlElement(required = true)
     private Info cause;
 
+    public Failure() {
+    }
 
+
+    
     public Failure(Action action, Info cause) {
         this.action = action;
         this.cause = cause;
@@ -78,12 +84,12 @@ public class Failure extends AbstractMessageBody {
         return action.isEncoded();
     }
 
-    public void encode(ACLMessageFactory.Encodings encoding) {
+    public void encode(Encodings encoding) {
         action.encode(encoding);
         cause.encode(encoding);
     }
 
-    public void decode(ACLMessageFactory.Encodings encoding) {
+    public void decode(Encodings encoding) {
         action.decode(encoding);
         cause.decode(encoding);
     }

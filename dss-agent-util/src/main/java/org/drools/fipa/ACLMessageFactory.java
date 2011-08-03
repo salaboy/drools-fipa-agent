@@ -5,8 +5,10 @@ import org.drools.fipa.body.content.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.AgentID;
+import org.drools.fipa.Encodings;
 
 
 /**
@@ -50,21 +52,7 @@ public class ACLMessageFactory implements Serializable {
 
 
 
-    public enum Encodings {
-        XML("text/xml"),
-        JSON("application/json"),
-        GSON("application/json"),
-        BYTE("application/octet-stream"),
-        NONE("application/x-java-serialized-object");
-
-        private String encoding;
-
-        private Encodings(String enc) { encoding = enc; }
-
-        public String getEncoding() { return encoding; }
-    }
-
-    private Encodings defaultEncoding = ACLMessageFactory.Encodings.XML;
+    private Encodings defaultEncoding = Encodings.XML;
     public Encodings getDefaultEncoding() { return defaultEncoding; }
     public void setDefaultEncoding(Encodings defaultEncoding) { this.defaultEncoding = defaultEncoding; }
 
@@ -114,7 +102,7 @@ public class ACLMessageFactory implements Serializable {
     private boolean setMessageBody(ACLMessage msg, ACLMessageBody body) {
 
         msg.setPerformative(body.getPerformative());
-        if (getDefaultEncoding() != ACLMessageFactory.Encodings.NONE)
+        if (getDefaultEncoding() != Encodings.NONE)
             body.encode(getDefaultEncoding());
         msg.setBody((AbstractMessageBody)body);
 
