@@ -87,11 +87,11 @@
 </xs:schema>
 <xs:schema targetNamespace="http://content.body.fipa.drools.org/" version="1.0" xmlns:ns1="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:import namespace="http://dssagentserver.drools.org/"/>
-<xs:complexType name="Info">
+<xs:complexType name="Rule">
     <xs:complexContent>
       <xs:extension base="ns1:abstractMessageContent">
         <xs:sequence>
-          <xs:element minOccurs="0" name="data" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="drl" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -119,11 +119,11 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="Rule">
+<xs:complexType name="Info">
     <xs:complexContent>
       <xs:extension base="ns1:abstractMessageContent">
         <xs:sequence>
-          <xs:element minOccurs="0" name="drl" type="xs:string"/>
+          <xs:element minOccurs="0" name="data" type="xs:anyType"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -134,11 +134,12 @@
 <xs:complexType abstract="true" name="AbstractMessageBody">
     <xs:sequence/>
   </xs:complexType>
-<xs:complexType name="InformIf">
+<xs:complexType name="Failure">
     <xs:complexContent>
       <xs:extension base="tns:AbstractMessageBody">
         <xs:sequence>
-          <xs:element name="proposition" type="ns1:Info"/>
+          <xs:element name="action" type="ns1:Action"/>
+          <xs:element name="cause" type="ns1:Info"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -161,12 +162,11 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="Failure">
+<xs:complexType name="InformIf">
     <xs:complexContent>
       <xs:extension base="tns:AbstractMessageBody">
         <xs:sequence>
-          <xs:element name="action" type="ns1:Action"/>
-          <xs:element name="cause" type="ns1:Info"/>
+          <xs:element name="proposition" type="ns1:Info"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -213,7 +213,7 @@
   </wsdl:binding>
   <wsdl:service name="SynchronousDroolsAgentServiceImplService">
     <wsdl:port binding="tns:SynchronousDroolsAgentServiceImplServiceSoapBinding" name="SynchronousDroolsAgentServiceImplPort">
-      <soap:address location="http://localhost:8080/dss-agent-server/service/SynchronousDroolsAgentService"/>
+      <soap:address location="http://localhost:8080/dss-agent-service/service/SynchronousDroolsAgentService"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -1,0 +1,70 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.drools.fipa;
+import com.jayway.jsonpath.JsonPath;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
+import org.drools.fipa.body.acts.Inform;
+import org.drools.fipa.body.acts.QueryIf;
+import org.drools.fipa.body.acts.QueryRef;
+import org.drools.fipa.body.content.AbstractMessageContent;
+/**
+ *
+ * @author salaboy
+ */
+
+
+public class InspectMessageHelper {
+    public static String inspect(ACLMessage message, String path) throws ParseException, XPathExpressionException, ParserConfigurationException, IOException, SAXException {
+        AbstractMessageContent content = inspectContent(message);
+        if(content.getEncodedContent() != null || !content.getEncodedContent().equals("")){
+            switch (message.getEncoding()) {
+                case JSON:
+                    Object res = JsonPath.read(content.getEncodedContent(),path);
+                    return (res != null) ? res.toString() : null;
+                case XML:
+                    XPath accessor = XPathFactory.newInstance().newXPath();
+                    InputStream inStream = new ByteArrayInputStream(content.getEncodedContent().getBytes());
+                    Document dox = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inStream);
+                    return (String) accessor.evaluate(path, dox, XPathConstants.STRING);
+                default :
+                    throw new ParseException("Unable to access byte-encoded message body",0);
+            }
+        }
+        return null;
+    }
+    
+    public static AbstractMessageContent inspectContent(ACLMessage message){
+        Act act = message.getBody().getPerformative();
+        Object decoded = null;
+        switch (act) {
+            case INFORM:
+                
+                return ((Inform) message.getBody()).getProposition();
+               
+               
+            case QUERY_IF:
+               return ((QueryIf) message.getBody()).getProposition();
+                
+             case QUERY_REF:
+               return ((QueryRef) message.getBody()).getQuery();    
+               
+        }
+        return null;
+    
+    }
+    
+}

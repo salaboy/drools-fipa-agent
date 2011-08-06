@@ -16,9 +16,10 @@
     </properties>
     <modules>
         <module>dss-agent-core</module>
-        <module>dss-agent-server</module>
+        <module>dss-agent-service</module>
         <module>dss-agent-client</module>
-        <module>dss-agent-model</module>
-    <module>dss-agent-util</module>
+        <module>dss-agent-acl</module>
+        <module>dss-agent-util</module>
+    <module>dss-domain-client-example</module>
   </modules>
 </project>

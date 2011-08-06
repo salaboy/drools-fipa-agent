@@ -5,9 +5,8 @@
     <parent>
         <artifactId>drools-fipa-agent</artifactId>
         <groupId>org.drools.fipa</groupId>
-        <version>${project.version}</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>org.drools.fipa</groupId>
     <artifactId>dss-agent-client</artifactId>
     
     <name>Drools :: FIPA Agent Client</name>
@@ -32,9 +31,9 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/dss-agent-server/service/SynchronousDroolsAgentService.wsdl</wsdlFile>
+                                <wsdlFile>localhost_8080/dss-agent-service/service/SynchronousDroolsAgentService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <wsdlLocation>http://localhost:8080/dss-agent-server/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
+                            <wsdlLocation>http://localhost:8080/dss-agent-service/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/SynchronousDroolsAgentService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-SynchronousDroolsAgentService</id>
@@ -60,11 +59,20 @@
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
                 <configuration>
-                    <webApp>../dss-agent-server/target/dss-agent-server.war</webApp>
-                    <contextPath>dss-agent-server</contextPath>
+                    <webApp>../dss-agent-service/target/dss-agent-service.war</webApp>
+                    <contextPath>dss-agent-service</contextPath>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>
+                    
                 </configuration>
+                
+                <dependencies>
+                    <dependency>
+                        <groupId>org.drools.fipa</groupId>
+                        <artifactId>dss-domain-client-example</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </dependency>
+                </dependencies>
                 <executions>
                     <execution>
                         <id>start-jetty</id>
@@ -108,11 +116,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <!--dependency>
+        <dependency>
             <groupId>org.drools.fipa</groupId>
-            <artifactId>dss-agent-model</artifactId>
+            <artifactId>dss-domain-client-example</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.drools.fipa</groupId>
+            <artifactId>dss-agent-util</artifactId>
             <version>${project.version}</version>
-        </dependency-->
+        </dependency>
         
         <dependency>
             <groupId>javax.xml</groupId>

@@ -8,3 +8,6 @@
 /dss-agent-client/target/
 /dss-agent-model/target/
 /dss-agent-util/target/
+/dss-agent-acl/target/
+/dss-agent-service/target/
+/dss-domain-client-example/target/

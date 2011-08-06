@@ -5,7 +5,7 @@
     <parent>
         <artifactId>drools-fipa-agent</artifactId>
         <groupId>org.drools.fipa</groupId>
-        <version>${project.version}</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     
     <artifactId>dss-agent-util</artifactId>
@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>org.drools.fipa</groupId>
-            <artifactId>dss-agent-model</artifactId>
+            <artifactId>dss-agent-acl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
