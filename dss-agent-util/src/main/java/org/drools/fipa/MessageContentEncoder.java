@@ -102,7 +102,7 @@ public class MessageContentEncoder {
     }
 
     public static String encode(Object obj, Encodings encoding) {
-
+        System.out.println("Encoding!!!! - OBJECT"+obj);
         switch (encoding) {
             case BYTE:
                 try {
@@ -152,7 +152,7 @@ public class MessageContentEncoder {
     }
 
     protected static Object decode(String encodedContent, Encodings encoding) {
-
+        System.out.println("DEcoding!!!! - STRING - "+encodedContent);
         switch (encoding) {
             case BYTE:
                 try {

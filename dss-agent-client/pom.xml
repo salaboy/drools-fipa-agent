@@ -119,7 +119,7 @@
         <dependency>
             <groupId>org.drools.fipa</groupId>
             <artifactId>dss-domain-client-example</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.drools.fipa</groupId>
