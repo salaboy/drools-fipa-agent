@@ -14,6 +14,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import org.drools.fipa.body.acts.AbstractMessageBody;
 import org.drools.fipa.body.acts.Inform;
+import org.drools.fipa.body.acts.InformIf;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.acts.QueryRef;
 import org.drools.fipa.body.content.Query;
@@ -38,6 +39,11 @@ public class MessageContentEncoder {
                 decoded = MessageContentEncoder.decode(((Inform) body).getProposition().getEncodedContent(), encoding);
                 ((Inform) body).getProposition().setData(decoded);
                 ((Inform) body).getProposition().setEncoded(false);
+                break;
+            case INFORM_IF:
+                decoded = MessageContentEncoder.decode(((InformIf) body).getProposition().getEncodedContent(), encoding);
+                ((InformIf) body).getProposition().setData(decoded);
+                ((InformIf) body).getProposition().setEncoded(false);
                 break;
             case QUERY_IF:
                 decoded = MessageContentEncoder.decode(((QueryIf) body).getProposition().getEncodedContent(), encoding);
@@ -83,6 +89,13 @@ public class MessageContentEncoder {
                 ((Inform) body).getProposition().setEncoding(encoding);
                 ((Inform) body).getProposition().setData(null);
                 break;
+            case INFORM_IF:
+                encoded = MessageContentEncoder.encode(((InformIf) body).getProposition().getData(), encoding);
+                ((InformIf) body).getProposition().setEncodedContent(encoded);
+                ((InformIf) body).getProposition().setEncoded(true);
+                ((InformIf) body).getProposition().setEncoding(encoding);
+                ((InformIf) body).getProposition().setData(null);
+                break;
             case QUERY_IF:
                 encoded = MessageContentEncoder.encode(((QueryIf) body).getProposition().getData(), encoding);
                 ((QueryIf) body).getProposition().setEncodedContent(encoded);
@@ -98,11 +111,12 @@ public class MessageContentEncoder {
                 ((QueryRef) body).getQuery().setArgs(null);
                 ((QueryRef) body).getQuery().setQueryName("");
                 break;
+
         }
     }
 
     public static String encode(Object obj, Encodings encoding) {
-        System.out.println("Encoding!!!! - OBJECT"+obj);
+        System.out.println("Encoding!!!! - OBJECT" + obj);
         switch (encoding) {
             case BYTE:
                 try {
@@ -152,7 +166,6 @@ public class MessageContentEncoder {
     }
 
     protected static Object decode(String encodedContent, Encodings encoding) {
-        System.out.println("DEcoding!!!! - STRING - "+encodedContent);
         switch (encoding) {
             case BYTE:
                 try {

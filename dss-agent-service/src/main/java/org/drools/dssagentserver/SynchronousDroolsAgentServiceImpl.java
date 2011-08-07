@@ -42,7 +42,7 @@ public class SynchronousDroolsAgentServiceImpl implements SynchronousDroolsAgent
     
     @Override
     public List<ACLMessage> tell( ACLMessage message) {
-        System.out.println(">>>>>>>IN MEssage: ----"+message.getPerformative().name());
+        
         try {
             agent.tell(message);
         } catch (Throwable t) {
@@ -50,12 +50,7 @@ public class SynchronousDroolsAgentServiceImpl implements SynchronousDroolsAgent
             t.printStackTrace();
         }
         List<ACLMessage> retrieveResponses = responseInformer.retrieveResponses(message);
-        if(retrieveResponses != null){
-            System.out.println("OUT MESSAGES NRO: "+retrieveResponses.size());
-            for (ACLMessage aCLMessage : retrieveResponses) {
-                System.out.println(">>>>>>>OUT MEssage: ----"+aCLMessage.getPerformative().name());
-            }
-        }
+       
         return retrieveResponses;
     }
 

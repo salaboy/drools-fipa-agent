@@ -19,11 +19,11 @@
     
 
     <dependencies>
-        <dependency>
+        <!--dependency>
             <groupId>org.drools.fipa</groupId>
             <artifactId>dss-domain-client-example</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
+        </dependency-->
         <dependency>
             <groupId>org.drools.fipa</groupId>
             <artifactId>drools-agent-core</artifactId>
