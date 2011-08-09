@@ -7,6 +7,7 @@
 package org.drools.fipa;
 
 import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.MessageContentFactory;
 import org.drools.fipa.ACLMessage;
 import org.drools.fipa.AgentID;
 import org.drools.fipa.body.content.*;
@@ -60,7 +61,8 @@ when
                        $content : body,
                        performative == Act.QUERY_REF)
 then
-   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, new Action(((QueryRef)$content).getQuery().getQueryName(),null), new Rule(""));
+   Action action = MessageContentFactory.newActionContent(((QueryRef)$content).getQuery().getQueryName(),null);
+   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, action, new Rule());
    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
    responseInformer.informResponse($msg,ans);
 end
@@ -79,7 +81,8 @@ when
                        performative == Act.QUERY_IF)
 then
    //TODO: $content is a QueryIf and not a Query. The following line will fail
-   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, new Action(((Query)$content).getQueryName(),null), new Rule(""));
+   Action action = MessageContentFactory.newActionContent(((Query)$content).getQueryName(),null);
+   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, action, new Rule());
    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
    responseInformer.informResponse($msg,ans);
 end
@@ -143,8 +146,9 @@ when
     $resp : ResponseContent( messageId == $msgId, $data : data == null)
 then
     retract($resp);
+    Action action = MessageContentFactory.newActionContent(((QueryRef)$content).getQuery().getQueryName(),null);
     ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName,
-                                                           new Action(((QueryRef)$content).getQuery().getQueryName(),null),
+                                                           action,
                                                            "Query Error - TODO improve diagnostics");
     System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
     responseInformer.informResponse($msg,ans);
@@ -166,8 +170,9 @@ when
     $resp : ResponseContent( messageId == $msgId, $data : data == null)
 then
     retract($resp);
+    Action action = MessageContentFactory.newActionContent(((QueryIf)$content).getProposition().toString(),null);
     ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName,
-                                                           new Action(((QueryIf)$content).getProposition().toString(),null),
+                                                          action,
                                                            "Query Error - TODO improve diagnostics");
     System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
     responseInformer.informResponse($msg,ans);
@@ -193,7 +198,8 @@ when
                        $content : body,
                        performative == Act.REQUEST )
 then
-   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, new Action( ((Request) $content).getAction() ), new Rule(""));
+   Action action = MessageContentFactory.newActionContent(((Request) $content).getAction());
+   ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, action, new Rule());
    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
    responseInformer.informResponse($msg,ans);
 end

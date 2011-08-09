@@ -80,8 +80,8 @@ public class Refuse extends AbstractMessageBody {
     public void setCause(Info cause) {
         this.cause = cause;
     }
-
-    public Object[] getArguments() {
-        return new Object[]{action.getArgs().values().toArray(), cause.getData()};
-    }
+// THIS METHOD SHOULD GO TO A HELPER
+//    public Object[] getArguments() {
+//        return new Object[]{action.getArgs().values().toArray(), cause.getData()};
+//    }
 }

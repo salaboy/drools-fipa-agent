@@ -24,7 +24,7 @@ public abstract class AbstractMessageBody implements Serializable {
     }
     // args
 
-    public abstract Object[] getArguments();
+//    public abstract Object[] getArguments();
     
     
 }

@@ -19,9 +19,9 @@ public class InformRef extends AbstractMessageBody {
     public InformRef() {
     }
 
-    public InformRef(Ref references) {
-        this.references = references;
-    }
+//    public InformRef(Ref references) {
+//        this.references = references;
+//    }
 
    
 
@@ -63,7 +63,7 @@ public class InformRef extends AbstractMessageBody {
         this.references = references;
     }
 
-    public Object[] getArguments() {
-        return new Object[]{references.getReferences()};
-    }
+//    public Object[] getArguments() {
+//        return new Object[]{references.getReferences()};
+//    }
 }

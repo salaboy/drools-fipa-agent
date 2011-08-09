@@ -54,8 +54,8 @@ public class Subscribe extends AbstractMessageBody {
         this.query = query;
     }
 
-  
-    public Object[] getArguments() {
-        return query.getFullArguments();
-    }
+  // THIS METHOD SHOULD GO TO A HELPER
+//    public Object[] getArguments() {
+//        return query.getFullArguments();
+//    }
 }

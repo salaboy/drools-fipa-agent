@@ -1,5 +1,7 @@
 package org.drools.fipa;
 
+import java.util.HashMap;
+import org.drools.fipa.body.acts.Inform;
 import mock.MockFact;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
@@ -61,7 +63,7 @@ public class TestACLMessage {
        // msg2.getBody().decode(msg2.getEncoding());
         System.out.println(msg2);
 
-        Object target = msg2.getBody().getArguments()[0];
+        Object target = ((Inform)msg2.getBody()).getProposition().getData();
         assertEquals(source,target);
 
     }
@@ -109,11 +111,13 @@ public class TestACLMessage {
 
 
         Object obj = new String("x");
-        Action act = new Action("act",null);
-        Query qry = new Query("test",1,2,3);
-        Rule rule = new Rule("when String( this == \"test\" )");
+        Action act = MessageContentFactory.newActionContent("act",new HashMap<String, Object>());
+        Query qry = MessageContentFactory.newQueryContent("test",1,2,3);//new Query(); 
+        Rule rule = new Rule();
+        rule.setDrl("when String( this == \"test\" )");
         Map<String,Object> map = Collections.emptyMap();
-        Ref ref = new Ref(map);
+        Ref ref = new Ref();
+        ref.setReferences(MapArgsAdapterHelper.marshal(map));
         AgentID[] tgts = new AgentID[0];
 
 

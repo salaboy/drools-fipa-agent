@@ -53,7 +53,7 @@ when
 then
     retract($a);
     System.out.println("Executing square root");
-    insert( new MathResponse((Double) $x, Math.sqrt( (Double) $x), 0.0) );
+    insert( new MathResponse((Double) $x.getValue(), Math.sqrt( (Double) $x.getValue()), 0.0) );
 end
 
 query squareRoot( Double $x, Double $return  )
@@ -73,7 +73,7 @@ when
 
 then
     retract($a);
-    Double x = (Double) $x;
+    Double x = (Double) $x.getValue();
     Double z = Math.random();
     System.out.println("ACTING II " + x + "   " +z + "  " );
     insert( new MathResponse(x, x+z, z ) );

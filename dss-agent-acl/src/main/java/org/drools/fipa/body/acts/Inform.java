@@ -1,11 +1,9 @@
 package org.drools.fipa.body.acts;
 
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.body.content.AbstractMessageContent;
 import org.drools.fipa.body.content.Info;
 
 @XmlType(name = "Inform", namespace = "http://acts.body.fipa.drools.org/")
@@ -59,10 +57,10 @@ public class Inform extends AbstractMessageBody {
     public void setProposition(Info proposition) {
         this.proposition = proposition;
     }
-
-    public Object[] getArguments() {
-        return new Object[]{proposition.getData()};
-    }
+//
+//    public Object[] getArguments() {
+//        return new Object[]{proposition.getData()};
+//    }
 
    
     

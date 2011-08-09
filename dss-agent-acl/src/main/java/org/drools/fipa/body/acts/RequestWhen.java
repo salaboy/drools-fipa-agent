@@ -75,15 +75,15 @@ public class RequestWhen extends AbstractMessageBody {
         this.condition = condition;
     }
 
-
-    public Object[] getArguments() {
-        Object[] ans = new Object[action.getArgs().size()+2];
-        Object[] actionParams = action.getArgs().values().toArray();
-        ans[0] = action.getActionName();
-        for (int j = 0; j < actionParams.length; j++) {
-            ans[j+1] = actionParams[j];
-        }
-        ans[ans.length-1] = condition.getDrl();
-        return ans;
-    }
+// THIS METHOD SHOULD GO TO A HELPER
+//    public Object[] getArguments() {
+//        Object[] ans = new Object[action.getArgs().size()+2];
+//        Object[] actionParams = action.getArgs().values().toArray();
+//        ans[0] = action.getActionName();
+//        for (int j = 0; j < actionParams.length; j++) {
+//            ans[j+1] = actionParams[j];
+//        }
+//        ans[ans.length-1] = condition.getDrl();
+//        return ans;
+//    }
 }

@@ -359,7 +359,7 @@ public class ACLMessageFactory implements Serializable {
 
     public ACLMessage newReplyWithAgreeMessage(ACLMessage origin, AgentID sender, Action action, Rule condition) {
         ACLMessage msg = createReply(origin, sender);
-        Agree body = new Agree(action, condition);
+        Agree body = new Agree();
         body.setPerformative(Act.AGREE);
         body.setAction(action);
         body.setCondition(condition);
@@ -390,7 +390,8 @@ public class ACLMessageFactory implements Serializable {
         ACLMessage msg = createReply(origin, sender);
         Confirm body = new Confirm();
         body.setPerformative(Act.CONFIRM);
-        Info info = new Info(proposition);
+        Info info = new Info();
+        info.setData(proposition);
         body.setProposition(info);
         setMessageBody(msg, body);
         return msg;
@@ -400,7 +401,8 @@ public class ACLMessageFactory implements Serializable {
         ACLMessage msg = createReply(origin, sender);
         Disconfirm body = new Disconfirm();
         body.setPerformative(Act.DISCONFIRM);
-        Info info = new Info(proposition);
+        Info info = new Info();
+        info.setData(proposition);
         body.setProposition(info);
         setMessageBody(msg, body);
         return msg;

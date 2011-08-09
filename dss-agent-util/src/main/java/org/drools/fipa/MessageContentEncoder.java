@@ -12,12 +12,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.List;
 import org.drools.fipa.body.acts.AbstractMessageBody;
+import org.drools.fipa.body.acts.Agree;
 import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.acts.InformIf;
+import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.acts.QueryRef;
+import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Query;
+import org.drools.fipa.body.content.Rule;
+import org.drools.fipa.mappers.MyMapArgsEntryType;
 import org.drools.runtime.rule.Variable;
 
 /**
@@ -45,12 +51,27 @@ public class MessageContentEncoder {
                 ((InformIf) body).getProposition().setData(decoded);
                 ((InformIf) body).getProposition().setEncoded(false);
                 break;
+            case INFORM_REF:
+                decoded = MessageContentEncoder.decode(((InformRef) body).getReferences().getEncodedContent(), encoding);
+                ((InformRef) body).getReferences().setReferences((List<MyMapArgsEntryType>)decoded);
+                ((InformRef) body).getReferences().setEncoded(false);
+                break;    
             case QUERY_IF:
                 decoded = MessageContentEncoder.decode(((QueryIf) body).getProposition().getEncodedContent(), encoding);
                 ((QueryIf) body).getProposition().setData(decoded);
                 ((QueryIf) body).getProposition().setEncoded(false);
                 break;
 
+             case AGREE:
+                Object decodedAction = MessageContentEncoder.decode(((Agree) body).getAction().getEncodedContent(), encoding);
+                Object decodedCondition = MessageContentEncoder.decode(((Agree) body).getCondition().getEncodedContent(), encoding);
+                ((Agree) body).setAction((Action)decodedAction);
+                ((Agree) body).setCondition((Rule)decodedCondition);
+                ((Agree) body).getCondition().setEncoded(false);
+                ((Agree) body).getAction().setEncoded(false);
+                break;
+
+                
             case QUERY_REF:
                 String oldEncoded = ((QueryRef) body).getQuery().getEncodedContent();
                 decoded = MessageContentEncoder.decode(((QueryRef) body).getQuery().getEncodedContent(), encoding);
@@ -60,15 +81,15 @@ public class MessageContentEncoder {
                 ((QueryRef) body).getQuery().setEncoding(encoding);
 
                 String queryName = ((Query) decoded).getQueryName();
-                Object[] args = ((Query) decoded).getArgs();
+                List<Object> args = ((Query) decoded).getArgs();
 
                 if (args != null) {
-                    for (int i = 0; i < args.length; i++) {
-                        Object argument = args[i];
+                    for (int i = 0; i < args.size(); i++) {
+                        Object argument = args.get(i);
                         if (argument != null && argument instanceof Variable) {
                             Variable tmpVariable = Variable.v;
-
-                            args[i] = tmpVariable;
+                            args.set(i, tmpVariable);
+                           
                         }
                     }
                 }
@@ -96,6 +117,13 @@ public class MessageContentEncoder {
                 ((InformIf) body).getProposition().setEncoding(encoding);
                 ((InformIf) body).getProposition().setData(null);
                 break;
+            case INFORM_REF:
+                encoded = MessageContentEncoder.encode(((InformRef) body).getReferences(), encoding);
+                ((InformRef) body).getReferences().setEncodedContent(encoded);
+                ((InformRef) body).getReferences().setEncoded(true);
+                ((InformRef) body).getReferences().setEncoding(encoding);
+                ((InformRef) body).getReferences().setReferences(null);
+                break;
             case QUERY_IF:
                 encoded = MessageContentEncoder.encode(((QueryIf) body).getProposition().getData(), encoding);
                 ((QueryIf) body).getProposition().setEncodedContent(encoded);
@@ -108,15 +136,29 @@ public class MessageContentEncoder {
                 ((QueryRef) body).getQuery().setEncodedContent(encoded);
                 ((QueryRef) body).getQuery().setEncoded(true);
                 ((QueryRef) body).getQuery().setEncoding(encoding);
-                ((QueryRef) body).getQuery().setArgs(null);
+                ((QueryRef) body).getQuery().getArgs().clear();
+                ((QueryRef) body).getQuery().getReferences().clear();
                 ((QueryRef) body).getQuery().setQueryName("");
                 break;
+            case AGREE:
+                String encodedAction = MessageContentEncoder.encode(((Agree) body).getAction(), encoding);
+                String encodedCondition = MessageContentEncoder.encode(((Agree) body).getCondition(), encoding);
+                ((Agree) body).getAction().setEncoded(true);
+                ((Agree) body).getAction().setEncodedContent(encodedAction);
+                ((Agree) body).getAction().setEncoding(encoding);
+                ((Agree) body).getAction().setArgs(null);
+                ((Agree) body).getAction().getReferences().clear();
+                ((Agree) body).getCondition().setEncoded(true);
+                ((Agree) body).getCondition().setEncoding(encoding);
+                ((Agree) body).getCondition().setEncodedContent(encodedCondition);
+                
+                
+                break;    
 
         }
     }
 
     public static String encode(Object obj, Encodings encoding) {
-        System.out.println("Encoding!!!! - OBJECT" + obj);
         switch (encoding) {
             case BYTE:
                 try {

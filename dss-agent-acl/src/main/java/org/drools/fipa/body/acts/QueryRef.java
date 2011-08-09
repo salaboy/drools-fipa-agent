@@ -1,12 +1,13 @@
 package org.drools.fipa.body.acts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.Act;
-import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Query;
 
 @XmlType(name = "QueryRef", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class QueryRef extends AbstractMessageBody {
 
     
@@ -61,7 +62,7 @@ public class QueryRef extends AbstractMessageBody {
     }
 
 
-    public Object[] getArguments() {
-        return query.getFullArguments();
-    }
+//    public Object[] getArguments() {
+//        return query.getFullArguments();
+//    }
 }

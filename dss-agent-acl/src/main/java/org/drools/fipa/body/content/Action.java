@@ -2,60 +2,68 @@ package org.drools.fipa.body.content;
 
 
 
-import org.drools.base.DroolsQuery;
-import org.drools.runtime.rule.QueryResults;
-import org.drools.runtime.rule.Variable;
-import org.drools.runtime.rule.impl.NativeQueryResults;
 
 import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.Encodings;
+import org.drools.fipa.mappers.MyMapArgsEntryType;
+import org.drools.fipa.mappers.MyMapReferenceEntryType;
 
 @XmlType(name = "Action", namespace="http://content.body.fipa.drools.org/")
-//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Action extends AbstractMessageContent {
-
-    public static final String RETURN = "?return";
-//    @XmlElement(required = true)
+    
+    @XmlElement(required = true)
+    public String RETURN = "?return";
+    @XmlElement(required = true)
     private String actionName;
-//    @XmlElement(required = true)
-    private Map<Integer, String> references;
-//    @XmlElement(required = true)
-    private Map<String,Object> args;
-
+    
+//    @XmlJavaTypeAdapter(MyMapReferencesAdapter.class)
+//    private Map<Integer, String> references = new HashMap<Integer, String>();
+    @XmlElement(required = true)
+    public List<MyMapReferenceEntryType> references = new ArrayList<MyMapReferenceEntryType>(); 
+    
+    
+//    @XmlJavaTypeAdapter(MyMapArgsAdapter.class)
+//    private Map<String,Object> args = new HashMap<String, Object>();
+    @XmlElement(required = true)
+    private List<MyMapArgsEntryType> args = new ArrayList<MyMapArgsEntryType>();
+    
     public Action() {
     }
 
 
 
-    public Action(String name, Map<String,Object> args) {
-        boolean hasOutputArg = false;
-        this.actionName = name;
-        this.args = args == null ? Collections.<String, Object>emptyMap() : new LinkedHashMap<String,Object>(args);
-        this.references = new HashMap<Integer,String>();
-        if (args != null) {
-            int j = 0;
-            for (String key : args.keySet()) {
-                if (args.get(key) instanceof Variable) {
-                    references.put(j,key);
-                    hasOutputArg = true;
-                }
-                j++;
-            }
-        }
-        if (! hasOutputArg && args != null) {
-            references.put(this.args.size(),RETURN);
-            this.args.put(RETURN, Variable.v);
-        }
-
-    }
-
-    public Action(Action other) {
-        this.actionName = other.getActionName();
-        this.args = new LinkedHashMap<String,Object>(other.args);
-        this.references = new HashMap<Integer,String>(other.references);
-        this.setEncodedContent(other.getEncodedContent());
-    }
+//    public Action(String name, Map<String,Object> args) {
+//        boolean hasOutputArg = false;
+//        this.actionName = name;
+//        this.args = args == null ? Collections.<String, Object>emptyMap() : new LinkedHashMap<String,Object>(args);
+//        this.references = new HashMap<Integer,String>();
+//        if (args != null) {
+//            int j = 0;
+//            for (String key : args.keySet()) {
+//                if (args.get(key) instanceof Variable) {
+//                    references.put(j,key);
+//                    hasOutputArg = true;
+//                }
+//                j++;
+//            }
+//        }
+//        if (! hasOutputArg && args != null) {
+//            references.put(this.args.size(),RETURN);
+//            this.args.put(RETURN, Variable.v);
+//        }
+//
+//    }
+//
+//    public Action(Action other) {
+//        this.actionName = other.getActionName();
+//        this.args = new LinkedHashMap<String,Object>(other.args);
+//        this.references = new HashMap<Integer,String>(other.references);
+//        this.setEncodedContent(other.getEncodedContent());
+//    }
 
 
     @Override
@@ -63,7 +71,7 @@ public class Action extends AbstractMessageContent {
         return "Action{" +
                 "actionName='" + actionName + '\'' +
                 ", args=" + (args == null ? null : Arrays.asList(args)) +
-//                ", enc=" + getEncodedContent() +
+                ", encoded=" + getEncodedContent() +
                 '}';
     }
 
@@ -105,19 +113,15 @@ public class Action extends AbstractMessageContent {
 //        }
 //    }
 
-
-    public Ref getReferences(QueryResults results) {
-        Map<String,Object> map = new HashMap<String,Object>();
-        org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
-            DroolsQuery query = (DroolsQuery) inner.get(0).get(-1);
-
-        for (Integer index : references.keySet()) {
-            map.put(references.get(index), query.getElements()[index]);
-        }
-
-        return new Ref(map);
+    public List<MyMapReferenceEntryType> getReferences() {
+        return references;
     }
 
+    public void setReferences(List<MyMapReferenceEntryType> references) {
+        this.references = references;
+    }
+
+    
 
     public String getActionName() {
         return actionName;
@@ -127,16 +131,21 @@ public class Action extends AbstractMessageContent {
         this.actionName = actionName;
     }
 
-    public Map<String, Object> getArgs() {
+    public List<MyMapArgsEntryType> getArgs() {
         return args;
     }
 
-    public void setArgs(Map<String, Object> args) {
+    public void setArgs(List<MyMapArgsEntryType> args) {
         this.args = args;
     }
 
-    public Object[] getArgsArray() {
-//        return args != null ? args.values().toArray() : new Object[0];
-        return args.values().toArray();
+   
+
+    public String getRETURN() {
+        return RETURN;
     }
+
+    public void setRETURN(String RETURN) {
+        this.RETURN = RETURN;
+    } 
 }

@@ -93,24 +93,25 @@ public class Reject extends AbstractMessageBody {
         this.cause = cause;
     }
 
-    public Object[] getArguments() {
-
-        Object[] ans = new Object[proposal.getArgs().size() + call.getArgs().size() + 3];
-
-        Object[] proposalParams = proposal.getArgs().values().toArray();
-        Object[] callParams = call.getArgs().values().toArray();
-
-        ans[0] = call.getActionName();
-        for (int j = 0; j < callParams.length; j++) {
-            ans[j + 1] = callParams[j];
-        }
-        ans[callParams.length + 1] = proposal.getActionName();
-        for (int j = 0; j < proposalParams.length; j++) {
-            ans[j + 1] = callParams[j];
-        }
-
-
-        ans[ans.length - 1] = cause.getData();
-        return ans;
-    }
+// THIS METHOD SHOULD GO TO A HELPER
+//    public Object[] getArguments() {
+//
+//        Object[] ans = new Object[proposal.getArgs().size() + call.getArgs().size() + 3];
+//
+//        Object[] proposalParams = proposal.getArgs().values().toArray();
+//        Object[] callParams = call.getArgs().values().toArray();
+//
+//        ans[0] = call.getActionName();
+//        for (int j = 0; j < callParams.length; j++) {
+//            ans[j + 1] = callParams[j];
+//        }
+//        ans[callParams.length + 1] = proposal.getActionName();
+//        for (int j = 0; j < proposalParams.length; j++) {
+//            ans[j + 1] = callParams[j];
+//        }
+//
+//
+//        ans[ans.length - 1] = cause.getData();
+//        return ans;
+//    }
 }

@@ -1,3 +1,5 @@
+
+import org.drools.fipa.body.acts.InformIf;
 import mock.MockFact;
 import org.drools.fipa.*;
 import org.drools.fipa.body.acts.InformRef;
@@ -12,19 +14,16 @@ import org.drools.runtime.rule.Variable;
 import org.junit.*;
 
 import java.util.*;
+import org.drools.fipa.mappers.MyMapArgsEntryType;
 
 import static org.junit.Assert.*;
 
 public class TestAgent {
 
-
-
     private static DroolsAgent mainAgent;
     private static DroolsAgent clientAgent;
-
     private static MockResponseInformer mainResponseInformer;
     private static MockResponseInformer clientResponseInformer;
-
 
     @Before
     public void createAgents() {
@@ -36,9 +35,9 @@ public class TestAgent {
         mainConfig.setAgentId("Mock Test Agent");
         mainConfig.setChangeset("mainTestAgent_changeset.xml");
         mainConfig.setResponseInformer(mainResponseInformer);
-        DroolsAgentConfiguration.SubSessionDescriptor subDescr1 = new DroolsAgentConfiguration.SubSessionDescriptor("session1","sub1.xml","NOT_USED_YET");
+        DroolsAgentConfiguration.SubSessionDescriptor subDescr1 = new DroolsAgentConfiguration.SubSessionDescriptor("session1", "sub1.xml", "NOT_USED_YET");
         mainConfig.addSubSession(subDescr1);
-        DroolsAgentConfiguration.SubSessionDescriptor subDescr2 = new DroolsAgentConfiguration.SubSessionDescriptor("session2","sub2.xml","NOT_USED_YET");
+        DroolsAgentConfiguration.SubSessionDescriptor subDescr2 = new DroolsAgentConfiguration.SubSessionDescriptor("session2", "sub2.xml", "NOT_USED_YET");
         mainConfig.addSubSession(subDescr2);
         mainAgent = DroolsAgentFactory.getInstance().spawn(mainConfig);
         assertNotNull(mainAgent);
@@ -53,8 +52,6 @@ public class TestAgent {
         assertNotNull(clientAgent);
     }
 
- 
-
     @After
     public void cleanUp() {
         if (mainAgent != null) {
@@ -66,19 +63,13 @@ public class TestAgent {
         }
     }
 
-
-
-
-
-
-
     @Test
     public void testSimpleInform() {
-        MockFact fact = new MockFact("patient1",18);
+        MockFact fact = new MockFact("patient1", 18);
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        ACLMessage info = factory.newInformMessage("me","you",fact);
-            mainAgent.tell(info);
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
 
         assertNull(mainResponseInformer.getResponses(info));
         StatefulKnowledgeSession target = mainAgent.getInnerSession("session1");
@@ -86,112 +77,96 @@ public class TestAgent {
 
     }
 
-
-
     @Test
     public void testInformAsTrigger() {
-        MockFact fact = new MockFact("patient1",22);
+        MockFact fact = new MockFact("patient1", 22);
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
 
 
-        ACLMessage info = factory.newInformMessage("me","you",fact);
-            mainAgent.tell(info);
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
 
 
         assertNull(mainResponseInformer.getResponses(info));
         StatefulKnowledgeSession target = mainAgent.getInnerSession("session2");
-        for (Object o : target.getObjects())
+        for (Object o : target.getObjects()) {
             System.err.println("\t Inform-Trigger test : " + o);
+        }
         assertTrue(target.getObjects().contains(new Double(22.0)));
         assertTrue(target.getObjects().contains(new Integer(484)));
     }
 
-
-
     @Test
     public void testQueryIf() {
-        MockFact fact = new MockFact("patient1",18);
+        MockFact fact = new MockFact("patient1", 18);
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        ACLMessage info = factory.newInformMessage("me","you",fact);
-            mainAgent.tell(info);
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
 
-        ACLMessage qryif = factory.newQueryIfMessage("me","you",fact);
+        ACLMessage qryif = factory.newQueryIfMessage("me", "you", fact);
         assertNull(mainResponseInformer.getResponses(qryif));
-            mainAgent.tell(qryif);
+        mainAgent.tell(qryif);
 
 
         assertNotNull(mainResponseInformer.getResponses(qryif));
         assertEquals(1, mainResponseInformer.getResponses(qryif).size());
 
         ACLMessage answer = mainResponseInformer.getResponses(qryif).get(0);
-            //answer.getBody().decode(answer.getEncoding());
-            MessageContentEncoder.decodeBody(answer.getBody(), answer.getEncoding());
-            assertEquals(Act.INFORM_IF,answer.getPerformative());
-            assertEquals(answer.getBody().getArguments()[0],fact);
+        //answer.getBody().decode(answer.getEncoding());
+        MessageContentEncoder.decodeBody(answer.getBody(), answer.getEncoding());
+        assertEquals(Act.INFORM_IF, answer.getPerformative());
+        assertEquals(((InformIf) answer.getBody()).getProposition().getData(), fact);
     }
-
-
-
-
 
     @Test
     public void testQueryRef() {
-        MockFact fact = new MockFact("patient1",18);
+        MockFact fact = new MockFact("patient1", 18);
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        ACLMessage info = factory.newInformMessage("me","you",fact);
-            mainAgent.tell(info);
-
-        ACLMessage qryref = factory.newQueryRefMessage("me","you",new Query("ageOfPatient", new Object[] {Query.variable("?mock"), "patient1", Query.variable("?age")} ));
-            mainAgent.tell(qryref);
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
+        Query query = MessageContentFactory.newQueryContent("ageOfPatient", new Object[]{MessageContentHelper.variable("?mock"), "patient1", MessageContentHelper.variable("?age")});
+        ACLMessage qryref = factory.newQueryRefMessage("me", "you", query);
+        mainAgent.tell(qryref);
 
         assertNotNull(mainResponseInformer.getResponses(qryref));
-        assertEquals(2,mainResponseInformer.getResponses(qryref).size());
+        assertEquals(2, mainResponseInformer.getResponses(qryref).size());
 
         ACLMessage answer = mainResponseInformer.getResponses(qryref).get(0);
-        assertEquals(Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE, answer.getPerformative());
         ACLMessage answer2 = mainResponseInformer.getResponses(qryref).get(1);
-        assertEquals(Act.INFORM_REF,answer2.getPerformative());
+        assertEquals(Act.INFORM_REF, answer2.getPerformative());
     }
-
-
-
-
-
 
     @Ignore
     public void testRequest() {
 
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        Map<String,Object> args = new LinkedHashMap<String,Object>();
-        args.put("x",new Double(36));
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
+        args.put("x", new Double(36));
 
-
-        ACLMessage req = factory.newRequestMessage("me","you",new Action("squareRoot", args));
+        Action action = MessageContentFactory.newActionContent("squareRoot", args);
+        ACLMessage req = factory.newRequestMessage("me", "you", action);
 
 
 
         mainAgent.tell(req);
 
         assertNotNull(mainResponseInformer.getResponses(req));
-        assertEquals(2,mainResponseInformer.getResponses(req).size());
+        assertEquals(2, mainResponseInformer.getResponses(req).size());
 
         ACLMessage answer = mainResponseInformer.getResponses(req).get(0);
-        assertEquals(Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE, answer.getPerformative());
         ACLMessage answer2 = mainResponseInformer.getResponses(req).get(1);
-        assertEquals(Act.INFORM,answer2.getPerformative());
+        assertEquals(Act.INFORM, answer2.getPerformative());
 
-     //   assertTrue(answer2.getBody().getEncodedContent().contains("6.0"));
+        //   assertTrue(answer2.getBody().getEncodedContent().contains("6.0"));
 
     }
 
-
-
-
- 
     @Ignore
     public void testRequestWhen() {
 
@@ -199,20 +174,22 @@ public class TestAgent {
 
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        Map<String,Object> args = new LinkedHashMap<String,Object>();
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
         args.put("x", in);
 
 
-        Rule condition = new Rule("String( this == \"actionTrigger\" || this == \"actionTrigger2\")");
+        Rule condition = new Rule();
+        condition.setDrl("String( this == \"actionTrigger\" || this == \"actionTrigger2\")");
 
-        ACLMessage req = factory.newRequestWhenMessage("me", "you", new Action("squareRoot", args), condition);
+        Action action = MessageContentFactory.newActionContent("squareRoot", args);
+        ACLMessage req = factory.newRequestWhenMessage("me", "you", action, condition);
         mainAgent.tell(req);
 
-        ACLMessage info = factory.newInformMessage("me","you",new String("actionTrigger"));
+        ACLMessage info = factory.newInformMessage("me", "you", new String("actionTrigger"));
         mainAgent.tell(info);
 
 
-        ACLMessage info2 = factory.newInformMessage("me","you",new String("actionTrigger2"));
+        ACLMessage info2 = factory.newInformMessage("me", "you", new String("actionTrigger2"));
         mainAgent.tell(info2);
 
 
@@ -226,11 +203,6 @@ public class TestAgent {
 
     }
 
-
-
-
-
-    
     @Ignore
     public void testRequestWhenever() {
 
@@ -238,20 +210,22 @@ public class TestAgent {
 
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        Map<String,Object> args = new LinkedHashMap<String,Object>();
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
         args.put("x", in);
 
 
-        Rule condition = new Rule("String( this == \"actionTrigger\" || this == \"actionTrigger2\")");
+        Rule condition = new Rule();
+        condition.setDrl("String( this == \"actionTrigger\" || this == \"actionTrigger2\")");
 
-        ACLMessage req = factory.newRequestWheneverMessage("me", "you", new Action("squareRoot", args), condition);
+        Action action = MessageContentFactory.newActionContent("squareRoot", args);
+        ACLMessage req = factory.newRequestWheneverMessage("me", "you", action, condition);
         mainAgent.tell(req);
 
-        ACLMessage info = factory.newInformMessage("me","you",new String("actionTrigger"));
+        ACLMessage info = factory.newInformMessage("me", "you", new String("actionTrigger"));
         mainAgent.tell(info);
 
 
-        ACLMessage info2 = factory.newInformMessage("me","you",new String("actionTrigger2"));
+        ACLMessage info2 = factory.newInformMessage("me", "you", new String("actionTrigger2"));
         mainAgent.tell(info2);
 
 
@@ -259,119 +233,106 @@ public class TestAgent {
         QueryResults ans = s2.getQueryResults("squareRoot", in, Variable.v);
         assertEquals(2, ans.size());
         Iterator<QueryResultsRow> iter = ans.iterator();
-        assertEquals(6.0,(Double) iter.next().get("$return"),1e-6);
-        assertEquals(6.0,(Double) iter.next().get("$return"),1e-6);
+        assertEquals(6.0, (Double) iter.next().get("$return"), 1e-6);
+        assertEquals(6.0, (Double) iter.next().get("$return"), 1e-6);
 
 
         fail("INCOMPLETE TEST : Needs open queries to send answer back with a message, but keep trigger rule!");
 
     }
 
-
-
-
-
-
-
     @Ignore
     public void testRequestWithMultipleOutputs() {
 
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        Map<String,Object> args = new LinkedHashMap<String,Object>();
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
         Double x = 32.0;
 
-        args.put("x",x);
-        args.put("?y",Variable.v);
-        args.put("?inc",Variable.v);
+        args.put("x", x);
+        args.put("?y", Variable.v);
+        args.put("?inc", Variable.v);
 
 
-
-        ACLMessage req = factory.newRequestMessage("me","you",new Action("randomSum", args));
+        Action action = MessageContentFactory.newActionContent("randomSum", args);
+        ACLMessage req = factory.newRequestMessage("me", "you", action);
 
 
 
         mainAgent.tell(req);
 
         assertNotNull(mainResponseInformer.getResponses(req));
-        assertEquals(2,mainResponseInformer.getResponses(req).size());
+        assertEquals(2, mainResponseInformer.getResponses(req).size());
 
         ACLMessage answer = mainResponseInformer.getResponses(req).get(0);
-        assertEquals(Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE, answer.getPerformative());
         ACLMessage answer2 = mainResponseInformer.getResponses(req).get(1);
-        assertEquals(Act.INFORM_REF,answer2.getPerformative());
+        assertEquals(Act.INFORM_REF, answer2.getPerformative());
 
         //answer2.getBody().decode(answer2.getEncoding());
         MessageContentEncoder.decodeBody(answer2.getBody(), answer2.getEncoding());
-        assertEquals(InformRef.class,answer2.getBody().getClass());
+        assertEquals(InformRef.class, answer2.getBody().getClass());
 
         Ref ref = ((InformRef) answer2.getBody()).getReferences();
         assertNotNull(ref.getReferences());
+        boolean containsInc = false;
+        boolean containsY = false;
+        for(MyMapArgsEntryType entry : ref.getReferences()){
+            if(entry.getValue().toString().contains("?inc")){
+                 containsInc = true;
+            }
+            if(entry.getValue().toString().contains("?y")){
+                 containsInc = true;
+            }
+        }
+        assertTrue(containsInc);
+        assertTrue(containsY);
+        assertEquals(Double.class, ref.getReferences().get(0).getValue().getClass());
+        assertEquals(Double.class, ref.getReferences().get(1).getValue().getClass());
 
-        assertTrue(ref.getReferences().containsKey("?inc"));
-        assertTrue(ref.getReferences().containsKey("?y"));
-        assertEquals(Double.class, ref.getReferences().get("?inc").getClass());
-        assertEquals(Double.class, ref.getReferences().get("?y").getClass());
+        Double z = (Double) ref.getReferences().get(0).getValue();
+        Double y = (Double) ref.getReferences().get(1).getValue();
 
-        Double z = (Double) ref.getReferences().get("?inc");
-        Double y = (Double) ref.getReferences().get("?y");
-
-        assertEquals(y, x + z,1e-6);
+        assertEquals(y, x + z, 1e-6);
 
     }
 
-
-
-
-
-
-
     @Test
     public void testSimpleInformInNewSession() {
-        MockFact fact = new MockFact("patient3",18);
-        MockFact fact2 = new MockFact("patient3",44);
+        MockFact fact = new MockFact("patient3", 18);
+        MockFact fact2 = new MockFact("patient3", 44);
 
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        ACLMessage info = factory.newInformMessage("me","you",fact);
-            mainAgent.tell(info);
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
 
         assertNull(mainResponseInformer.getResponses(info));
         StatefulKnowledgeSession target = mainAgent.getInnerSession("patient3");
         assertNotNull(target);
         assertTrue(target.getObjects().contains(fact));
 
-        ACLMessage info2 = factory.newInformMessage("me","you",fact2);
-            mainAgent.tell(info2);
+        ACLMessage info2 = factory.newInformMessage("me", "you", fact2);
+        mainAgent.tell(info2);
 
         assertTrue(target.getObjects().contains(fact2));
 
     }
-
-
-
-
 }
 
+class MockResponseInformer implements DroolsAgentResponseInformer {
 
-
-
-
-
-class MockResponseInformer implements DroolsAgentResponseInformer{
-
-    private Map<ACLMessage,List<ACLMessage>> responses = new HashMap<ACLMessage, List<ACLMessage>>();
+    private Map<ACLMessage, List<ACLMessage>> responses = new HashMap<ACLMessage, List<ACLMessage>>();
 
     public synchronized void informResponse(ACLMessage originalMessage, ACLMessage response) {
-        if (!responses.containsKey(originalMessage)){
+        if (!responses.containsKey(originalMessage)) {
             responses.put(originalMessage, new ArrayList<ACLMessage>());
         }
 
         responses.get(originalMessage).add(response);
     }
 
-    public List<ACLMessage> getResponses(ACLMessage originalMessage){
+    public List<ACLMessage> getResponses(ACLMessage originalMessage) {
         return this.responses.get(originalMessage);
     }
-
 }

@@ -36,7 +36,5 @@ public abstract class AbstractMessageContent implements Serializable {
         this.encoded = encoded;
     }
     
-    public static NamedVariable variable(String ref) {
-        return new NamedVariable(ref);
-    }
+   
 }

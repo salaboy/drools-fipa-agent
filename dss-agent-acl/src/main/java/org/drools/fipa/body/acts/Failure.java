@@ -4,8 +4,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.Act;
-import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Info;
 
@@ -22,10 +20,10 @@ public class Failure extends AbstractMessageBody {
     public Failure() {
     }
 
-    public Failure(Action action, Info cause) {
-        this.action = action;
-        this.cause = cause;
-    }
+//    public Failure(Action action, Info cause) {
+//        this.action = action;
+//        this.cause = cause;
+//    }
 
   
 
@@ -82,15 +80,15 @@ public class Failure extends AbstractMessageBody {
     }
 
  
-
-    public Object[] getArguments() {
-        Object[] ans = new Object[action.getArgs().size() + 2];
-        Object[] actionParams = action.getArgs().values().toArray();
-        ans[0] = action.getActionName();
-        for (int j = 0; j < actionParams.length; j++) {
-            ans[j + 1] = actionParams[j];
-        }
-        ans[ans.length - 1] = cause.getData();
-        return ans;
-    }
+// THIS METHOD SHOUDL GO TO A HELPER !!!
+//    public Object[] getArguments() {
+//        Object[] ans = new Object[action.getArgs().size() + 2];
+//        Object[] actionParams = action.getArgs().values().toArray();
+//        ans[0] = action.getActionName();
+//        for (int j = 0; j < actionParams.length; j++) {
+//            ans[j + 1] = actionParams[j];
+//        }
+//        ans[ans.length - 1] = cause.getData();
+//        return ans;
+//    }
 }

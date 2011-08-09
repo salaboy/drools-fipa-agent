@@ -1,12 +1,14 @@
 package org.drools.fipa.body.content;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.Encodings;
 
 @XmlType(name = "Rule", namespace="http://content.body.fipa.drools.org/")
-//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Rule extends AbstractMessageContent {
-  //  @XmlElement(required = true)
+    @XmlElement(required = true)
     private String drl;
 
     public Rule() {
@@ -14,9 +16,9 @@ public class Rule extends AbstractMessageContent {
 
     
     
-    public Rule(String drl) {
-        this.drl = drl;
-    }
+//    public Rule(String drl) {
+//        this.drl = drl;
+//    }
 
     @Override
     public String toString() {
@@ -50,14 +52,7 @@ public class Rule extends AbstractMessageContent {
         this.drl = drl;
     }
 
-    public void encode(Encodings encoding) {
-
-    }
-
-
-    public void decode(Encodings encoding) {
-
-    }
+  
 
 
 }

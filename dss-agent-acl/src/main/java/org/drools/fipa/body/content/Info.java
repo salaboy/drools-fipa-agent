@@ -10,9 +10,9 @@ public class Info extends AbstractMessageContent  {
     public Info() {
     }
     
-    public Info(Object data) {
-        this.data = data;
-    }
+//    public Info(Object data) {
+//        this.data = data;
+//    }
 
 
     @Override

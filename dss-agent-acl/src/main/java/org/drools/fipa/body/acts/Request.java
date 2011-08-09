@@ -58,16 +58,16 @@ public class Request extends AbstractMessageBody {
     public void setAction(Action action) {
         this.action = action;
     }
-
-    public Object[] getArguments() {
-        Object[] ans = new Object[action.getArgs().size()+2];
-        Object[] actionParams = action.getArgs().values().toArray();
-        ans[0] = action.getActionName();
-        for (int j = 0; j < actionParams.length; j++) {
-            ans[j+1] = actionParams[j];
-        }
-        return ans;
-    }
+// THIS METHOD SHOULD GO TO A HELPER
+//    public Object[] getArguments() {
+//        Object[] ans = new Object[action.getArgs().size()+2];
+//        Object[] actionParams = action.getArgs().values().toArray();
+//        ans[0] = action.getActionName();
+//        for (int j = 0; j < actionParams.length; j++) {
+//            ans[j+1] = actionParams[j];
+//        }
+//        return ans;
+//    }
 
 
 }

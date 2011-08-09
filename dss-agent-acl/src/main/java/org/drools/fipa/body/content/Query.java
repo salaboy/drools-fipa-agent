@@ -4,50 +4,53 @@ package org.drools.fipa.body.content;
 
 
 
-import org.drools.base.DroolsQuery;
-import org.drools.runtime.rule.QueryResults;
-import org.drools.runtime.rule.impl.NativeQueryResults;
 
 import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.Encodings;
-import org.drools.runtime.rule.Variable;
+import org.drools.fipa.mappers.MyMapReferenceEntryType;
 
 @XmlType(name = "Query", namespace="http://content.body.fipa.drools.org/")
-//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Query extends AbstractMessageContent  {
-  //  @XmlElement(required = true)
+    @XmlElement(required = true)
     private String queryName;
-   // @XmlElement(required = true)
-    private Map<Integer, String> references;
-   // @XmlElement(required = true)
-    private Object[] args;
+    
+//    @XmlJavaTypeAdapter(MyMapReferencesAdapter.class)
+//    private Map<Integer, String> references = new HashMap<Integer, String>();
+    @XmlElement(required = true)
+    public List<MyMapReferenceEntryType> references = new ArrayList<MyMapReferenceEntryType>(); 
+    
+    @XmlElement(required = true)
+    private List<Object> args = new ArrayList<Object>();
 
     public Query() {
     }
 
     
-    public Query(String queryName) {
-        this.queryName = queryName;
-        this.args = new Object[0];
-    }
-
-    public Query(String queryName, Object... args) {
-        this.queryName = queryName;
-        this.args = args;
-
-        references = new HashMap<Integer,String>();
-        for (int j = 0; j < args.length; j++) {
-            if (args[j] instanceof NamedVariable) {
-                NamedVariable var = (NamedVariable) args[j];
-                this.args[j] = var.getVariable();
-                references.put(j, var.getRef());
-            }
-//            else {
-//                this.args.add(j,args[j]);
+//    public Query(String queryName) {
+//        this.queryName = queryName;
+//        this.args = new Object[0];
+//    }
+//
+//    public Query(String queryName, Object... args) {
+//        this.queryName = queryName;
+//        this.args = args;
+//
+//        references = new HashMap<Integer,String>();
+//        for (int j = 0; j < args.length; j++) {
+//            if (args[j] instanceof NamedVariable) {
+//                NamedVariable var = (NamedVariable) args[j];
+//                this.args[j] = var.getVariable();
+//                references.put(j, var.getRef());
 //            }
-        }
-    }
+////            else {
+////                this.args.add(j,args[j]);
+////            }
+//        }
+//    }
 
     @Override
     public String toString() {
@@ -87,25 +90,20 @@ public class Query extends AbstractMessageContent  {
         this.queryName = queryName;
     }
 
-    public Object[] getArgs() {
+    public List<Object> getArgs() {
         return args;
     }
 
-    public void setArgs(Object[] args) {
+    public void setArgs(List<Object> args) {
         this.args = args;
     }
 
+   
 
 
+    
 
-    public Object[] getFullArguments() {
-        Object[] full = new Object[args.length+1];
-        full[0] = queryName;
-        for (int j = 0; j < args.length; j++) {
-            full[j+1] = args[j];
-        }
-        return full;
-    }
+
 
 //    public void encode(Encodings encoding) {
 //        if (! isEncoded()) {
@@ -141,18 +139,34 @@ public class Query extends AbstractMessageContent  {
 
 
 
+    //THESE METHODS SHOULD GO TO THE HELPERS
+//    public Object[] getFullArguments() {
+//        Object[] full = new Object[args.length+1];
+//        full[0] = queryName;
+//        for (int j = 0; j < args.length; j++) {
+//            full[j+1] = args[j];
+//        }
+//        return full;
+//    }
 
+//    public Ref getReferences(QueryResults results) {
+//       Map<String,Object> map = new HashMap<String,Object>();
+//        org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
+//            DroolsQuery query = (DroolsQuery) inner.get(0).get(-1);
+//
+//        for (Integer index : references.keySet()) {
+//            map.put(references.get(index), query.getElements()[index]);
+//        }
+//
+//        return new Ref(map);
+//    }
 
-    public Ref getReferences(QueryResults results) {
-       Map<String,Object> map = new HashMap<String,Object>();
-        org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
-            DroolsQuery query = (DroolsQuery) inner.get(0).get(-1);
+    public List<MyMapReferenceEntryType> getReferences() {
+        return references;
+    }
 
-        for (Integer index : references.keySet()) {
-            map.put(references.get(index), query.getElements()[index]);
-        }
-
-        return new Ref(map);
+    public void setReferences(List<MyMapReferenceEntryType> references) {
+        this.references = references;
     }
 
 

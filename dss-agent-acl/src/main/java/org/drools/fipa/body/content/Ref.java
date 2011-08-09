@@ -1,23 +1,29 @@
 package org.drools.fipa.body.content;
 
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.Encodings;
+import org.drools.fipa.mappers.MyMapArgsEntryType;
 
 @XmlType(name = "Ref", namespace="http://content.body.fipa.drools.org/")
-//@XmlAccessorType(XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Ref extends AbstractMessageContent {
-  //  @XmlElement(required = true)
-    private Map<String,Object> references;
+  
+   @XmlElement(required = true)
+    public List<MyMapArgsEntryType> references = new ArrayList<MyMapArgsEntryType>(); 
+   
 
     public Ref() {
     }
 
     
-    public Ref(Map<String, Object> references) {
-        this.references = references;
-    }
+//    public Ref(Map<String, Object> references) {
+//        this.references = references;
+//    }
 
     @Override
     public boolean equals(Object o) {
@@ -44,13 +50,7 @@ public class Ref extends AbstractMessageContent {
                 '}';
     }
 
-    public Map<String, Object> getReferences() {
-        return references;
-    }
-
-    public void setReferences(Map<String, Object> references) {
-        this.references = references;
-    }
+   
 
 //    public void encode(Encodings encoding) {
 //        if (! isEncoded()) {
@@ -67,6 +67,14 @@ public class Ref extends AbstractMessageContent {
 //            setEncoded(false);
 //        }
 //    }
+
+    public List<MyMapArgsEntryType> getReferences() {
+        return references;
+    }
+
+    public void setReferences(List<MyMapArgsEntryType> references) {
+        this.references = references;
+    }
 
 
 }

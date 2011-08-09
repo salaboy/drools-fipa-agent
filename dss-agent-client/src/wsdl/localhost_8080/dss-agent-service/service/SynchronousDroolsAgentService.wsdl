@@ -1,5 +1,20 @@
 <?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="SynchronousDroolsAgentServiceImplService" targetNamespace="http://dssagentserver.drools.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://dssagentserver.drools.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
+<xs:schema targetNamespace="http://mappers.fipa.drools.org/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:complexType name="MyMapReferenceEntryType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="key" type="xs:int"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+<xs:complexType name="MyMapArgsEntryType">
+    <xs:sequence>
+      <xs:any namespace="##other" processContents="skip"/>
+    </xs:sequence>
+    <xs:attribute name="key" type="xs:string"/>
+  </xs:complexType>
+</xs:schema>
 <xs:schema targetNamespace="http://fipa.drools.org/" version="1.0" xmlns:ns1="http://acts.body.fipa.drools.org/" xmlns:tns="http://fipa.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:import namespace="http://acts.body.fipa.drools.org/"/>
 <xs:complexType name="ACLMessage">
@@ -86,17 +101,9 @@
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
-<xs:schema targetNamespace="http://content.body.fipa.drools.org/" version="1.0" xmlns:ns1="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema targetNamespace="http://content.body.fipa.drools.org/" version="1.0" xmlns:ns1="http://dssagentserver.drools.org/" xmlns:ns2="http://mappers.fipa.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:import namespace="http://dssagentserver.drools.org/"/>
-<xs:complexType name="Rule">
-    <xs:complexContent>
-      <xs:extension base="ns1:abstractMessageContent">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="drl" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+<xs:import namespace="http://mappers.fipa.drools.org/"/>
 <xs:complexType name="Info">
     <xs:complexContent>
       <xs:extension base="ns1:abstractMessageContent">
@@ -110,21 +117,39 @@
     <xs:complexContent>
       <xs:extension base="ns1:abstractMessageContent">
         <xs:sequence>
-          <xs:element minOccurs="0" name="actionName" type="xs:string"/>
-          <xs:element name="args">
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
-                  <xs:complexType>
-                    <xs:sequence>
-                      <xs:element minOccurs="0" name="key" type="xs:string"/>
-                      <xs:element minOccurs="0" name="value" type="xs:anyType"/>
-                    </xs:sequence>
-                  </xs:complexType>
-                </xs:element>
-              </xs:sequence>
-            </xs:complexType>
-          </xs:element>
+          <xs:element name="RETURN" type="xs:string"/>
+          <xs:element name="actionName" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" name="references" type="ns2:MyMapReferenceEntryType"/>
+          <xs:element maxOccurs="unbounded" name="args" type="ns2:MyMapArgsEntryType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Rule">
+    <xs:complexContent>
+      <xs:extension base="ns1:abstractMessageContent">
+        <xs:sequence>
+          <xs:element name="drl" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Ref">
+    <xs:complexContent>
+      <xs:extension base="ns1:abstractMessageContent">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" name="references" type="ns2:MyMapArgsEntryType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Query">
+    <xs:complexContent>
+      <xs:extension base="ns1:abstractMessageContent">
+        <xs:sequence>
+          <xs:element name="queryName" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" name="references" type="ns2:MyMapReferenceEntryType"/>
+          <xs:element maxOccurs="unbounded" name="args" type="xs:anyType"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -166,6 +191,15 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+<xs:complexType name="InformIf">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="proposition" type="ns2:Info"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 <xs:complexType name="Failure">
     <xs:complexContent>
       <xs:extension base="tns:AbstractMessageBody">
@@ -176,11 +210,20 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="InformIf">
+<xs:complexType name="InformRef">
     <xs:complexContent>
       <xs:extension base="tns:AbstractMessageBody">
         <xs:sequence>
-          <xs:element name="proposition" type="ns2:Info"/>
+          <xs:element name="references" type="ns2:Ref"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="QueryRef">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="query" type="ns2:Query"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

@@ -2,7 +2,6 @@ package org.drools.fipa.body.acts;
 
 import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.Act;
-import org.drools.fipa.Encodings;
 
 /**
  * Interface for ACL Message body types, i.e. communicative acts
