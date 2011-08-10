@@ -10,9 +10,9 @@
   </xs:complexType>
 <xs:complexType name="MyMapArgsEntryType">
     <xs:sequence>
-      <xs:any namespace="##other" processContents="skip"/>
+      <xs:element name="key" type="xs:string"/>
+      <xs:element name="value" type="xs:anyType"/>
     </xs:sequence>
-    <xs:attribute name="key" type="xs:string"/>
   </xs:complexType>
 </xs:schema>
 <xs:schema targetNamespace="http://fipa.drools.org/" version="1.0" xmlns:ns1="http://acts.body.fipa.drools.org/" xmlns:tns="http://fipa.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -125,11 +125,13 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="Rule">
+<xs:complexType name="Query">
     <xs:complexContent>
       <xs:extension base="ns1:abstractMessageContent">
         <xs:sequence>
-          <xs:element name="drl" type="xs:string"/>
+          <xs:element name="queryName" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" name="references" type="ns2:MyMapReferenceEntryType"/>
+          <xs:element maxOccurs="unbounded" name="args" type="xs:anyType"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -143,13 +145,11 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="Query">
+<xs:complexType name="Rule">
     <xs:complexContent>
       <xs:extension base="ns1:abstractMessageContent">
         <xs:sequence>
-          <xs:element name="queryName" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" name="references" type="ns2:MyMapReferenceEntryType"/>
-          <xs:element maxOccurs="unbounded" name="args" type="xs:anyType"/>
+          <xs:element name="drl" type="xs:string"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -172,12 +172,12 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="Agree">
+<xs:complexType name="Failure">
     <xs:complexContent>
       <xs:extension base="tns:AbstractMessageBody">
         <xs:sequence>
           <xs:element name="action" type="ns2:Action"/>
-          <xs:element name="condition" type="ns2:Rule"/>
+          <xs:element name="cause" type="ns2:Info"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -191,6 +191,24 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+<xs:complexType name="QueryRef">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="query" type="ns2:Query"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="Request">
+    <xs:complexContent>
+      <xs:extension base="tns:AbstractMessageBody">
+        <xs:sequence>
+          <xs:element name="action" type="ns2:Action"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 <xs:complexType name="InformIf">
     <xs:complexContent>
       <xs:extension base="tns:AbstractMessageBody">
@@ -200,12 +218,12 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="Failure">
+<xs:complexType name="Agree">
     <xs:complexContent>
       <xs:extension base="tns:AbstractMessageBody">
         <xs:sequence>
           <xs:element name="action" type="ns2:Action"/>
-          <xs:element name="cause" type="ns2:Info"/>
+          <xs:element name="condition" type="ns2:Rule"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -215,15 +233,6 @@
       <xs:extension base="tns:AbstractMessageBody">
         <xs:sequence>
           <xs:element name="references" type="ns2:Ref"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="QueryRef">
-    <xs:complexContent>
-      <xs:extension base="tns:AbstractMessageBody">
-        <xs:sequence>
-          <xs:element name="query" type="ns2:Query"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

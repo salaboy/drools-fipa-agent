@@ -2,7 +2,7 @@ package org.drools.test;
 
 import mock.MockFact;
 import org.drools.fipa.body.content.Action;
-
+import org.drools.fipa.mappers.MyMapArgsEntryType;
 
 
 rule "Call Interface"
@@ -48,12 +48,12 @@ end
 rule "Action_Request : squareRoot"
 when
     $a : Action( actionName == "squareRoot",
-                 $x : args.get(0) )
+                 $x : this["x"]  )
 
 then
     retract($a);
     System.out.println("Executing square root");
-    insert( new MathResponse((Double) $x.getValue(), Math.sqrt( (Double) $x.getValue()), 0.0) );
+    insert( new MathResponse((Double) $x, Math.sqrt( (Double) $x), 0.0) );
 end
 
 query squareRoot( Double $x, Double $return  )
@@ -69,11 +69,11 @@ end
 rule "Action_Request : randomSum"
 when
     $a : Action( actionName == "randomSum",
-                 $x : args.get(0) )
+                 $x : this["x"]  )
 
 then
     retract($a);
-    Double x = (Double) $x.getValue();
+    Double x = (Double) $x;
     Double z = Math.random();
     System.out.println("ACTING II " + x + "   " +z + "  " );
     insert( new MathResponse(x, x+z, z ) );

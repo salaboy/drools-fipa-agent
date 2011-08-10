@@ -4,6 +4,9 @@
  */
 package org.drools.fipa;
 
+import java.util.Map;
+import org.drools.fipa.body.content.Action;
+import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.acts.InformIf;
@@ -239,32 +242,35 @@ public class SynchronousDroolsAgentServiceServiceTest {
 //
 //
 //
-//    @Ignore
-//    public void testRequest() {
-//
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//        Map<String,Object> args = new LinkedHashMap<String,Object>();
-//        args.put("x",new Double(36));
-//
-//
-//        ACLMessage req = factory.newRequestMessage("me","you",new Action("squareRoot", args));
-//
-//
-//
-//        mainAgent.tell(req);
-//
-//        assertNotNull(mainResponseInformer.getResponses(req));
-//        assertEquals(2,mainResponseInformer.getResponses(req).size());
-//
-//        ACLMessage answer = mainResponseInformer.getResponses(req).get(0);
-//        assertEquals(Act.AGREE,answer.getPerformative());
-//        ACLMessage answer2 = mainResponseInformer.getResponses(req).get(1);
-//        assertEquals(Act.INFORM,answer2.getPerformative());
-//
-//     //   assertTrue(answer2.getBody().getEncodedContent().contains("6.0"));
-//
-//    }
+    @Test
+    public void testRequest() {
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort(); 
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        Map<String,Object> args = new LinkedHashMap<String,Object>();
+        args.put("x",new Double(36));
+
+
+        Action action = MessageContentFactory.newActionContent("squareRoot", args);
+        ACLMessage req = factory.newRequestMessage("me", "you", action);    
+        
+       
+
+
+
+        List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(req);
+
+        assertNotNull(answers);
+        assertEquals(2,answers.size());
+
+        ACLMessage answer = answers.get(0);
+        assertEquals(Act.AGREE,answer.getPerformative());
+        ACLMessage answer2 = answers.get(1);
+        assertEquals(Act.INFORM,answer2.getPerformative());
+
+     //   assertTrue(answer2.getBody().getEncodedContent().contains("6.0"));
+
+    }
 //
 //
 //

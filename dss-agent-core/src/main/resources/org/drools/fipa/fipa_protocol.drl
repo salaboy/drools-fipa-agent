@@ -221,9 +221,8 @@ when
                        $content : body,
                        performative == Act.REQUEST )
     $resp : ResponseContent( messageId == $msgId, $data : data != null )
-          //  Ref( $ret : references["?return"] != null ) from $data
             $ref: Ref( ) from $data
-            //eval($ref.getReferences().get(0).getKey().equals("?return") )
+            eval($ref.getReferences().get(0).getKey().equals("?return") )
             // Action.RETURN
 then
    System.out.println("PROTOCOL RULES : MY DATA1: " + $data);
@@ -248,10 +247,8 @@ when
                        $content : body,
                        performative == Act.REQUEST )
     $resp : ResponseContent( messageId == $msgId, $data : data != null )
-            //Ref( references["?return"] == null ) from $data
-            //Ref(  ) from $data  
             $ref: Ref( ) from $data
-            //eval(!$ref.getReferences().get(0).getKey().equals("?return") )
+            eval(!$ref.getReferences().get(0).getKey().equals("?return") )
             // Action.RETURN
 then
    System.out.println("PROTOCOL RULES : MY DATA2: " + $data);

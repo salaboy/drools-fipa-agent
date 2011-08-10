@@ -6,8 +6,7 @@ package org.drools.fipa.mappers;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAnyElement;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -18,9 +17,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MyMapArgsEntryType {
 
-    @XmlAttribute
+    @XmlElement(required = true)
     private String key;
-    @XmlAnyElement
+    @XmlElement(required = true)
     private Object value;
 
     public MyMapArgsEntryType() {

@@ -21,10 +21,11 @@ import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.acts.QueryRef;
 import org.drools.fipa.body.acts.Request;
+import org.drools.fipa.body.acts.RequestWhen;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Query;
+import org.drools.fipa.body.content.Ref;
 import org.drools.fipa.body.content.Rule;
-import org.drools.fipa.mappers.MyMapArgsEntryType;
 import org.drools.runtime.rule.Variable;
 
 /**
@@ -54,7 +55,7 @@ public class MessageContentEncoder {
                 break;
             case INFORM_REF:
                 decoded = MessageContentEncoder.decode(((InformRef) body).getReferences().getEncodedContent(), encoding);
-                ((InformRef) body).getReferences().setReferences((List<MyMapArgsEntryType>) decoded);
+                ((InformRef) body).setReferences((Ref)decoded);
                 ((InformRef) body).getReferences().setEncoded(false);
                 break;
             case QUERY_IF:
@@ -67,6 +68,7 @@ public class MessageContentEncoder {
                 Object decodedAction = MessageContentEncoder.decode(((Agree) body).getAction().getEncodedContent(), encoding);
                 Object decodedCondition = MessageContentEncoder.decode(((Agree) body).getCondition().getEncodedContent(), encoding);
                 ((Agree) body).setAction((Action) decodedAction);
+                
                 ((Agree) body).setCondition((Rule) decodedCondition);
                 ((Agree) body).getCondition().setEncoded(false);
                 ((Agree) body).getAction().setEncoded(false);
@@ -102,8 +104,25 @@ public class MessageContentEncoder {
                 decoded = MessageContentEncoder.decode(((Request) body).getAction().getEncodedContent(), encoding);
                 ((Request) body).setAction((Action) decoded);
                 ((Request) body).getAction().setEncodedContent(oldEncodedAction);
+                ((Request) body).getAction().getArgs().addAll(((Action) decoded).getArgs());
+                ((Request) body).getAction().getReferences().addAll(((Action) decoded).getReferences());
                 ((Request) body).getAction().setEncoded(false);
                 break;
+            case REQUEST_WHEN:
+                String oldEncodedActionWhen = ((RequestWhen) body).getAction().getEncodedContent();
+                String oldEncodedConditionWhen = ((RequestWhen) body).getCondition().getEncodedContent();
+                Object decodedActionRequestWhen = MessageContentEncoder.decode(((RequestWhen) body).getAction().getEncodedContent(), encoding);
+                Object decodedConditionRequestWhen = MessageContentEncoder.decode(((RequestWhen) body).getCondition().getEncodedContent(), encoding);
+                ((RequestWhen) body).setAction((Action) decodedActionRequestWhen);
+                ((RequestWhen) body).getAction().setEncodedContent(oldEncodedActionWhen);
+                ((RequestWhen) body).getAction().getArgs().addAll(((Action) decodedActionRequestWhen).getArgs());
+                ((RequestWhen) body).getAction().getReferences().addAll(((Action) decodedActionRequestWhen).getReferences());
+                ((RequestWhen) body).getAction().setEncoded(false);
+                
+                ((RequestWhen) body).setCondition((Rule) decodedConditionRequestWhen);
+                ((RequestWhen) body).getCondition().setEncodedContent(oldEncodedConditionWhen);
+                ((RequestWhen) body).getCondition().setEncoded(false);
+                break;    
         }
     }
 
@@ -144,7 +163,7 @@ public class MessageContentEncoder {
                 ((QueryRef) body).getQuery().setEncodedContent(encoded);
                 ((QueryRef) body).getQuery().setEncoded(true);
                 ((QueryRef) body).getQuery().setEncoding(encoding);
-                ((QueryRef) body).getQuery().setArgs(null);
+                ((QueryRef) body).getQuery().getArgs().clear();
                 ((QueryRef) body).getQuery().getReferences().clear();
                 ((QueryRef) body).getQuery().setQueryName("");
                 break;
@@ -154,8 +173,8 @@ public class MessageContentEncoder {
                 ((Agree) body).getAction().setEncoded(true);
                 ((Agree) body).getAction().setEncodedContent(encodedAction);
                 ((Agree) body).getAction().setEncoding(encoding);
-                ((Agree) body).getAction().setArgs(null);
-                ((Agree) body).getAction().setReferences(null);
+                ((Agree) body).getAction().getArgs().clear();
+                ((Agree) body).getAction().getReferences().clear();
                 ((Agree) body).getCondition().setEncoded(true);
                 ((Agree) body).getCondition().setEncoding(encoding);
                 ((Agree) body).getCondition().setEncodedContent(encodedCondition);
@@ -168,12 +187,23 @@ public class MessageContentEncoder {
                 ((Request) body).getAction().setEncoded(true);
                 ((Request) body).getAction().setEncodedContent(encoded);
                 ((Request) body).getAction().setEncoding(encoding);
-                ((Request) body).getAction().setArgs(null);
-                ((Request) body).getAction().setReferences(null);
+                ((Request) body).getAction().getArgs().clear();
+                ((Request) body).getAction().getReferences().clear();
 
 
                 break;    
+           case REQUEST_WHEN:
+                String encodedConditionRequestWhen = MessageContentEncoder.encode(((RequestWhen) body).getCondition(), encoding);
+                String encodedActionRequestWhen = MessageContentEncoder.encode(((RequestWhen) body).getAction(), encoding);
+                ((RequestWhen) body).getAction().setEncoded(true);
+                ((RequestWhen) body).getAction().setEncodedContent(encodedActionRequestWhen);
+                ((RequestWhen) body).getAction().setEncoding(encoding);
+                ((RequestWhen) body).getAction().setArgs(null);
+                ((RequestWhen) body).getAction().setReferences(null);
+                ((RequestWhen) body).getCondition().setEncoded(true);
+                ((RequestWhen) body).getCondition().setEncodedContent(encodedConditionRequestWhen);
 
+                break;   
         }
     }
 

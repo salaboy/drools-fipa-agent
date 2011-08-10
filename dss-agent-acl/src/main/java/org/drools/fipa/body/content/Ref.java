@@ -2,7 +2,10 @@ package org.drools.fipa.body.content;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -11,7 +14,7 @@ import org.drools.fipa.mappers.MyMapArgsEntryType;
 
 @XmlType(name = "Ref", namespace="http://content.body.fipa.drools.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Ref extends AbstractMessageContent {
+public class Ref extends AbstractMessageContent implements Map{
   
    @XmlElement(required = true)
     public List<MyMapArgsEntryType> references = new ArrayList<MyMapArgsEntryType>(); 
@@ -74,6 +77,60 @@ public class Ref extends AbstractMessageContent {
 
     public void setReferences(List<MyMapArgsEntryType> references) {
         this.references = references;
+    }
+
+    public int size() {
+        
+        return references.size();
+    }
+
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean containsKey(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean containsValue(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Object get(Object o) {
+        for(MyMapArgsEntryType entry : this.references){
+            if(entry.getKey().equals(o.toString() )){
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
+    public Object put(Object k, Object v) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Object remove(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void putAll(Map map) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Set keySet() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Collection values() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Set entrySet() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 

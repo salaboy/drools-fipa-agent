@@ -53,9 +53,6 @@ then
     org.drools.runtime.impl.ExecutionResultImpl result = (org.drools.runtime.impl.ExecutionResultImpl) kSession.execute($batch);
    
     ResponseContent response = new ResponseContent($msgId, result.getValue("$out_"+$msgId)); 
-    System.err.println(">>>>>>>>>>>>>>>>>>>>>MSG:  " + $msg);
-    System.err.println(">>>>>>>>>>>>>>>>>>>>> BODY:  " + $msg.getBody());
-    System.err.println(">>>>>>>>>>>>>>>>>>>>> RESPONSE:  " + response);
     insert( response );
     
 end

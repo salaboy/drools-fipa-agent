@@ -1,10 +1,11 @@
 
+import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.acts.InformIf;
 import mock.MockFact;
+import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.*;
 import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.content.Action;
-import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.content.Ref;
 import org.drools.fipa.body.content.Rule;
 import org.drools.runtime.StatefulKnowledgeSession;
@@ -63,82 +64,81 @@ public class TestAgent {
         }
     }
 
-//    @Test
-//    public void testSimpleInform() {
-//        MockFact fact = new MockFact("patient1", 18);
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//        ACLMessage info = factory.newInformMessage("me", "you", fact);
-//        mainAgent.tell(info);
-//
-//        assertNull(mainResponseInformer.getResponses(info));
-//        StatefulKnowledgeSession target = mainAgent.getInnerSession("session1");
-//        assertTrue(target.getObjects().contains(fact));
-//
-//    }
-//
-//    @Test
-//    public void testInformAsTrigger() {
-//        MockFact fact = new MockFact("patient1", 22);
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//
-//
-//        ACLMessage info = factory.newInformMessage("me", "you", fact);
-//        mainAgent.tell(info);
-//
-//
-//        assertNull(mainResponseInformer.getResponses(info));
-//        StatefulKnowledgeSession target = mainAgent.getInnerSession("session2");
-//        for (Object o : target.getObjects()) {
-//            System.err.println("\t Inform-Trigger test : " + o);
-//        }
-//        assertTrue(target.getObjects().contains(new Double(22.0)));
-//        assertTrue(target.getObjects().contains(new Integer(484)));
-//    }
-//
-//    @Test
-//    public void testQueryIf() {
-//        MockFact fact = new MockFact("patient1", 18);
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//        ACLMessage info = factory.newInformMessage("me", "you", fact);
-//        mainAgent.tell(info);
-//
-//        ACLMessage qryif = factory.newQueryIfMessage("me", "you", fact);
-//        assertNull(mainResponseInformer.getResponses(qryif));
-//        mainAgent.tell(qryif);
-//
-//
-//        assertNotNull(mainResponseInformer.getResponses(qryif));
-//        assertEquals(1, mainResponseInformer.getResponses(qryif).size());
-//
-//        ACLMessage answer = mainResponseInformer.getResponses(qryif).get(0);
-//        //answer.getBody().decode(answer.getEncoding());
-//        MessageContentEncoder.decodeBody(answer.getBody(), answer.getEncoding());
-//        assertEquals(Act.INFORM_IF, answer.getPerformative());
-//        assertEquals(((InformIf) answer.getBody()).getProposition().getData(), fact);
-//    }
-//
-//    @Test
-//    public void testQueryRef() {
-//        MockFact fact = new MockFact("patient1", 18);
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//        ACLMessage info = factory.newInformMessage("me", "you", fact);
-//        mainAgent.tell(info);
-//        Query query = MessageContentFactory.newQueryContent("ageOfPatient", new Object[]{MessageContentHelper.variable("?mock"), "patient1", MessageContentHelper.variable("?age")});
-//        ACLMessage qryref = factory.newQueryRefMessage("me", "you", query);
-//        mainAgent.tell(qryref);
-//
-//        assertNotNull(mainResponseInformer.getResponses(qryref));
-//        assertEquals(2, mainResponseInformer.getResponses(qryref).size());
-//
-//        ACLMessage answer = mainResponseInformer.getResponses(qryref).get(0);
-//        assertEquals(Act.AGREE, answer.getPerformative());
-//        ACLMessage answer2 = mainResponseInformer.getResponses(qryref).get(1);
-//        assertEquals(Act.INFORM_REF, answer2.getPerformative());
-//    }
+    @Test
+    public void testSimpleInform() {
+        MockFact fact = new MockFact("patient1", 18);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
+
+        assertNull(mainResponseInformer.getResponses(info));
+        StatefulKnowledgeSession target = mainAgent.getInnerSession("session1");
+        assertTrue(target.getObjects().contains(fact));
+
+    }
+
+    @Test
+    public void testInformAsTrigger() { 
+        MockFact fact = new MockFact("patient1", 22);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+
+
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
+
+
+        assertNull(mainResponseInformer.getResponses(info));
+        StatefulKnowledgeSession target = mainAgent.getInnerSession("session2");
+        for (Object o : target.getObjects()) {
+            System.err.println("\t Inform-Trigger test : " + o);
+        }
+        assertTrue(target.getObjects().contains(new Double(22.0)));
+        assertTrue(target.getObjects().contains(new Integer(484)));
+    }
+
+    @Test
+    public void testQueryIf() {
+        MockFact fact = new MockFact("patient1", 18);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
+
+        ACLMessage qryif = factory.newQueryIfMessage("me", "you", fact);
+        assertNull(mainResponseInformer.getResponses(qryif));
+        mainAgent.tell(qryif);
+
+
+        assertNotNull(mainResponseInformer.getResponses(qryif));
+        assertEquals(1, mainResponseInformer.getResponses(qryif).size());
+
+        ACLMessage answer = mainResponseInformer.getResponses(qryif).get(0);
+        MessageContentEncoder.decodeBody(answer.getBody(), answer.getEncoding());
+        assertEquals(Act.INFORM_IF, answer.getPerformative());
+        assertEquals(((InformIf) answer.getBody()).getProposition().getData(), fact);
+    }
+
+    @Test
+    public void testQueryRef() {
+        MockFact fact = new MockFact("patient1", 18);
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
+        Query query = MessageContentFactory.newQueryContent("ageOfPatient", new Object[]{MessageContentHelper.variable("?mock"), "patient1", MessageContentHelper.variable("?age")});
+        ACLMessage qryref = factory.newQueryRefMessage("me", "you", query);
+        mainAgent.tell(qryref);
+
+        assertNotNull(mainResponseInformer.getResponses(qryref));
+        assertEquals(2, mainResponseInformer.getResponses(qryref).size());
+
+        ACLMessage answer = mainResponseInformer.getResponses(qryref).get(0);
+        assertEquals(Act.AGREE, answer.getPerformative());
+        ACLMessage answer2 = mainResponseInformer.getResponses(qryref).get(1);
+        assertEquals(Act.INFORM_REF, answer2.getPerformative());
+    }
 
     @Test
     public void testRequest() {
@@ -161,14 +161,13 @@ public class TestAgent {
         ACLMessage answer = mainResponseInformer.getResponses(req).get(0);
         assertEquals(Act.AGREE, answer.getPerformative());
         ACLMessage answer2 = mainResponseInformer.getResponses(req).get(1);
-        assertEquals(Act.INFORM_REF, answer2.getPerformative());
-        //MessageContentEncoder.decodeBody(answer2.getBody(), Encodings.XML);
-        System.out.println("???????????????????asdasdsa"+((InformRef)answer2.getBody()).getReferences());
-        assertTrue(((InformRef)answer2.getBody()).getReferences().getEncodedContent().contains("6.0"));
+        assertEquals(Act.INFORM, answer2.getPerformative());
+
+        assertTrue(((Inform)answer2.getBody()).getProposition().getEncodedContent().contains("6.0"));
 
     }
 
-    @Ignore
+    @Test
     public void testRequestWhen() {
 
         Double in = new Double(36);
@@ -242,7 +241,7 @@ public class TestAgent {
 
     }
 
-    @Ignore
+    @Test
     public void testRequestWithMultipleOutputs() {
 
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
@@ -279,11 +278,11 @@ public class TestAgent {
         boolean containsInc = false;
         boolean containsY = false;
         for(MyMapArgsEntryType entry : ref.getReferences()){
-            if(entry.getValue().toString().contains("?inc")){
+            if(entry.getKey().equals("?inc")){
                  containsInc = true;
             }
-            if(entry.getValue().toString().contains("?y")){
-                 containsInc = true;
+            if(entry.getKey().equals("?y")){
+                 containsY = true;
             }
         }
         assertTrue(containsInc);
@@ -298,27 +297,27 @@ public class TestAgent {
 
     }
 
-//    @Test
-//    public void testSimpleInformInNewSession() {
-//        MockFact fact = new MockFact("patient3", 18);
-//        MockFact fact2 = new MockFact("patient3", 44);
-//
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//        ACLMessage info = factory.newInformMessage("me", "you", fact);
-//        mainAgent.tell(info);
-//
-//        assertNull(mainResponseInformer.getResponses(info));
-//        StatefulKnowledgeSession target = mainAgent.getInnerSession("patient3");
-//        assertNotNull(target);
-//        assertTrue(target.getObjects().contains(fact));
-//
-//        ACLMessage info2 = factory.newInformMessage("me", "you", fact2);
-//        mainAgent.tell(info2);
-//
-//        assertTrue(target.getObjects().contains(fact2));
-//
-//    }
+    @Test
+    public void testSimpleInformInNewSession() {
+        MockFact fact = new MockFact("patient3", 18);
+        MockFact fact2 = new MockFact("patient3", 44);
+
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        mainAgent.tell(info);
+
+        assertNull(mainResponseInformer.getResponses(info));
+        StatefulKnowledgeSession target = mainAgent.getInnerSession("patient3");
+        assertNotNull(target);
+        assertTrue(target.getObjects().contains(fact));
+
+        ACLMessage info2 = factory.newInformMessage("me", "you", fact2);
+        mainAgent.tell(info2);
+
+        assertTrue(target.getObjects().contains(fact2));
+
+    }
 }
 
 class MockResponseInformer implements DroolsAgentResponseInformer {

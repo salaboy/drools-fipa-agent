@@ -43,7 +43,7 @@ public class MessageContentHelper {
         
         int i = 0;
         for (MyMapReferenceEntryType entry : action.getReferences()) {
-            map.put(action.getReferences().get(i).getValue(), query.getElements()[i]);
+            map.put(action.getReferences().get(i).getValue(), query.getElements()[action.getReferences().get(i).getKey()]);
             i++;
         }
         Ref ref = new Ref();
@@ -64,7 +64,7 @@ public class MessageContentHelper {
         int i = 0;
         for (MyMapReferenceEntryType entry : query.getReferences()) {
            
-            map.put(query.getReferences().get(i).getValue(), droolsQuery.getElements()[i]);
+            map.put(query.getReferences().get(i).getValue(), droolsQuery.getElements()[query.getReferences().get(i).getKey()]);
             i++;
         }
 

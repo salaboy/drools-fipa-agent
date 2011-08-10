@@ -13,21 +13,17 @@ import org.drools.fipa.mappers.MyMapReferenceEntryType;
 
 @XmlType(name = "Action", namespace="http://content.body.fipa.drools.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Action extends AbstractMessageContent {
+public class Action extends AbstractMessageContent implements Map{
     
     @XmlElement(required = true)
     public String RETURN = "?return";
     @XmlElement(required = true)
     private String actionName;
     
-//    @XmlJavaTypeAdapter(MyMapReferencesAdapter.class)
-//    private Map<Integer, String> references = new HashMap<Integer, String>();
     @XmlElement(required = true)
     public List<MyMapReferenceEntryType> references = new ArrayList<MyMapReferenceEntryType>(); 
     
     
-//    @XmlJavaTypeAdapter(MyMapArgsAdapter.class)
-//    private Map<String,Object> args = new HashMap<String, Object>();
     @XmlElement(required = true)
     private List<MyMapArgsEntryType> args = new ArrayList<MyMapArgsEntryType>();
     
@@ -76,24 +72,41 @@ public class Action extends AbstractMessageContent {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Action action = (Action) o;
-
-        if (actionName != null ? !actionName.equals(action.actionName) : action.actionName != null) return false;
-        if (args != null ? !args.equals(action.args) : action.args != null) return false;
-
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Action other = (Action) obj;
+        if ((this.RETURN == null) ? (other.RETURN != null) : !this.RETURN.equals(other.RETURN)) {
+            return false;
+        }
+        if ((this.actionName == null) ? (other.actionName != null) : !this.actionName.equals(other.actionName)) {
+            return false;
+        }
+        if (this.references != other.references && (this.references == null || !this.references.equals(other.references))) {
+            return false;
+        }
+        if (this.args != other.args && (this.args == null || !this.args.equals(other.args))) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = actionName != null ? actionName.hashCode() : 0;
-        result = 31 * result + (args != null ? args.hashCode() : 0);
-        return result;
+        int hash = 7;
+        hash = 83 * hash + (this.RETURN != null ? this.RETURN.hashCode() : 0);
+        hash = 83 * hash + (this.actionName != null ? this.actionName.hashCode() : 0);
+        hash = 83 * hash + (this.references != null ? this.references.hashCode() : 0);
+        hash = 83 * hash + (this.args != null ? this.args.hashCode() : 0);
+        return hash;
     }
+
+  
+    
 
 //    public void encode(Encodings encoding) {
 //        if (! isEncoded()) {
@@ -147,5 +160,61 @@ public class Action extends AbstractMessageContent {
 
     public void setRETURN(String RETURN) {
         this.RETURN = RETURN;
-    } 
+    }
+
+    public int size() {
+        return args.size();
+    }
+
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean containsKey(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public boolean containsValue(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Object get(Object o) {
+        for(MyMapArgsEntryType entry : this.args){
+            System.out.println("o.toString()"+o);
+            if(entry.getKey().equals(o.toString())){
+                System.out.println("entry.getKey()="+entry.getKey()+"====="+o);
+                System.out.println("VALUE -> "+entry.getValue());
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
+    public Object put(Object k, Object v) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Object remove(Object o) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void putAll(Map map) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Set keySet() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Collection values() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public Set entrySet() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

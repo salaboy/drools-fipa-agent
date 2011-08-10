@@ -1,16 +1,18 @@
 package org.drools.fipa.body.acts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Rule;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 8:03 PM
- */
+@XmlType(name = "RequestWhenever", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class RequestWhenever extends AbstractMessageBody {
-
+    @XmlElement(required = true)
     private Action action;
+    @XmlElement(required = true)
     private Rule condition;
 
     public RequestWhenever() {

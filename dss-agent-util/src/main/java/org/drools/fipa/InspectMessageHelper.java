@@ -24,6 +24,8 @@ import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.acts.QueryRef;
 import org.drools.fipa.body.acts.Request;
+import org.drools.fipa.body.acts.RequestWhen;
+import org.drools.fipa.body.acts.RequestWhenever;
 import org.drools.fipa.body.content.AbstractMessageContent;
 
 /**
@@ -71,6 +73,10 @@ public class InspectMessageHelper {
 
             case REQUEST:
                 return ((Request) message.getBody()).getAction();
+            case REQUEST_WHEN:
+                return ((RequestWhen) message.getBody()).getAction();
+            case REQUEST_WHENEVER:
+                return ((RequestWhenever) message.getBody()).getAction();    
             
             case AGREE:
                 return ((Agree) message.getBody()).getCondition();

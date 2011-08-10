@@ -28,7 +28,7 @@ public class MessageContentFactory {
         if(args == null){
             args = new HashMap<String, Object>();
         }
-        action.setArgs(MapArgsAdapterHelper.marshal(args));
+        action.getArgs().addAll(MapArgsAdapterHelper.marshal(args));
 
 
         if (args != null) {
