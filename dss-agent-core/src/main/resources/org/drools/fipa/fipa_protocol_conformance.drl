@@ -29,7 +29,7 @@ then
                        performative == Act.REFUSE,                      // expect either a REFUSE or an AGREE
                        $body : body,
                        this after[0,10m] $trigger
-                       ) ? {  System.err.println( $body ); }
+                       ) ? {  System.err.println( ">>>>>>>>>>>>ASDASDSA>>>>>>:  // expect either a REFUSE or an AGREE->" + $body ); }
     or
     expect $ack : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
                        $ackId : id,
@@ -48,7 +48,7 @@ then
                                                             performative == Act.FAILURE,            // which can be a FAILURE
                                                             $body : body,
                                                             this after[0,10m] $ack
-                                                          ) ? {  System.err.println( $body ); }
+                                                          ) ? {  System.err.println( ">>>>>>>>>>>>ASDASDSA>>>>>>: // which can be a FAILURE: " + $body ); }
                                 or
                                 expect $succ : ACLMessage( messageType == ACLMessage.DEFAULT_FIPA_MESSAGE_TYPE,
                                                             $ackId : id,
@@ -59,7 +59,7 @@ then
                                                             performative == Act.INFORM,             // or a success - i.e. an INFORM with the results
                                                             $body : body,
                                                             this after[0,10m] $ack
-                                                          ) ? {  System.out.println( $body ); }
+                                                          ) ? {  System.err.println( ">>>>>>>>>>>>ASDASDSA>>>>>>: //  or a success - i.e. an INFORM with the results:" + $body ); }
                        }
 end
 

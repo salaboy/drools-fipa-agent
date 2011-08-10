@@ -1,29 +1,25 @@
 package org.drools.fipa.body.acts;
 
-import org.drools.fipa.Act;
-import org.drools.fipa.Encodings;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.body.content.Action;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 8:03 PM
- */
+@XmlType(name = "Request", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Request extends AbstractMessageBody {
 
-
-   
-    
-    
+    @XmlElement(required = true)
     private Action action;
 
     public Request() {
     }
 
     
-    public Request(Action action) {
-        this.action = action;
-    }
+//    public Request(Action action) {
+//        this.action = action;
+//    }
 
    
     @Override

@@ -108,7 +108,6 @@ public class ACLMessageFactory implements Serializable {
         msg.setPerformative(body.getPerformative());
         if (getDefaultEncoding() != Encodings.NONE) {
             MessageContentEncoder.encodeBody(body, getDefaultEncoding());
-
         }
         msg.setBody(body);
 

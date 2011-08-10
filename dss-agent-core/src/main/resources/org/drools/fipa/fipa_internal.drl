@@ -51,8 +51,13 @@ then
     StatefulKnowledgeSession kSession = (StatefulKnowledgeSession) proxies.get($sessionId);
     
     org.drools.runtime.impl.ExecutionResultImpl result = (org.drools.runtime.impl.ExecutionResultImpl) kSession.execute($batch);
-
-    insert( new ResponseContent($msgId, result.getValue("$out_"+$msgId)) );
+   
+    ResponseContent response = new ResponseContent($msgId, result.getValue("$out_"+$msgId)); 
+    System.err.println(">>>>>>>>>>>>>>>>>>>>>MSG:  " + $msg);
+    System.err.println(">>>>>>>>>>>>>>>>>>>>> BODY:  " + $msg.getBody());
+    System.err.println(">>>>>>>>>>>>>>>>>>>>> RESPONSE:  " + response);
+    insert( response );
+    
 end
 
 
@@ -118,6 +123,8 @@ when
     $msg : ACLMessage( $msgId : id, performative == Act.QUERY_IF )
     $cont : ResponseContent( messageId == $msgId, $data : data )
 then
+    
+    System.out.println("LOGIC HERE3"+((QueryResults) $data).iterator().next().get("$queryIf"));
     $cont.setData(((QueryResults) $data).iterator().next().get("$queryIf"));
     update($cont);
 end
@@ -150,6 +157,8 @@ when
     QueryRef( $query : query ) from $msg.body
     $cont : ResponseContent( messageId == $msgId, $data : data )
 then
+    
+    System.out.println("LOGIC HERE"+MessageContentHelper.getQueryReferences($query, (QueryResults) $data));
     $cont.setData(MessageContentHelper.getQueryReferences($query, (QueryResults) $data));
     update($cont);
 end
@@ -191,6 +200,8 @@ when
     $req : Request( $act : action, $actName : action.actionName ) from $msg.body
     $cont : ResponseContent( messageId == $msgId, $data : data )
 then
+    System.out.println("LOGIC HERE2 DATA: "+ $data);
+    System.out.println("LOGIC HERE2"+MessageContentHelper.getActionReferences($act, (QueryResults) $data));
     
    $cont.setData( MessageContentHelper.getActionReferences($act, (QueryResults) $data));
     update($cont);

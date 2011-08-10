@@ -18,7 +18,7 @@ import org.drools.runtime.rule.Variable;
  *
  * @author salaboy
  */
-public class MessageContentFactory {
+public class MessageContentFactory { 
 
     public static Action newActionContent(String name, Map<String, Object> args) {
         Action action = new Action();

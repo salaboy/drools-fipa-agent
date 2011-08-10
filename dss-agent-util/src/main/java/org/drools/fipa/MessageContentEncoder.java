@@ -20,6 +20,7 @@ import org.drools.fipa.body.acts.InformIf;
 import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.acts.QueryRef;
+import org.drools.fipa.body.acts.Request;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.content.Rule;
@@ -53,25 +54,25 @@ public class MessageContentEncoder {
                 break;
             case INFORM_REF:
                 decoded = MessageContentEncoder.decode(((InformRef) body).getReferences().getEncodedContent(), encoding);
-                ((InformRef) body).getReferences().setReferences((List<MyMapArgsEntryType>)decoded);
+                ((InformRef) body).getReferences().setReferences((List<MyMapArgsEntryType>) decoded);
                 ((InformRef) body).getReferences().setEncoded(false);
-                break;    
+                break;
             case QUERY_IF:
                 decoded = MessageContentEncoder.decode(((QueryIf) body).getProposition().getEncodedContent(), encoding);
                 ((QueryIf) body).getProposition().setData(decoded);
                 ((QueryIf) body).getProposition().setEncoded(false);
                 break;
 
-             case AGREE:
+            case AGREE:
                 Object decodedAction = MessageContentEncoder.decode(((Agree) body).getAction().getEncodedContent(), encoding);
                 Object decodedCondition = MessageContentEncoder.decode(((Agree) body).getCondition().getEncodedContent(), encoding);
-                ((Agree) body).setAction((Action)decodedAction);
-                ((Agree) body).setCondition((Rule)decodedCondition);
+                ((Agree) body).setAction((Action) decodedAction);
+                ((Agree) body).setCondition((Rule) decodedCondition);
                 ((Agree) body).getCondition().setEncoded(false);
                 ((Agree) body).getAction().setEncoded(false);
                 break;
 
-                
+
             case QUERY_REF:
                 String oldEncoded = ((QueryRef) body).getQuery().getEncodedContent();
                 decoded = MessageContentEncoder.decode(((QueryRef) body).getQuery().getEncodedContent(), encoding);
@@ -89,12 +90,19 @@ public class MessageContentEncoder {
                         if (argument != null && argument instanceof Variable) {
                             Variable tmpVariable = Variable.v;
                             args.set(i, tmpVariable);
-                           
+
                         }
                     }
                 }
 
 
+                break;
+            case REQUEST:
+                String oldEncodedAction = ((Request) body).getAction().getEncodedContent();
+                decoded = MessageContentEncoder.decode(((Request) body).getAction().getEncodedContent(), encoding);
+                ((Request) body).setAction((Action) decoded);
+                ((Request) body).getAction().setEncodedContent(oldEncodedAction);
+                ((Request) body).getAction().setEncoded(false);
                 break;
         }
     }
@@ -151,8 +159,19 @@ public class MessageContentEncoder {
                 ((Agree) body).getCondition().setEncoded(true);
                 ((Agree) body).getCondition().setEncoding(encoding);
                 ((Agree) body).getCondition().setEncodedContent(encodedCondition);
+
+
+                break;
+            case REQUEST:
                 
-                
+                encoded = MessageContentEncoder.encode(((Request) body).getAction(), encoding);
+                ((Request) body).getAction().setEncoded(true);
+                ((Request) body).getAction().setEncodedContent(encoded);
+                ((Request) body).getAction().setEncoding(encoding);
+                ((Request) body).getAction().setArgs(null);
+                ((Request) body).getAction().getReferences().clear();
+
+
                 break;    
 
         }

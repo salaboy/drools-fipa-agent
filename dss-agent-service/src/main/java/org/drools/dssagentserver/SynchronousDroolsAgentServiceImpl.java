@@ -18,6 +18,7 @@ import org.drools.fipa.body.acts.InformIf;
 import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.acts.QueryRef;
+import org.drools.fipa.body.acts.Request;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.content.Ref;
@@ -36,7 +37,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @XmlSeeAlso(value={Inform.class, QueryIf.class, InformIf.class, 
                     Agree.class, Failure.class, Action.class, Rule.class, 
                     QueryRef.class, Query.class, 
-                    Ref.class, InformRef.class,
+                    Ref.class, InformRef.class, Request.class,
                     MyMapReferenceEntryType.class, MyMapArgsEntryType.class})
 public class SynchronousDroolsAgentServiceImpl implements SynchronousDroolsAgentService {
     

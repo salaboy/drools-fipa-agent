@@ -16,9 +16,9 @@ public class Inform extends AbstractMessageBody {
     public Inform() {
     }
 
-    public Inform(Info proposition) {
-        this.proposition = proposition;
-    }
+//    public Inform(Info proposition) {
+//        this.proposition = proposition;
+//    }
 
     @Override
     public String toString() {

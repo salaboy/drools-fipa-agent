@@ -48,7 +48,7 @@ end
 rule "Action_Request : squareRoot"
 when
     $a : Action( actionName == "squareRoot",
-                 $x : args["x"] )
+                 $x : args.get(0) )
 
 then
     retract($a);
@@ -69,7 +69,7 @@ end
 rule "Action_Request : randomSum"
 when
     $a : Action( actionName == "randomSum",
-                 $x : args["x"] )
+                 $x : args.get(0) )
 
 then
     retract($a);

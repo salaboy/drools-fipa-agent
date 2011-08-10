@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package org.drools.fipa;
+
 import com.jayway.jsonpath.JsonPath;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -17,54 +18,66 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import org.drools.fipa.body.acts.Agree;
 import org.drools.fipa.body.acts.Inform;
+import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.acts.QueryRef;
+import org.drools.fipa.body.acts.Request;
 import org.drools.fipa.body.content.AbstractMessageContent;
+
 /**
  *
  * @author salaboy
  */
-
-
 public class InspectMessageHelper {
+
     public static String inspect(ACLMessage message, String path) throws ParseException, XPathExpressionException, ParserConfigurationException, IOException, SAXException {
         AbstractMessageContent content = inspectContent(message);
-        if(content.getEncodedContent() != null || !content.getEncodedContent().equals("")){
+      
+        if (content.getEncodedContent() != null || !content.getEncodedContent().equals("")) {
             switch (message.getEncoding()) {
                 case JSON:
-                    Object res = JsonPath.read(content.getEncodedContent(),path);
+                    Object res = JsonPath.read(content.getEncodedContent(), path);
                     return (res != null) ? res.toString() : null;
                 case XML:
                     XPath accessor = XPathFactory.newInstance().newXPath();
                     InputStream inStream = new ByteArrayInputStream(content.getEncodedContent().getBytes());
                     Document dox = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inStream);
                     return (String) accessor.evaluate(path, dox, XPathConstants.STRING);
-                default :
-                    throw new ParseException("Unable to access byte-encoded message body",0);
+                default:
+                    throw new ParseException("Unable to access byte-encoded message body", 0);
             }
         }
         return null;
     }
-    
-    public static AbstractMessageContent inspectContent(ACLMessage message){
+
+    public static AbstractMessageContent inspectContent(ACLMessage message) {
+        
         Act act = message.getBody().getPerformative();
-        Object decoded = null;
+       
         switch (act) {
             case INFORM:
-                
                 return ((Inform) message.getBody()).getProposition();
-               
-               
+
             case QUERY_IF:
-               return ((QueryIf) message.getBody()).getProposition();
-                
-             case QUERY_REF:
-               return ((QueryRef) message.getBody()).getQuery();    
-               
+                return ((QueryIf) message.getBody()).getProposition();
+
+            case QUERY_REF:
+                return ((QueryRef) message.getBody()).getQuery();
+
+            case INFORM_REF:
+                return ((InformRef) message.getBody()).getReferences();
+
+            case REQUEST:
+                return ((Request) message.getBody()).getAction();
+            
+            case AGREE:
+                return ((Agree) message.getBody()).getCondition();
+
+
         }
         return null;
-    
+
     }
-    
 }
