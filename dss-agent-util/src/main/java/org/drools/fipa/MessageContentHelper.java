@@ -36,16 +36,18 @@ public class MessageContentHelper {
 
     public static Ref getActionReferences(Action action, QueryResults results) {
         Map<String, Object> map = new HashMap<String, Object>();
-        System.out.println("outer = "+results);
+        
         org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
-        System.out.println("inner = "+inner);
+        
         DroolsQuery query = (DroolsQuery) inner.get(0).get(-1);
-        System.out.println("action references = "+ action.getReferences().size());
+        
+        int i = 0;
         for (MyMapReferenceEntryType entry : action.getReferences()) {
-            map.put(action.getReferences().get(entry.getKey()).getValue(), query.getElements()[entry.getKey()]);
+            map.put(action.getReferences().get(i).getValue(), query.getElements()[i]);
+            i++;
         }
         Ref ref = new Ref();
-        System.out.println("THIS ARE MY ACTION REFERENCES : "+ref);
+        
         ref.setReferences(MapArgsAdapterHelper.marshal(map));
         return ref;
     }
@@ -68,7 +70,7 @@ public class MessageContentHelper {
 
         Ref ref = new Ref();
         ref.setReferences(MapArgsAdapterHelper.marshal(map));
-        System.out.println("THIS ARE MY QUERY REFERENCES : "+ref);
+        
         return ref;
     }
 }

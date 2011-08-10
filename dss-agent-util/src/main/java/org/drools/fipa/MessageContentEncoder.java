@@ -144,7 +144,7 @@ public class MessageContentEncoder {
                 ((QueryRef) body).getQuery().setEncodedContent(encoded);
                 ((QueryRef) body).getQuery().setEncoded(true);
                 ((QueryRef) body).getQuery().setEncoding(encoding);
-                ((QueryRef) body).getQuery().getArgs().clear();
+                ((QueryRef) body).getQuery().setArgs(null);
                 ((QueryRef) body).getQuery().getReferences().clear();
                 ((QueryRef) body).getQuery().setQueryName("");
                 break;
@@ -155,7 +155,7 @@ public class MessageContentEncoder {
                 ((Agree) body).getAction().setEncodedContent(encodedAction);
                 ((Agree) body).getAction().setEncoding(encoding);
                 ((Agree) body).getAction().setArgs(null);
-                ((Agree) body).getAction().getReferences().clear();
+                ((Agree) body).getAction().setReferences(null);
                 ((Agree) body).getCondition().setEncoded(true);
                 ((Agree) body).getCondition().setEncoding(encoding);
                 ((Agree) body).getCondition().setEncodedContent(encodedCondition);
@@ -169,7 +169,7 @@ public class MessageContentEncoder {
                 ((Request) body).getAction().setEncodedContent(encoded);
                 ((Request) body).getAction().setEncoding(encoding);
                 ((Request) body).getAction().setArgs(null);
-                ((Request) body).getAction().getReferences().clear();
+                ((Request) body).getAction().setReferences(null);
 
 
                 break;    
