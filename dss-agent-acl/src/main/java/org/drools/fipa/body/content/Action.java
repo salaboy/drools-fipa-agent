@@ -16,7 +16,7 @@ import org.drools.fipa.mappers.MyMapReferenceEntryType;
 public class Action extends AbstractMessageContent implements Map<String, Object> {
     
     @XmlElement(required = true)
-    public String RETURN = "?return";
+    public String returnVariable = "?return";
     @XmlElement(required = true)
     private String actionName;
     
@@ -97,7 +97,7 @@ public class Action extends AbstractMessageContent implements Map<String, Object
             return false;
         }
         final Action other = (Action) obj;
-        if ((this.RETURN == null) ? (other.RETURN != null) : !this.RETURN.equals(other.RETURN)) {
+        if ((this.returnVariable == null) ? (other.returnVariable != null) : !this.returnVariable.equals(other.returnVariable)) {
             return false;
         }
         if ((this.actionName == null) ? (other.actionName != null) : !this.actionName.equals(other.actionName)) {
@@ -115,7 +115,7 @@ public class Action extends AbstractMessageContent implements Map<String, Object
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 83 * hash + (this.RETURN != null ? this.RETURN.hashCode() : 0);
+        hash = 83 * hash + (this.returnVariable != null ? this.returnVariable.hashCode() : 0);
         hash = 83 * hash + (this.actionName != null ? this.actionName.hashCode() : 0);
         hash = 83 * hash + (this.references != null ? this.references.hashCode() : 0);
         hash = 83 * hash + (this.args != null ? this.args.hashCode() : 0);
@@ -171,12 +171,12 @@ public class Action extends AbstractMessageContent implements Map<String, Object
 
    
 
-    public String getRETURN() {
-        return RETURN;
+    public String getReturnVariable() {
+        return returnVariable;
     }
 
-    public void setRETURN(String RETURN) {
-        this.RETURN = RETURN;
+    public void setReturnVariable(String RETURN) {
+        this.returnVariable = RETURN;
     }
 
 

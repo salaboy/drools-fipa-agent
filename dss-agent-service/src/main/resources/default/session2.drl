@@ -1,18 +1,14 @@
 package org.drools.test;
 
-/*
 import mock.MockFact;
 import org.drools.fipa.body.content.Action;
-import org.drools.informer.*;
-import org.drools.informer.surveyAgent.*;
-
+import org.drools.fipa.mappers.MyMapArgsEntryType;
 
 
 rule "Call Interface"
 when
     $p : MockFact( $a : age )
 then
-    System.out.println(" SESSION #2 >>> Invoking local service " );
     double $x = Math.sqrt($a);
     insert( new Double($x*$x) );
 end
@@ -28,48 +24,74 @@ rule "Call rules"
 when
     $p : MockFact( $a : age )
 then
-    System.out.println(" SESSION #2 >>> Invoking rule-based service " );
     insert( new LocalTrigger($a) );
 end
 
 
 rule "Rule Op"
 when
-    LocalTrigger( $x : x )
+    $lt : LocalTrigger( $x : x )
 then
+    retract($lt);
     insert( new Integer($x*$x) );
 end
 
 
 
 
+declare MathResponse
+    x : Double
+    y : Double
+    z : Double
+end
 
-rule "Action_Request : getSurvey"
+rule "Action_Request : squareRoot"
 when
-    $a : Action( actionName == "getSurvey",
-                 $surveyClass : args["surveyClass"],
-                 $userId : args["userId"],
-                 $surveyId : args["surveyId"],
-                 $context : args["context"],
-                 $lang : args["language"] )
-    not SurveyTicket( sid == $surveyId )
+    $a : Action( actionName == "squareRoot",
+                 keySet contains "x", $x : this["x"]  )
 
 then
-//    System.err.println("NEEDED SURVEY " + $surveyClass  +" " + ((String) $surveyId) +" " + ((String) $userId) +" " + ((String) $context) );
-    insert( new SurveyTicket( (String) $surveyId, (String) $surveyClass, (String) $userId, (String) $context, (String) $lang, null) );
+    retract($a);
+    System.out.println("Executing square root");
+    insert( new MathResponse((Double) $x, Math.sqrt( (Double) $x), 0.0) );
+end
+
+query squareRoot( Double $x, Double $return  )
+    MathResponse( $x, $return ;)
 end
 
 
-query getSurvey( String $sid )
-    $return : SurveyGUIAdapter( surveyId == $sid )
+
+
+
+
+
+rule "Action_Request : randomSum"
+when
+    $a : Action( actionName == "randomSum",
+                 keySet contains "x", $x : this["x"]  )
+
+then
+    retract($a);
+    Double x = (Double) $x;
+    Double z = Math.random();
+    System.out.println("ACTING II " + x + "   " +z + "  " );
+    insert( new MathResponse(x, x+z, z ) );
+end
+
+query randomSum( Double $x, Double $return, Double $z  )
+    MathResponse( $x, $return, $z;)
 end
 
 
 
-//rule "Log"
-//when
-//    $o : Object()
-//then
-//    System.out.println("SESSION #2 >>> " + $o);
-//end
-*/
+
+
+
+rule "Log"
+when
+    $o : Object()
+then
+    System.out.println("SESSION #2 >>> " + $o);
+end
+

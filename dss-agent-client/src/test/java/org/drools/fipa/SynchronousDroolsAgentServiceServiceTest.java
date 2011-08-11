@@ -4,6 +4,9 @@
  */
 package org.drools.fipa;
 
+import org.drools.fipa.body.content.Ref;
+import org.drools.fipa.body.acts.InformRef;
+import org.drools.fipa.body.content.Rule;
 import java.util.Map;
 import org.drools.fipa.body.content.Action;
 import java.util.LinkedHashMap;
@@ -18,7 +21,8 @@ import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.content.Info;
 import java.util.List;
-
+import org.drools.fipa.mappers.MyMapArgsEntryType;
+import org.drools.runtime.rule.Variable;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -187,7 +191,7 @@ public class SynchronousDroolsAgentServiceServiceTest {
         assertNotNull(answers);
         assertEquals(0, answers.size());
 
-        
+
 //        assertNull(mainResponseInformer.getResponses(info));
 //        StatefulKnowledgeSession target = mainAgent.getInnerSession("session2");
 //        for (Object o : target.getObjects())
@@ -215,60 +219,51 @@ public class SynchronousDroolsAgentServiceServiceTest {
         assertEquals(((InformIf) answer.getBody()).getProposition().getData(), fact);
 
     }
-     @Test
+
+    @Test
     public void testQueryRef() {
-        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort(); 
-        MockFact fact = new MockFact("patient1",18);
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
+        MockFact fact = new MockFact("patient1", 18);
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        ACLMessage info = factory.newInformMessage("me","you",fact);
-            synchronousDroolsAgentServicePort.tell(info);
-        Query query = MessageContentFactory.newQueryContent("ageOfPatient", new Object[] {MessageContentHelper.variable("?mock"), "patient1", MessageContentHelper.variable("?age")} );
-        ACLMessage qryref = factory.newQueryRefMessage("me","you",query);
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        synchronousDroolsAgentServicePort.tell(info);
+        Query query = MessageContentFactory.newQueryContent("ageOfPatient", new Object[]{MessageContentHelper.variable("?mock"), "patient1", MessageContentHelper.variable("?age")});
+        ACLMessage qryref = factory.newQueryRefMessage("me", "you", query);
         List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(qryref);
 
         assertNotNull(answers);
-        assertEquals(2,answers.size());
+        assertEquals(2, answers.size());
 
         ACLMessage answer = answers.get(0);
-        assertEquals(Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE, answer.getPerformative());
         ACLMessage answer2 = answers.get(1);
-        assertEquals(Act.INFORM_REF,answer2.getPerformative());
-        
+        assertEquals(Act.INFORM_REF, answer2.getPerformative());
+
     }
-//
-//
-//
-//
-//
-//
+
     @Test
     public void testRequest() {
-        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort(); 
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        Map<String,Object> args = new LinkedHashMap<String,Object>();
-        args.put("x",new Double(36));
-
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
+        args.put("x", new Double(36));
 
         Action action = MessageContentFactory.newActionContent("squareRoot", args);
-        ACLMessage req = factory.newRequestMessage("me", "you", action);    
-        
-       
-
-
+        ACLMessage req = factory.newRequestMessage("me", "you", action);
 
         List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(req);
 
         assertNotNull(answers);
-        assertEquals(2,answers.size());
+        assertEquals(2, answers.size());
 
         ACLMessage answer = answers.get(0);
-        assertEquals(Act.AGREE,answer.getPerformative());
+        assertEquals(Act.AGREE, answer.getPerformative());
         ACLMessage answer2 = answers.get(1);
-        assertEquals(Act.INFORM,answer2.getPerformative());
+        assertEquals(Act.INFORM, answer2.getPerformative());
 
-     //   assertTrue(answer2.getBody().getEncodedContent().contains("6.0"));
+        assertTrue(((Inform) answer2.getBody()).getProposition().getEncodedContent().contains("6.0"));
 
     }
 //
@@ -276,39 +271,41 @@ public class SynchronousDroolsAgentServiceServiceTest {
 //
 //
 // 
-//    @Ignore
-//    public void testRequestWhen() {
-//
-//        Double in = new Double(36);
-//
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//        Map<String,Object> args = new LinkedHashMap<String,Object>();
-//        args.put("x", in);
-//
-//
-//        Rule condition = new Rule("String( this == \"actionTrigger\" || this == \"actionTrigger2\")");
-//
-//        ACLMessage req = factory.newRequestWhenMessage("me", "you", new Action("squareRoot", args), condition);
-//        mainAgent.tell(req);
-//
-//        ACLMessage info = factory.newInformMessage("me","you",new String("actionTrigger"));
-//        mainAgent.tell(info);
-//
-//
-//        ACLMessage info2 = factory.newInformMessage("me","you",new String("actionTrigger2"));
-//        mainAgent.tell(info2);
-//
-//
-//        StatefulKnowledgeSession s2 = mainAgent.getInnerSession("session2");
-//        QueryResults ans = s2.getQueryResults("squareRoot", in, Variable.v);
-//        assertEquals(1, ans.size());
-//        assertEquals(6.0, (Double) ans.iterator().next().get("$return"), 1e-6);
-//
-//
-//
-//
-//    }
+
+    @Test
+    public void testRequestWhen() {
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
+        Double in = new Double(36);
+
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
+        args.put("x", in);
+
+
+        Rule condition = new Rule();
+        condition.setDrl("String( this == \"actionTrigger\" || this == \"actionTrigger2\")");
+        Action action = MessageContentFactory.newActionContent("squareRoot", args);
+        ACLMessage req = factory.newRequestWhenMessage("me", "you", action, condition);
+
+        List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(req);
+
+        ACLMessage info = factory.newInformMessage("me", "you", new String("actionTrigger"));
+        answers = synchronousDroolsAgentServicePort.tell(info);
+
+
+        ACLMessage info2 = factory.newInformMessage("me", "you", new String("actionTrigger2"));
+        answers = synchronousDroolsAgentServicePort.tell(info);
+
+
+
+        //assertEquals(1, answers.size());
+        //assertEquals(6.0, (Double) ans.iterator().next().get("$return"), 1e-6);
+
+
+
+
+    }
 //
 //
 //
@@ -356,80 +353,85 @@ public class SynchronousDroolsAgentServiceServiceTest {
 //
 //
 //
-//
-//    @Ignore
-//    public void testRequestWithMultipleOutputs() {
-//
-//        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
-//
-//        Map<String,Object> args = new LinkedHashMap<String,Object>();
-//        Double x = 32.0;
-//
-//        args.put("x",x);
-//        args.put("?y",Variable.v);
-//        args.put("?inc",Variable.v);
-//
-//
-//
-//        ACLMessage req = factory.newRequestMessage("me","you",new Action("randomSum", args));
-//
-//
-//
-//        mainAgent.tell(req);
-//
-//        assertNotNull(mainResponseInformer.getResponses(req));
-//        assertEquals(2,mainResponseInformer.getResponses(req).size());
-//
-//        ACLMessage answer = mainResponseInformer.getResponses(req).get(0);
-//        assertEquals(Act.AGREE,answer.getPerformative());
-//        ACLMessage answer2 = mainResponseInformer.getResponses(req).get(1);
-//        assertEquals(Act.INFORM_REF,answer2.getPerformative());
-//
-//        //answer2.getBody().decode(answer2.getEncoding());
-//        MessageContentEncoder.decodeBody(answer2.getBody(), answer2.getEncoding());
-//        assertEquals(InformRef.class,answer2.getBody().getClass());
-//
-//        Ref ref = ((InformRef) answer2.getBody()).getReferences();
-//        assertNotNull(ref.getReferences());
-//
-//        assertTrue(ref.getReferences().containsKey("?inc"));
-//        assertTrue(ref.getReferences().containsKey("?y"));
-//        assertEquals(Double.class, ref.getReferences().get("?inc").getClass());
-//        assertEquals(Double.class, ref.getReferences().get("?y").getClass());
-//
-//        Double z = (Double) ref.getReferences().get("?inc");
-//        Double y = (Double) ref.getReferences().get("?y");
-//
-//        assertEquals(y, x + z,1e-6);
-//
-//    }
-//
-//
-//
-//
-//
-//
-//
+
     @Test
-    public void testSimpleInformInNewSession() {
-        MockFact fact = new MockFact("patient3",18);
-        MockFact fact2 = new MockFact("patient3",44);
-        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort(); 
+    public void testRequestWithMultipleOutputs() {
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
-        ACLMessage info = factory.newInformMessage("me","you",fact);
-        List<ACLMessage> answers =  synchronousDroolsAgentServicePort.tell(info);
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
+        Double x = 32.0;
 
-        assertEquals(0,answers.size());
+        args.put("x", x);
+        args.put("?y", Variable.v);
+        args.put("?inc", Variable.v);
+
+
+        Action action = MessageContentFactory.newActionContent("randomSum", args);
+        ACLMessage req = factory.newRequestMessage("me", "you", action);
+
+
+
+        List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(req);
+
+        assertNotNull(answers);
+        assertEquals(2, answers.size());
+
+        ACLMessage answer = answers.get(0);
+        assertEquals(Act.AGREE, answer.getPerformative());
+        ACLMessage answer2 = answers.get(1);
+        assertEquals(Act.INFORM_REF, answer2.getPerformative());
+
+        //answer2.getBody().decode(answer2.getEncoding());
+        MessageContentEncoder.decodeBody(answer2.getBody(), answer2.getEncoding());
+        assertEquals(InformRef.class, answer2.getBody().getClass());
+
+        Ref ref = ((InformRef) answer2.getBody()).getReferences();
+        assertNotNull(ref.getReferences());
+        boolean containsInc = false;
+        boolean containsY = false;
+        Double z = null;
+        Double y = null;
+        for (MyMapArgsEntryType entry : ref.getReferences()) {
+            if (entry.getKey().equals("?inc")) {
+                containsInc = true;
+                assertEquals(Double.class, entry.getValue().getClass());
+                z = (Double) entry.getValue();
+            }
+            if (entry.getKey().equals("?y")) {
+                containsY = true;
+                assertEquals(Double.class, entry.getValue().getClass());
+                y = (Double) entry.getValue();
+            }
+        }
+        assertTrue(containsInc);
+        assertTrue(containsY);
+
+
+
+        assertEquals(y, x + z,1e-6);
+
+    }
+
+    @Test
+    public void testSimpleInformInNewSession() {
+        MockFact fact = new MockFact("patient3", 18);
+        MockFact fact2 = new MockFact("patient3", 44);
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        ACLMessage info = factory.newInformMessage("me", "you", fact);
+        List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(info);
+
+        assertEquals(0, answers.size());
 //        StatefulKnowledgeSession target = mainAgent.getInnerSession("patient3");
 //        assertNotNull(target);
 //        assertTrue(target.getObjects().contains(fact));
 
-        ACLMessage info2 = factory.newInformMessage("me","you",fact2);
-        answers =  synchronousDroolsAgentServicePort.tell(info2);
-        assertEquals(0,answers.size());
+        ACLMessage info2 = factory.newInformMessage("me", "you", fact2);
+        answers = synchronousDroolsAgentServicePort.tell(info2);
+        assertEquals(0, answers.size());
         //assertTrue(target.getObjects().contains(fact2));
 
     }
-//  
 }

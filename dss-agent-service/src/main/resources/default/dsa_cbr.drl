@@ -16,8 +16,8 @@ import org.drools.fipa.ACLMessage;
 import org.drools.fipa.ACLMessageFactory;
 import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.content.Info;
-import mock.MockFact;
 import org.drools.fipa.InspectMessageHelper;
+import mock.MockFact;
 
 // ACL message factory, to generate responses
 global ACLMessageFactory aclFactory;
@@ -35,10 +35,11 @@ end
 rule "Route_Encoded"
 salience -1
 when
-    //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
-    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON )
+  //  $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
+    //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON, body.encodedContent != null  )
+    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON  )
     $patientId : String( this != null ) from InspectMessageHelper.inspect($msg,"$..name[0]")
-    ?mapSession( $patientId , $sessionId ; )
+    mapSession( $patientId , $sessionId ; )
 then
     System.err.println("Routing message " + $msgId + " to session " + $sessionId );
     insert( new Destination($msgId, $sessionId) );
@@ -47,14 +48,23 @@ end
 rule "Route_Encoded_X"
 salience -1
 when
-   // $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
-   $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML )
-    $patientId : String( this != null ) from InspectMessageHelper.inspect($msg,"//name")
-    ?mapSession( $patientId , $sessionId ; )
+    //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
+    //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML, body.encodedContent != null )
+    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML )
+    $patientId : String( this != null ) from InspectMessageHelper.inspect($msg,"//name") 
+    mapSession( $patientId , $sessionId ; )
 then
     System.err.println("Routing message " + $msgId + " to session " + $sessionId );
     insert( new Destination($msgId, $sessionId) );
 end
+
+
+
+
+
+
+
+
 
 
 
@@ -72,13 +82,12 @@ then
 end
 
 
-
-
 rule "Query is known to be in session #1"
 dialect "mvel"
 salience -1
 when
     //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
+    //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON, body.encodedContent != null )
     $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON )
     String( this == "ageOfPatient" ) from InspectMessageHelper.inspect($msg,"$..queryName[0]")
 then
@@ -92,8 +101,8 @@ rule "Query is known to be in session #1_X"
 dialect "mvel"
 salience -1
 when
-   // $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
-   $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML )
+    //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
+    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML )
     String( this == "ageOfPatient" ) from InspectMessageHelper.inspect($msg,"//queryName")
 then
     System.err.println("Routing message " + $msgId + " to session1 ");
@@ -115,8 +124,8 @@ dialect "mvel"
 salience -1
 when
     //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
-    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON )
-    String( this == "getSurvey" ) from InspectMessageHelper.inspect($msg,"$..actionName[0]")
+    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.JSON)
+    String( this == "squareRoot" || this == "randomSum" ) from InspectMessageHelper.inspect($msg,"$..actionName[0]")
 then
     System.err.println("Routing message " + $msgId + " to session2 ");
     insert( new Destination($msgId, "session2") );
@@ -129,8 +138,21 @@ dialect "mvel"
 salience -1
 when
     //$msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML, body.encodedContent != null /* , $patientId : this.inspect("$..name[0]") */ )
-    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML )
-    String( this == "getSurvey" ) from InspectMessageHelper.inspect($msg,"//actionName")
+    $msg : ACLMessage( $msgId : id, $b : body, encoding == Encodings.XML)
+    String( this == "squareRoot" || this == "randomSum" ) from InspectMessageHelper.inspect($msg,"//actionName")
+then
+    System.err.println("Routing message " + $msgId + " to session2 ");
+    insert( new Destination($msgId, "session2") );
+end
+
+
+rule "Special String"
+dialect "mvel"
+salience -1
+when
+    $msg : ACLMessage( $msgId : id, $body : body, performative == Act.INFORM  )
+    Inform( $prop : proposition ) from $body
+    String( this == "actionTrigger" || this == "actionTrigger2" ) from $prop.getData()
 then
     System.err.println("Routing message " + $msgId + " to session2 ");
     insert( new Destination($msgId, "session2") );

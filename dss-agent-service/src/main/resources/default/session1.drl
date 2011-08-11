@@ -16,4 +16,3 @@ then
     System.out.println("SESSION #1 >>> " + $o);
 end
 
-

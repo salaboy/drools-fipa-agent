@@ -23,7 +23,7 @@ public class MessageContentFactory {
 
     public static Action newActionContent(String name, Map<String, Object> args) {
         Action action = new Action();
-        action.setRETURN("?return");
+        action.setReturnVariable("?return");
         boolean hasOutputArg = false;
         action.setActionName(name);
         if(args == null){
@@ -49,10 +49,10 @@ public class MessageContentFactory {
 
             MyMapReferenceEntryType myMapReferenceEntryType = new MyMapReferenceEntryType();
             myMapReferenceEntryType.setKey( action.getArgs().size());
-            myMapReferenceEntryType.setValue(action.getRETURN());
+            myMapReferenceEntryType.setValue(action.getReturnVariable());
             action.getReferences().add(myMapReferenceEntryType);
             MyMapArgsEntryType myMapArgsEntryType = new MyMapArgsEntryType();
-            myMapArgsEntryType.setKey(action.getRETURN());
+            myMapArgsEntryType.setKey(action.getReturnVariable());
             myMapArgsEntryType.setValue(Variable.v);
             action.getArgs().add(myMapArgsEntryType);
         }
@@ -61,7 +61,7 @@ public class MessageContentFactory {
 
     public static Action newActionContent(Action other) {
         Action action = new Action();
-        action.setRETURN("?return");
+        action.setReturnVariable("?return");
         action.setActionName(other.getActionName());
         action.setArgs(new ArrayList(other.getArgs()));
         action.setReferences(new ArrayList(other.getReferences()));

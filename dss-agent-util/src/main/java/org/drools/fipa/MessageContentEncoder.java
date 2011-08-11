@@ -199,8 +199,8 @@ public class MessageContentEncoder {
                 ((RequestWhen) body).getAction().setEncoded(true);
                 ((RequestWhen) body).getAction().setEncodedContent(encodedActionRequestWhen);
                 ((RequestWhen) body).getAction().setEncoding(encoding);
-                ((RequestWhen) body).getAction().setArgs(null);
-                ((RequestWhen) body).getAction().setReferences(null);
+                ((RequestWhen) body).getAction().getArgs().clear();
+                ((RequestWhen) body).getAction().getArgs().clear();
                 ((RequestWhen) body).getCondition().setEncoded(true);
                 ((RequestWhen) body).getCondition().setEncodedContent(encodedConditionRequestWhen);
 
