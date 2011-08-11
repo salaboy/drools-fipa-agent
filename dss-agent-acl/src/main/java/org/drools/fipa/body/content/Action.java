@@ -13,7 +13,7 @@ import org.drools.fipa.mappers.MyMapReferenceEntryType;
 
 @XmlType(name = "Action", namespace="http://content.body.fipa.drools.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Action extends AbstractMessageContent implements Map{
+public class Action extends AbstractMessageContent implements Map<String, Object> {
     
     @XmlElement(required = true)
     public String RETURN = "?return";
@@ -66,9 +66,26 @@ public class Action extends AbstractMessageContent implements Map{
     public String toString() {
         return "Action{" +
                 "actionName='" + actionName + '\'' +
-                ", args=" + (args == null ? null : Arrays.asList(args)) +
+                ", args=" + (args == null ? null : argsToString()) +
+                ", refs=" + (args == null ? null : referencesToString()) +
                 ", encoded=" + getEncodedContent() +
                 '}';
+    }
+
+    private String referencesToString() {
+        StringBuilder sb = new StringBuilder();
+        for (MyMapReferenceEntryType ref : references) {
+            sb.append( ref.getKey() ).append( "=").append( ref.getValue() );
+        }
+        return sb.toString();
+    }
+
+    private String argsToString() {
+        StringBuilder sb = new StringBuilder();
+        for ( MyMapArgsEntryType arg : args ) {
+            sb.append( arg.getKey() ).append( "=").append( arg.getValue() );
+        }
+        return sb.toString();
     }
 
     @Override
@@ -162,26 +179,39 @@ public class Action extends AbstractMessageContent implements Map{
         this.RETURN = RETURN;
     }
 
+
+
+
     public int size() {
         return args.size();
     }
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return size() > 0;
     }
 
     public boolean containsKey(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(MyMapArgsEntryType entry : this.args){
+            if( entry.getKey().equals(o.toString() ) ){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean containsValue(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(MyMapArgsEntryType entry : this.args){
+            if( entry.getValue().equals(o.toString()) ){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Object get(Object o) {
         for(MyMapArgsEntryType entry : this.args){
             System.out.println("o.toString()"+o);
-            if(entry.getKey().equals(o.toString())){
+            if( entry.getKey().equals(o.toString()) ){
                 System.out.println("entry.getKey()="+entry.getKey()+"====="+o);
                 System.out.println("VALUE -> "+entry.getValue());
                 return entry.getValue();
@@ -190,31 +220,73 @@ public class Action extends AbstractMessageContent implements Map{
         return null;
     }
 
-    public Object put(Object k, Object v) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Object put(String key, Object value) {
+        throw new UnsupportedOperationException("Read-only : put not allowed");
     }
+
 
     public Object remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Read-only : remove not allowed");
     }
 
-    public void putAll(Map map) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void putAll(Map<? extends String, ? extends Object> map) {
+        throw new UnsupportedOperationException("Read-only : putAll not allowed");
     }
 
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.references.clear();
+        this.args.clear();
     }
 
     public Set keySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashSet<String> set = new HashSet<String>();
+        for ( MyMapArgsEntryType entry : args ) {
+            set.add( entry.getKey() );
+        }
+        return set;
     }
 
     public Collection values() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Collection<Object> list = new ArrayList<Object>();
+        for ( MyMapArgsEntryType entry : args ) {
+            list.add( entry.getValue() );
+        }
+        return list;
     }
 
     public Set entrySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashSet<Entry<String,Object>> set = new HashSet<Entry<String,Object>>();
+        for ( MyMapArgsEntryType entry : args ) {
+            final String k = entry.getKey();
+            final Object v = entry.getValue();
+            set.add( new Entry<String,Object>() {
+
+                {
+                    key = k;
+                    value = v;
+                }
+
+                private String key;
+                private Object value;
+
+                public String getKey() {
+                    return key;
+                }
+
+                public Object getValue() {
+                    return value;
+                }
+
+                public Object setValue(Object value) {
+                    this.value = value;
+                    return value;
+                }
+
+                public String toString() {
+                    return "[" + key + " = " + value +"]";
+                }
+            } );
+        }
+        return set;
     }
 }

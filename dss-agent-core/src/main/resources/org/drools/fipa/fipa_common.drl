@@ -28,7 +28,6 @@ salience 9999
 when
     $holder : ActionHolder( $id : refId, $act : action, $drl : condition)
 then
-    System.out.println("SCSASA " + manager);
     manager.addRuleByTemplate("FIPA_RWH_"+$id, "requestWhen.drlt", $holder);
 end
 

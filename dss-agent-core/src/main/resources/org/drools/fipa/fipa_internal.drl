@@ -177,13 +177,13 @@ when
     $req : Request( $act : action, $actName : action.actionName ) from $msg.body
     $dst : Destination( $msgId ; )
 then
-    System.err.println(" INTERNAL PROCESSING : GENERATING COMMANDS FOR REQUEST " + $msgId );
+    System.err.println(" INTERNAL PROCESSING : GENERATING COMMANDS FOR REQUEST " + $act );
 
     List list = new ArrayList(3);
-            list.add(CommandFactory.newInsert( $act ));
+            list.add(CommandFactory.newInsert( $req.getAction() ));
             list.add(CommandFactory.newFireAllRules());
             
-            list.add(CommandFactory.newQuery( "$out_"+$msgId, $act.getActionName() , MessageContentHelper.getActionArgsArray($act)) );
+            list.add(CommandFactory.newQuery( "$out_"+$msgId, $act.getActionName() , MessageContentHelper.getActionArgsArray( $req.getAction() )) );
     BatchExecutionCommand batch = CommandFactory.newBatchExecution(list);
     insert( new MessageCommands( $msgId, batch ) );
 end

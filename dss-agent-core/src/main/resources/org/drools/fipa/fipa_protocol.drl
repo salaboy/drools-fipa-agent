@@ -221,8 +221,7 @@ when
                        $content : body,
                        performative == Act.REQUEST )
     $resp : ResponseContent( messageId == $msgId, $data : data != null )
-            $ref: Ref( ) from $data
-            eval($ref.getReferences().get(0).getKey().equals("?return") )
+                $ref: Ref( size == 1 && keySet contains "?return" ) from $data
             // Action.RETURN
 then
    System.out.println("PROTOCOL RULES : MY DATA1: " + $data);
@@ -247,8 +246,7 @@ when
                        $content : body,
                        performative == Act.REQUEST )
     $resp : ResponseContent( messageId == $msgId, $data : data != null )
-            $ref: Ref( ) from $data
-            eval(!$ref.getReferences().get(0).getKey().equals("?return") )
+                $ref: Ref( size != 1 || keySet not contains "?return" ) from $data
             // Action.RETURN
 then
    System.out.println("PROTOCOL RULES : MY DATA2: " + $data);

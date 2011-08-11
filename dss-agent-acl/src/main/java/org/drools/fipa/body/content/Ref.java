@@ -1,20 +1,18 @@
 package org.drools.fipa.body.content;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.mappers.MyMapArgsEntryType;
+import org.drools.fipa.mappers.MyMapReferenceEntryType;
+import sun.security.x509.RFC822Name;
 
 @XmlType(name = "Ref", namespace="http://content.body.fipa.drools.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Ref extends AbstractMessageContent implements Map{
+public class Ref extends AbstractMessageContent implements Map<String,Object> {
   
    @XmlElement(required = true)
     public List<MyMapArgsEntryType> references = new ArrayList<MyMapArgsEntryType>(); 
@@ -80,57 +78,110 @@ public class Ref extends AbstractMessageContent implements Map{
     }
 
     public int size() {
-        
         return references.size();
     }
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return size() > 0;
     }
 
     public boolean containsKey(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(MyMapArgsEntryType entry : this.references){
+            if( entry.getKey().equals(o.toString() ) ){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean containsValue(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(MyMapArgsEntryType entry : this.references){
+            if( entry.getValue().equals(o.toString()) ){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Object get(Object o) {
         for(MyMapArgsEntryType entry : this.references){
-            if(entry.getKey().equals(o.toString() )){
+            System.out.println("o.toString()"+o);
+            if( entry.getKey().equals(o.toString()) ){
+                System.out.println("entry.getKey()="+entry.getKey()+"====="+o);
+                System.out.println("VALUE -> "+entry.getValue());
                 return entry.getValue();
             }
         }
         return null;
     }
 
-    public Object put(Object k, Object v) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Object put(String key, Object value) {
+        throw new UnsupportedOperationException("Read-only : put not allowed");
     }
+
 
     public Object remove(Object o) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        throw new UnsupportedOperationException("Read-only : remove not allowed");
     }
 
-    public void putAll(Map map) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void putAll(Map<? extends String, ? extends Object> map) {
+        throw new UnsupportedOperationException("Read-only : putAll not allowed");
     }
 
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.references.clear();
     }
 
     public Set keySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashSet<String> set = new HashSet<String>();
+        for ( MyMapArgsEntryType entry : references ) {
+            set.add( entry.getKey() );
+        }
+        return set;
     }
 
     public Collection values() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Collection<Object> list = new ArrayList<Object>();
+        for ( MyMapArgsEntryType entry : references) {
+            list.add( entry.getValue() );
+        }
+        return list;
     }
 
     public Set entrySet() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        HashSet<Entry<String,Object>> set = new HashSet<Entry<String,Object>>();
+        for ( MyMapArgsEntryType entry : references ) {
+            final String k = entry.getKey();
+            final Object v = entry.getValue();
+            set.add( new Entry<String,Object>() {
+
+                {
+                    key = k;
+                    value = v;
+                }
+
+                private String key;
+                private Object value;
+
+                public String getKey() {
+                    return key;
+                }
+
+                public Object getValue() {
+                    return value;
+                }
+
+                public Object setValue(Object value) {
+                    this.value = value;
+                    return value;
+                }
+
+                public String toString() {
+                    return "[" + key + " = " + value +"]";
+                }
+            } );
+        }
+        return set;
     }
 
 

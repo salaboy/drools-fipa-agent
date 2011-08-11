@@ -103,9 +103,10 @@ public class MessageContentEncoder {
                 String oldEncodedAction = ((Request) body).getAction().getEncodedContent();
                 decoded = MessageContentEncoder.decode(((Request) body).getAction().getEncodedContent(), encoding);
                 ((Request) body).setAction((Action) decoded);
+                System.err.println( decoded );
                 ((Request) body).getAction().setEncodedContent(oldEncodedAction);
-                ((Request) body).getAction().getArgs().addAll(((Action) decoded).getArgs());
-                ((Request) body).getAction().getReferences().addAll(((Action) decoded).getReferences());
+//                ((Request) body).getAction().getArgs().addAll(((Action) decoded).getArgs());
+//                ((Request) body).getAction().getReferences().addAll(((Action) decoded).getReferences());
                 ((Request) body).getAction().setEncoded(false);
                 break;
             case REQUEST_WHEN:
@@ -115,8 +116,8 @@ public class MessageContentEncoder {
                 Object decodedConditionRequestWhen = MessageContentEncoder.decode(((RequestWhen) body).getCondition().getEncodedContent(), encoding);
                 ((RequestWhen) body).setAction((Action) decodedActionRequestWhen);
                 ((RequestWhen) body).getAction().setEncodedContent(oldEncodedActionWhen);
-                ((RequestWhen) body).getAction().getArgs().addAll(((Action) decodedActionRequestWhen).getArgs());
-                ((RequestWhen) body).getAction().getReferences().addAll(((Action) decodedActionRequestWhen).getReferences());
+//                ((RequestWhen) body).getAction().getArgs().addAll(((Action) decodedActionRequestWhen).getArgs());
+//                ((RequestWhen) body).getAction().getReferences().addAll(((Action) decodedActionRequestWhen).getReferences());
                 ((RequestWhen) body).getAction().setEncoded(false);
                 
                 ((RequestWhen) body).setCondition((Rule) decodedConditionRequestWhen);

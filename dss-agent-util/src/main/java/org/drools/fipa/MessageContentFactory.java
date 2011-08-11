@@ -4,6 +4,7 @@
  */
 package org.drools.fipa;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,8 +63,8 @@ public class MessageContentFactory {
         Action action = new Action();
         action.setRETURN("?return");
         action.setActionName(other.getActionName());
-        action.setArgs(other.getArgs());
-        action.setReferences(other.getReferences());
+        action.setArgs(new ArrayList(other.getArgs()));
+        action.setReferences(new ArrayList(other.getReferences()));
         action.setEncodedContent(other.getEncodedContent());
         action.setEncoding(other.getEncoding());
         action.setEncoded(other.isEncoded());
