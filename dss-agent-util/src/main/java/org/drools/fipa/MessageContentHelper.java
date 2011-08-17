@@ -5,6 +5,7 @@
 package org.drools.fipa;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -15,6 +16,7 @@ import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.content.Ref;
 import org.drools.fipa.mappers.MyMapArgsEntryType;
 import org.drools.fipa.mappers.MyMapReferenceEntryType;
+import org.drools.rule.Declaration;
 import org.drools.runtime.rule.impl.NativeQueryResults;
 import org.drools.runtime.rule.QueryResults;
 /**
@@ -24,7 +26,6 @@ import org.drools.runtime.rule.QueryResults;
 public class MessageContentHelper {
 
     public static Object[] getActionArgsArray(Action action) {
-//        return args != null ? args.values().toArray() : new Object[0];
         Object[] myArray = new Object[action.getArgs().size()];
         int i = 0;
         for(MyMapArgsEntryType entry : action.getArgs()){
@@ -38,16 +39,15 @@ public class MessageContentHelper {
         Map<String, Object> map = new HashMap<String, Object>();
         
         org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
-        
-        DroolsQuery query = (DroolsQuery) inner.get(0).get(-1);
-        
-        int i = 0;
-        for (MyMapReferenceEntryType entry : action.getReferences()) {
-            map.put(action.getReferences().get(i).getValue(), query.getElements()[action.getReferences().get(i).getKey()]);
-            i++;
+
+        List<MyMapReferenceEntryType> pointers = action.getReferences();
+        Declaration[] params = inner.getParameters();
+
+        for (MyMapReferenceEntryType entry : pointers) {
+            Declaration dec = params[ entry.getKey() ];
+            map.put( entry.getValue(), inner.get(0).get( dec.getIdentifier() ) );
         }
         Ref ref = new Ref();
-        
         ref.setReferences(MapArgsAdapterHelper.marshal(map));
         return ref;
     }
@@ -59,13 +59,11 @@ public class MessageContentHelper {
     public static Ref getQueryReferences(Query query, QueryResults results) {
        Map<String,Object> map = new HashMap<String,Object>();
         org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
-            DroolsQuery droolsQuery = (DroolsQuery) inner.get(0).get(-1);
-           
-        int i = 0;
+        Declaration[] params = inner.getParameters();
+
         for (MyMapReferenceEntryType entry : query.getReferences()) {
-           
-            map.put(query.getReferences().get(i).getValue(), droolsQuery.getElements()[query.getReferences().get(i).getKey()]);
-            i++;
+            Declaration dec = params[ entry.getKey() ];
+            map.put( entry.getValue(), inner.get(0).get( dec.getIdentifier() ) );
         }
 
         Ref ref = new Ref();
@@ -73,4 +71,5 @@ public class MessageContentHelper {
         
         return ref;
     }
+
 }
