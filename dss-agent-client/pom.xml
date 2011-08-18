@@ -33,7 +33,7 @@
                             <wsdlFiles>
                                 <wsdlFile>localhost_8080/dss-agent-service/service/SynchronousDroolsAgentService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <wsdlLocation>http://localhost:8080/dss-agent-service/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
+                            <wsdlLocation>http://localhost:9944/dss-agent-service/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/SynchronousDroolsAgentService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-SynchronousDroolsAgentService</id>
@@ -62,6 +62,7 @@
                 <configuration>
                     <webApp>../dss-agent-service/target/dss-agent-service.war</webApp>
                     <contextPath>dss-agent-service</contextPath>
+                    <jettyConfig>src/main/resources/jetty.xml</jettyConfig>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>
                     
