@@ -58,6 +58,7 @@
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.26</version>
                 <configuration>
                     <webApp>../dss-agent-service/target/dss-agent-service.war</webApp>
                     <contextPath>dss-agent-service</contextPath>
