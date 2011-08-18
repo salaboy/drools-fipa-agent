@@ -22,4 +22,14 @@
         <module>dss-agent-util</module>
     <module>dss-domain-client-example</module>
   </modules>
+  
+  <repositories>
+    <repository>
+            <id>jboss</id>
+            <name>jboss</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+  
+  </repositories>
+      
 </project>
