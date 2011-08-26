@@ -20,16 +20,18 @@
         <module>dss-agent-client</module>
         <module>dss-agent-acl</module>
         <module>dss-agent-util</module>
-    <module>dss-domain-client-example</module>
-  </modules>
+        <module>dss-agent-custom-service</module>
+        <module>dss-domain-client-example</module>
+        <module>drools-fipa-agent-archetype</module>
+    </modules>
   
-  <repositories>
-    <repository>
+    <repositories>
+        <repository>
             <id>jboss</id>
             <name>jboss</name>
             <url>https://repository.jboss.org/nexus/content/groups/public/</url>
         </repository>
   
-  </repositories>
+    </repositories>
       
 </project>

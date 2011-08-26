@@ -21,8 +21,8 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
     default-autowire="byName">
-    <!-- your CUSTOM AGENT SHOULD CONFIGURE its sessions and resources here. Look at the example custom agent for reference -->    
-    <!--bean id="agent1-session1" class="org.drools.fipa.DroolsAgentConfiguration$SubSessionDescriptor">
+
+    <bean id="agent1-session1" class="org.drools.fipa.DroolsAgentConfiguration$SubSessionDescriptor">
         <constructor-arg value="session1"/>
         <constructor-arg value="default/agent1-session1-changeset.xml"/>
         <constructor-arg value="NOT_USED_YET"/>
@@ -52,6 +52,6 @@
   
     <bean id="agent" class="org.drools.fipa.DroolsAgent" factory-bean="agent-factory" factory-method="spawn">
         <constructor-arg ref="agent1-configuration"/>
-    </bean-->
+    </bean>
 
 </beans>

@@ -31,9 +31,10 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>localhost_8080/dss-agent-service/service/SynchronousDroolsAgentService.wsdl</wsdlFile>
+                                <wsdlFile>../../../dss-agent-service/target/jaxws/wsgen/wsdl/SynchronousDroolsAgentServiceImplService.wsdl</wsdlFile>
+                                <!--wsdlFile>localhost_8080/dss-agent-service/service/SynchronousDroolsAgentService.wsdl</wsdlFile-->
                             </wsdlFiles>
-                            <wsdlLocation>http://localhost:9944/dss-agent-service/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
+                            <wsdlLocation>http://localhost:9944/dss-agent-custom-service/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/SynchronousDroolsAgentService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-SynchronousDroolsAgentService</id>
@@ -60,8 +61,8 @@
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.26</version>
                 <configuration>
-                    <webApp>../dss-agent-service/target/dss-agent-service.war</webApp>
-                    <contextPath>dss-agent-service</contextPath>
+                    <webApp>../dss-agent-custom-service/target/dss-agent-custom-service.war</webApp>
+                    <contextPath>dss-agent-custom-service</contextPath>
                     <jettyConfig>src/main/resources/jetty.xml</jettyConfig>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>
