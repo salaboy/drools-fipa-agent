@@ -62,15 +62,22 @@ public class SynchronousDroolsAgentServiceImpl implements SynchronousDroolsAgent
     @Override
     public List<ACLMessage> tell(ACLMessage message) {
         logger.info(" >>> IN Message -> "+message.getPerformative().name());
+        System.out.println(">>> IN Message -> "+message.getPerformative().name());
         try {
             agent.tell(message);
         } catch (Throwable t) {
-            
+            System.out.println(">>>>>>>>>>>>> exception => "+t.getMessage());
         }
         List<ACLMessage> retrieveResponses = responseInformer.retrieveResponses(message);
-        logger.info(" >>> Number of OUT Messages -> "+retrieveResponses.size());
-        for(ACLMessage outMessage : retrieveResponses){
-            logger.info(" >>> OUT Message -> "+outMessage.getPerformative().name());
+        if(retrieveResponses != null ){
+            System.out.println(" >>> Number of OUT Messages -> "+retrieveResponses.size());
+            logger.info(" >>> Number of OUT Messages -> "+retrieveResponses.size());
+            for(ACLMessage outMessage : retrieveResponses){
+                logger.info(" >>> OUT Message -> "+outMessage.getPerformative().name());
+                System.out.println(" >>> OUT Message -> "+outMessage.getPerformative().name());
+            }
+        }else{
+            System.out.println(" >>> 0 OUT Messages");
         }
         return retrieveResponses;
     }

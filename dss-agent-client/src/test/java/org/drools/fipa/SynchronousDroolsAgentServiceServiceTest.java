@@ -121,7 +121,7 @@ public class SynchronousDroolsAgentServiceServiceTest {
 
         List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell(informMessage);
 
-        assertNotNull(answers);
+        assertNotNull(answers); 
         assertEquals(0, answers.size());
 
         ACLMessage queryIfMessage = new ACLMessage();

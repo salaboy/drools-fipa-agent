@@ -31,10 +31,9 @@
                         </goals>
                         <configuration>
                             <wsdlFiles>
-                                <wsdlFile>../../../dss-agent-service/target/jaxws/wsgen/wsdl/SynchronousDroolsAgentServiceImplService.wsdl</wsdlFile>
-                                <!--wsdlFile>localhost_8080/dss-agent-service/service/SynchronousDroolsAgentService.wsdl</wsdlFile-->
+                                <wsdlFile>localhost_8080/dss-agent-custom-service/service/SynchronousDroolsAgentService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <wsdlLocation>http://localhost:9944/dss-agent-custom-service/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
+                            <wsdlLocation>http://localhost:8080/dss-agent-custom-service/service/SynchronousDroolsAgentService?WSDL</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/SynchronousDroolsAgentService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-SynchronousDroolsAgentService</id>
@@ -56,7 +55,7 @@
                     <catalog>${basedir}/src/jax-ws-catalog.xml</catalog>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>maven-jetty-plugin</artifactId>
                 <version>6.1.26</version>
@@ -96,7 +95,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin-->
             
         </plugins>
     </build>
