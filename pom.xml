@@ -12,7 +12,7 @@
         <drools.informer.version>5.3.0-SNAPSHOT</drools.informer.version>
         <camel.version>2.7.1</camel.version>
         <spring.version>3.0.5.RELEASE</spring.version>
-        <cxf.version>2.3.3</cxf.version>
+        <cxf.version>2.4.2</cxf.version>
     </properties>
     <modules>
         <module>dss-agent-core</module>
