@@ -34,7 +34,7 @@
                                 <!--wsdlFile>localhost_8080/dss-agent-custom-service/service/SynchronousDroolsAgentService.wsdl</wsdlFile-->
                                 <wsdlFile>../../../dss-agent-service/target/jaxws/wsgen/wsdl/SynchronousDroolsAgentServiceImplService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <wsdlLocation>http://127.0.0.1:9944/dss-agent-custom-service/service/SynchronousDroolsAgentService?wsdl</wsdlLocation>
+                            <wsdlLocation>http://0.0.0.0:9944/dss-agent-custom-service/service/SynchronousDroolsAgentService?wsdl</wsdlLocation>
                             <staleFile>${project.build.directory}/jaxws/stale/SynchronousDroolsAgentService.stale</staleFile>
                         </configuration>
                         <id>wsimport-generate-SynchronousDroolsAgentService</id>
