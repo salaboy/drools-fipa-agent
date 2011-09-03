@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.drools.fipa;
+package archetype-resources.src.test.java.org.drools.fipa;
 
 import org.drools.fipa.body.content.Ref;
 import org.drools.fipa.body.acts.InformRef;

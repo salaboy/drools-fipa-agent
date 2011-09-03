@@ -17,12 +17,10 @@
     <modules>
         <module>dss-agent-core</module>
         <module>dss-agent-service</module>
-        <module>dss-agent-client</module>
         <module>dss-agent-acl</module>
         <module>dss-agent-util</module>
-        <module>dss-agent-custom-service</module>
-        <module>dss-domain-client-example</module>
         <module>drools-fipa-agent-archetype</module>
+        <module>drools-fipa-agent-client-archetype</module>
     </modules>
   
     <repositories>
