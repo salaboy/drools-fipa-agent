@@ -7,7 +7,7 @@
     <artifactId>${artifactId}</artifactId>
     <version>${version}</version>
     
-    <name>Drools :: FIPA Agent Client</name>
+    <name>Drools :: FIPA Agent (Custom) Client</name>
     <url>http://maven.apache.org</url>
     <build>
         <resources>
@@ -59,15 +59,18 @@
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
-                    <webApp>../dss-agent-custom-service/target/dss-agent-custom-service.war</webApp>
-                    <jettyConfig>dss-agent-client/src/main/resources/jetty.xml</jettyConfig>
+                    <!-- ADD YOUR DROOLS FIPA AGENT LOCATION HERE. TEST WILL RUN AGAINST THIS AGENT -->
+                    <webApp>../test-agent/target/dss-agent-custom-service.war</webApp>
+                    <jettyConfig>src/test/resources/jetty.xml</jettyConfig>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>
                     <webAppConfig>
+                        <!-- ADD YOUR DROOLS FIPA AGENT LOCATION HERE. TEST WILL RUN AGAINST THIS AGENT -->
                         <contextPath>/dss-agent-custom-service</contextPath>
                     </webAppConfig>
                 </configuration>
                 <dependencies>
+                    <!-- ADD YOUR DROOLS FIPA AGENT DOMAIN DEPENDENCIES HERE -->
                     <dependency>
                         <groupId>org.drools.fipa</groupId>
                         <artifactId>dss-domain-client-example</artifactId>
@@ -118,11 +121,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
+        <!-- ADD YOUR DROOLS FIPA AGENT LOCATION HERE. TEST WILL RUN AGAINST THIS AGENT -->
         <dependency>
             <groupId>org.drools.fipa</groupId>
             <artifactId>dss-domain-client-example</artifactId>
             <version>${project.version}</version>
         </dependency>
+        
+        
         <dependency>
             <groupId>org.drools.fipa</groupId>
             <artifactId>dss-agent-util</artifactId>

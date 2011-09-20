@@ -4,6 +4,11 @@
   <sources>
    
   </sources>
+  <resources>
+    
+    <resource>src/main/webapp/WEB-INF/web.xml</resource>
+    <resource>src/main/webapp/META-INF/context.xml</resource>
+  </resources>
   <testSources>
     
   </testSources>
