@@ -1,15 +1,16 @@
+
 <archetype xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype/1.0.0 http://maven.apache.org/xsd/archetype-1.0.0.xsd">
-  <id>drools-fipa-agent-archetype</id>
-  <sources>
+    <id>drools-fipa-agent-archetype</id>
+    <sources>
    
-  </sources>
-  <resources>
+    </sources>
+    <resources>
+        <resource>src/main/resources/dss-agents.xml</resource>
+        <resource>src/main/webapp/WEB-INF/web.xml</resource>
+        <resource>src/main/webapp/META-INF/context.xml</resource>
+    </resources>
+    <testSources>
     
-    <resource>src/main/webapp/WEB-INF/web.xml</resource>
-    <resource>src/main/webapp/META-INF/context.xml</resource>
-  </resources>
-  <testSources>
-    
-  </testSources>
+    </testSources>
 </archetype>
