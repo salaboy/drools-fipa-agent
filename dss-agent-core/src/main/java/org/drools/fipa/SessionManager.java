@@ -1,5 +1,6 @@
 package org.drools.fipa;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.io.IOUtils;
 import org.drools.*;
 import org.drools.agent.KnowledgeAgent;
@@ -25,10 +26,12 @@ import org.drools.io.Resource;
 import org.drools.io.impl.ByteArrayResource;
 import org.drools.io.impl.ChangeSetImpl;
 import org.drools.io.impl.ClassPathResource;
+import org.drools.io.internal.InternalResource;
 import org.drools.runtime.KnowledgeSessionConfiguration;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.conf.ClockTypeOption;
 
+import javax.xml.bind.annotation.XmlType;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,7 +62,9 @@ public class SessionManager extends SessionTemplateManager {
             if (grid == null) {
                 initGrid();
             }
-            return new SessionManager(id, buildKnowledgeBase(changeset,remoteNode));
+            return new SessionManager(id, buildKnowledgeBase(
+                    changeset != null ? changeset : DEFAULT_CHANGESET,
+                    remoteNode));
         } catch (IOException ioe) {
             ioe.printStackTrace();
             return null;
@@ -173,15 +178,22 @@ public class SessionManager extends SessionTemplateManager {
 
 
 
+    public void addResource( String id, Resource res ) {
+        ChangeSetImpl changeSet = new ChangeSetImpl();
+        changeSet.setResourcesAdded( Arrays.asList( res ) );
+
+        resources.put( id ,res );
+
+        kAgent.applyChangeSet(changeSet);
+        System.out.println("xx");
+    }
+
+
 
     public void addRule(String id, String drl) {
         ByteArrayResource bar = new ByteArrayResource(drl.getBytes());
         bar.setResourceType(ResourceType.DRL);
-        ChangeSetImpl changeSet = new ChangeSetImpl();
-        changeSet.setResourcesAdded(Arrays.asList((Resource) bar));
-
-        resources.put(id,bar);
-        kAgent.applyChangeSet(changeSet);
+        addResource( id, bar );
     }
 
     public void removeRule(String id) {

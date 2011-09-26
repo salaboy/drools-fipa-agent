@@ -35,6 +35,8 @@ public class DroolsAgentConfiguration {
 
     private String                              springContextFilePath;
 
+    private String                              defaultSubsessionChangeSet;
+
     public DroolsAgentConfiguration() {
 
     }
@@ -112,6 +114,13 @@ public class DroolsAgentConfiguration {
     }
 
 
+    public String getDefaultSubsessionChangeSet() {
+        return defaultSubsessionChangeSet;
+    }
+
+    public void setDefaultSubsessionChangeSet(String defaultSubsessionChangeSet) {
+        this.defaultSubsessionChangeSet = defaultSubsessionChangeSet;
+    }
 
 
 

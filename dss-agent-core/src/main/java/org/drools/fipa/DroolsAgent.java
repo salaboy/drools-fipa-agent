@@ -59,7 +59,7 @@ public class DroolsAgent {
     public void tell(ACLMessage msg) {
         
         MessageContentEncoder.decodeBody(msg.getBody(), msg.getEncoding());
-        System.out.println("!!!!!!!!!!!!!!!!msg -> "+msg);
+//        System.out.println("!!!!!!!!!!!!!!!!msg -> "+msg);
         this.mind.insert(msg);
         this.mind.fireAllRules();
     }

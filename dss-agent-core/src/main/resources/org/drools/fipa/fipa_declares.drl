@@ -23,6 +23,8 @@ global AgentID agentName;
 // References to slave sessions
 global Map proxies;
 
+// ChangeSet for dynamically generated subsessions
+global String defaultCS;
 
 
 // messages are declared events to handle timestamping

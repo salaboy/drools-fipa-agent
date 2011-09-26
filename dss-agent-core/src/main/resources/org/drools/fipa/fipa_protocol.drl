@@ -30,7 +30,7 @@ when
                        $content : body,
                        performative == Act.INFORM || performative == Act.CONFIRM || performative == Act.DISCONFIRM)
 then
-   System.out.println("PROTOCOL : RECEIVED ONE-WAY MESSAGE " + $msg);
+//   System.out.println("PROTOCOL : RECEIVED ONE-WAY MESSAGE " + $msg);
    // DO nothing
 end
 
@@ -40,7 +40,7 @@ when
     $msg : ACLMessage( $msgId : id, performative == Act.INFORM )
     $cont : ResponseContent( messageId == $msgId )
 then
-    System.err.println("PROTOCOL : INFORM PROCESSING COMPLETE, CLEANUP");
+//    System.err.println("PROTOCOL : INFORM PROCESSING COMPLETE, CLEANUP");
     retract( $msg );
     retract( $cont );
 end
@@ -63,7 +63,7 @@ when
 then
    Action action = MessageContentFactory.newActionContent(((QueryRef)$content).getQuery().getQueryName(),null);
    ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, action, new Rule());
-   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+//   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
    responseInformer.informResponse($msg,ans);
 end
 
@@ -101,8 +101,8 @@ when
     $resp : ResponseContent( messageId == $msgId, $data : data != null)
 then
     ACLMessage ans = aclFactory.newReplyWithInformIfMessage($msg, agentName, $data);
-    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
-    System.out.println("\t"+$msg.hashCode()+", "+ $msg);
+//    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+//    System.out.println("\t"+$msg.hashCode()+", "+ $msg);
     responseInformer.informResponse($msg,ans);
 
 
@@ -123,9 +123,9 @@ when
                        performative == Act.QUERY_REF)
     $resp : ResponseContent( messageId == $msgId, $data : data != null)
 then
-    System.err.println("sxxx " + $data.getClass());
+//    System.err.println("sxxx " + $data.getClass());
     ACLMessage ans = aclFactory.newReplyWithInformRefMessage($msg, agentName, (Ref) $data);
-    System.out.println("PROTOCOL RULES QUERYREF RESP: " + agentName + " >>>> " + ans);
+//    System.out.println("PROTOCOL RULES QUERYREF RESP: " + agentName + " >>>> " + ans);
     responseInformer.informResponse($msg,ans);
 
     retract($resp);
@@ -150,7 +150,7 @@ then
     ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName,
                                                            action,
                                                            "Query Error - TODO improve diagnostics");
-    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+//    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
     responseInformer.informResponse($msg,ans);
 
     retract($msg);
@@ -174,7 +174,7 @@ then
     ACLMessage ans = aclFactory.newReplyWithFailureMessage($msg, agentName,
                                                           action,
                                                            "Query Error - TODO improve diagnostics");
-    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+//    System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
     responseInformer.informResponse($msg,ans);
 
     retract($msg);
@@ -200,7 +200,7 @@ when
 then
    Action action = MessageContentFactory.newActionContent(((Request) $content).getAction());
    ACLMessage ans = aclFactory.newReplyWithAgreeMessage($msg, agentName, action, new Rule());
-   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+//   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
    responseInformer.informResponse($msg,ans);
 end
 
@@ -224,9 +224,9 @@ when
                 $ref: Ref( size == 1 && keySet contains "?return" ) from $data
             // Action.RETURN
 then
-   System.out.println("PROTOCOL RULES : MY DATA1: " + $data);
-   ACLMessage ans = aclFactory.newReplyWithInformMessage($msg, agentName, (Ref)$data);
-   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+//   System.out.println("PROTOCOL RULES : MY DATA1: " + $data);
+   ACLMessage ans = aclFactory.newReplyWithInformMessage($msg, agentName, ((Ref)$data).get("?return"));
+//   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
    responseInformer.informResponse($msg,ans);
 
    retract($msg);
@@ -249,9 +249,9 @@ when
                 $ref: Ref( size != 1 || keySet not contains "?return" ) from $data
             // Action.RETURN
 then
-   System.out.println("PROTOCOL RULES : MY DATA2: " + $data);
+//   System.out.println("PROTOCOL RULES : MY DATA2: " + $data);
    ACLMessage ans = aclFactory.newReplyWithInformRefMessage($msg, agentName, (Ref) $data);
-   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
+//   System.out.println("PROTOCOL RULES : " + agentName + " >>>> " + ans);
    responseInformer.informResponse($msg,ans);
    retract($msg);
    retract($resp);
@@ -274,10 +274,10 @@ end
 
 
 
-rule "Log"
-salience 999
-when
-    $msg : ACLMessage()
-then
-    System.out.println("PROTOCOL RULES : " + agentName + " <<<< " + $msg);
-end
+//rule "Log"
+//salience 999
+//when
+//    $msg : ACLMessage()
+//then
+//    System.out.println("PROTOCOL RULES : " + agentName + " <<<< " + $msg);
+//end

@@ -45,9 +45,10 @@ public class DroolsAgentFactory {
             StatefulKnowledgeSession mind = SessionManager.create(config.getAgentId(),config.getChangeset()).getStatefulKnowledgeSession();
 
             Map<String,StatefulKnowledgeSession> proxies = new HashMap<String,StatefulKnowledgeSession>();
-                mind.setGlobal("aclFactory",factory);
-                mind.setGlobal("agentName",aid);
-                mind.setGlobal("proxies",proxies);
+                mind.setGlobal("aclFactory", factory);
+                mind.setGlobal("agentName", aid);
+                mind.setGlobal("proxies", proxies);
+                mind.setGlobal("defaultCS", config.getDefaultSubsessionChangeSet() );
                 mind.setGlobal("responseInformer", config.getResponseInformer());
 
             for (DroolsAgentConfiguration.SubSessionDescriptor descr : config.getSubSessions()) {

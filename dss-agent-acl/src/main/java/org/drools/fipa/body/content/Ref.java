@@ -105,10 +105,10 @@ public class Ref extends AbstractMessageContent implements Map<String,Object> {
 
     public Object get(Object o) {
         for(MyMapArgsEntryType entry : this.references){
-            System.out.println("o.toString()"+o);
+//            System.out.println("o.toString()"+o);
             if( entry.getKey().equals(o.toString()) ){
-                System.out.println("entry.getKey()="+entry.getKey()+"====="+o);
-                System.out.println("VALUE -> "+entry.getValue());
+//                System.out.println("entry.getKey()="+entry.getKey()+"====="+o);
+//                System.out.println("VALUE -> "+entry.getValue());
                 return entry.getValue();
             }
         }

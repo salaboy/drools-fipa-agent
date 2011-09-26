@@ -25,10 +25,10 @@ when
     $key : String( this != "" ) from $el
     not SessionMapping( $key ;  )
 then
-//    System.out.println("****************************** I will create session for " + $qry + " with " + $el + " (" + $el.length );
+//    System.out.println("****************************** I will create session for " + $qry + " with " + $el );
     String sid = $key;
 
-    SessionManager sm = SessionManager.create(sid);
+    SessionManager sm = SessionManager.create( sid, defaultCS );
     StatefulKnowledgeSession kSession = sm.getStatefulKnowledgeSession();
     kSession.fireAllRules();
         proxies.put(sid,kSession);
