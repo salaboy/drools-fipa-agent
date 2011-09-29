@@ -54,14 +54,18 @@ public class SessionManager extends SessionTemplateManager {
         remoteNode = createRemoteNode(grid);
     }
 
+//    {
+//        initGrid();
+//    }
+
 
 
 
     public static SessionManager create(String id, String changeset) {
         try {
-            if (grid == null) {
-                initGrid();
-            }
+//            if (grid == null) {
+//                initGrid();
+//            }
             return new SessionManager(id, buildKnowledgeBase(
                     changeset != null ? changeset : DEFAULT_CHANGESET,
                     remoteNode));
@@ -74,9 +78,9 @@ public class SessionManager extends SessionTemplateManager {
 
     public static SessionManager create(String id) {
         try {
-            if (grid == null) {
-                initGrid();
-            }
+//            if (grid == null) {
+//                initGrid();
+//            }
             return new SessionManager(id, buildKnowledgeBase(DEFAULT_CHANGESET,remoteNode));
         } catch (IOException ioe) {
             ioe.printStackTrace();
