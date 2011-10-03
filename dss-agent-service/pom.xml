@@ -21,11 +21,6 @@
     <dependencies>
         <dependency>
             <groupId>org.drools.fipa</groupId>
-            <artifactId>dss-domain-client-example</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.drools.fipa</groupId>
             <artifactId>drools-agent-core</artifactId>
             <version>${project.version}</version>
         </dependency>

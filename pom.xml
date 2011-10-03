@@ -21,6 +21,7 @@
         <module>dss-agent-util</module>
         <module>drools-fipa-agent-archetype</module>
         <module>drools-fipa-agent-client-archetype</module>
+        <module>human-task-helpers</module>
     </modules>
   
     <repositories>
