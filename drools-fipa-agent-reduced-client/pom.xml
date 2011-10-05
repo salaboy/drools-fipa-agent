@@ -20,6 +20,17 @@
       <artifactId>dss-agent-acl</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
+     <dependency>
+      <groupId>org.drools.fipa</groupId>
+      <artifactId>dss-agent-util</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+     <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>knowledge-api</artifactId>
+      <version>5.4.0-SNAPSHOT</version>
+       <type>jar</type>
+     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
