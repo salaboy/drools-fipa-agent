@@ -38,7 +38,9 @@ public class DroolsAgentFactory {
 
 
     public DroolsAgent spawn(DroolsAgentConfiguration config) {
-        AgentID aid = new AgentID(config.getAgentId());
+        AgentID aid = new AgentID();
+        aid.setName(config.getAgentId());
+        aid.setLocalName(config.getAgentId());
 
         try {
             ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);

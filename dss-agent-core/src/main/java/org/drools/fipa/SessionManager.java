@@ -41,9 +41,7 @@ public class SessionManager extends SessionTemplateManager {
 
     private KnowledgeAgent kAgent;
     private StatefulKnowledgeSession kSession;
-    private Map<String,Resource> resources;
-
-
+    private Map<String, Resource> resources;
     private static Grid grid;
     private static GridNode remoteNode;
     private static final String DEFAULT_CHANGESET = "org/drools/fipa/fipa_subsession_def_changeset.xml";
@@ -54,18 +52,9 @@ public class SessionManager extends SessionTemplateManager {
         remoteNode = createRemoteNode(grid);
     }
 
-//    {
-//        initGrid();
-//    }
-
-
-
-
     public static SessionManager create(String id, String changeset) {
         try {
-//            if (grid == null) {
-//                initGrid();
-//            }
+
             return new SessionManager(id, buildKnowledgeBase(
                     changeset != null ? changeset : DEFAULT_CHANGESET,
                     remoteNode));
@@ -75,21 +64,15 @@ public class SessionManager extends SessionTemplateManager {
         }
     }
 
-
     public static SessionManager create(String id) {
         try {
-//            if (grid == null) {
-//                initGrid();
-//            }
-            return new SessionManager(id, buildKnowledgeBase(DEFAULT_CHANGESET,remoteNode));
+
+            return new SessionManager(id, buildKnowledgeBase(DEFAULT_CHANGESET, remoteNode));
         } catch (IOException ioe) {
             ioe.printStackTrace();
             return null;
         }
     }
-
-
-
 
 //     private static KnowledgeBase buildKnowledgeBase(String changeset, GridNode remoteNode) throws IOException {
 //        KnowledgeBuilder kbuilder = remoteNode.get(KnowledgeBuilderFactoryService.class).newKnowledgeBuilder();
@@ -106,15 +89,13 @@ public class SessionManager extends SessionTemplateManager {
 //
 //        return kbase;
 //     }
-
-
     private static KnowledgeBase buildKnowledgeBase(String changeset, GridNode remoteNode) throws IOException {
         KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-            kbuilder.add(new ClassPathResource(changeset), ResourceType.CHANGE_SET);
-            if (kbuilder.hasErrors()) {
-                System.err.println(kbuilder.getErrors());
-                System.exit(-1);
-            }
+        kbuilder.add(new ClassPathResource(changeset), ResourceType.CHANGE_SET);
+        if (kbuilder.hasErrors()) {
+            System.err.println(kbuilder.getErrors());
+            System.exit(-1);
+        }
 //        kbuilder.add(new ByteArrayResource(IOUtils.toByteArray(new ClassPathResource(changeset).getInputStream())), ResourceType.CHANGE_SET);
 
         RuleBaseConfiguration rbconf = new RuleBaseConfiguration();
@@ -127,20 +108,14 @@ public class SessionManager extends SessionTemplateManager {
         kbase.addKnowledgePackages(kbuilder.getKnowledgePackages());
 
         return kbase;
-     }
-
-
-
-
-
-
+    }
 
     protected SessionManager(String id, KnowledgeBase kbase) {
         super();
         System.err.println("SessionManager : CREATING session " + id);
 
         KnowledgeAgentConfiguration kaConfig = KnowledgeAgentFactory.newKnowledgeAgentConfiguration();
-        kaConfig.setProperty("drools.agent.newInstance","false");
+        kaConfig.setProperty("drools.agent.newInstance", "false");
         this.kAgent = KnowledgeAgentFactory.newKnowledgeAgent(id, kbase, kaConfig);
 
 //        ChangeSetImpl changeSet = new ChangeSetImpl();
@@ -151,13 +126,12 @@ public class SessionManager extends SessionTemplateManager {
 //        kAgent.applyChangeSet(changeSet);
 
         KnowledgeSessionConfiguration conf = KnowledgeBaseFactory.newKnowledgeSessionConfiguration();
-                    conf.setProperty(ClockTypeOption.PROPERTY_NAME, ClockType.REALTIME_CLOCK.toExternalForm());
-        this.kSession = kAgent.getKnowledgeBase().newStatefulKnowledgeSession(conf,null);
-            this.kSession.setGlobal("manager",this);
+        conf.setProperty(ClockTypeOption.PROPERTY_NAME, ClockType.REALTIME_CLOCK.toExternalForm());
+        this.kSession = kAgent.getKnowledgeBase().newStatefulKnowledgeSession(conf, null);
+        this.kSession.setGlobal("manager", this);
 
-        this.resources = new HashMap<String,Resource>();
+        this.resources = new HashMap<String, Resource>();
     }
-
 
 //    protected StatefulKnowledgeSession newKnowledgeSession() {
 //        KnowledgeSessionConfiguration conf = KnowledgeBaseFactory.newKnowledgeSessionConfiguration();
@@ -168,36 +142,24 @@ public class SessionManager extends SessionTemplateManager {
 //
 //        return kSession;
 //    }
-
-
-
-
-
-
-
     public StatefulKnowledgeSession getStatefulKnowledgeSession() {
         return kSession;
     }
 
-
-
-
-    public void addResource( String id, Resource res ) {
+    public void addResource(String id, Resource res) {
         ChangeSetImpl changeSet = new ChangeSetImpl();
-        changeSet.setResourcesAdded( Arrays.asList( res ) );
+        changeSet.setResourcesAdded(Arrays.asList(res));
 
-        resources.put( id ,res );
+        resources.put(id, res);
 
         kAgent.applyChangeSet(changeSet);
         System.out.println("xx");
     }
 
-
-
     public void addRule(String id, String drl) {
         ByteArrayResource bar = new ByteArrayResource(drl.getBytes());
         bar.setResourceType(ResourceType.DRL);
-        addResource( id, bar );
+        addResource(id, bar);
     }
 
     public void removeRule(String id) {
@@ -209,19 +171,13 @@ public class SessionManager extends SessionTemplateManager {
     }
 
     public void addRuleByTemplate(String id, String templateName, Object context) {
-        String drl = this.applyTemplate(templateName,context,null);
+        String drl = this.applyTemplate(templateName, context, null);
         System.err.println("Adding rule \n" + drl);
         addRule(id, drl);
 
-        System.err.println("RULE ADDED ____________ \n" );
+        System.err.println("RULE ADDED ____________ \n");
 
     }
-
-
-
-
-
-
 
     public KnowledgeAgent getkAgent() {
         return kAgent;
@@ -230,19 +186,6 @@ public class SessionManager extends SessionTemplateManager {
     protected void setkAgent(KnowledgeAgent kAgent) {
         this.kAgent = kAgent;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     protected static GridNode createRemoteNode(Grid grid1) {
         configureGrid(grid1,
@@ -264,8 +207,8 @@ public class SessionManager extends SessionTemplateManager {
     }
 
     private static void configureGrid(Grid grid,
-                                      int port,
-                                      WhitePages wp) {
+            int port,
+            WhitePages wp) {
 
         //Local Grid Configuration, for our client
         GridPeerConfiguration conf = new GridPeerConfiguration();
@@ -296,5 +239,4 @@ public class SessionManager extends SessionTemplateManager {
         conf.configure(grid);
 
     }
-
 }

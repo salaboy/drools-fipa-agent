@@ -1,15 +1,12 @@
 package org.drools.fipa;
 
-
 import org.drools.runtime.StatefulKnowledgeSession;
 
-import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * First implementation of a drools-based intelligent, communicative agent.
- * The agent is capable of receiving messages and reacting adequately
+ * First implementation of a drools-based intelligent, communicative agent. The
+ * agent is capable of receiving messages and reacting adequately
  *
  * Messages are based on the FIPA agent intercommunication standard
  *
@@ -17,25 +14,19 @@ import java.util.Map;
  */
 public class DroolsAgent {
 
-
     /**
      * Agent Identifier
      */
     private AgentID agentId;
-
     /**
-     * Main Agent Knowledge Session
-     * Message management (interpretation, routing) and response management will take place in this session
+     * Main Agent Knowledge Session Message management (interpretation, routing)
+     * and response management will take place in this session
      */
     private StatefulKnowledgeSession mind;
-
     /**
      * Response channel
      */
     private final DroolsAgentResponseInformer responseInformer;
-
-    
-    
 
     /**
      * Main constructor
@@ -50,16 +41,14 @@ public class DroolsAgent {
         this.responseInformer = responseInformer;
     }
 
-
     /**
      * Main interface method, used to accept incoming messages.
      * Messages are simply inserted into the main session and processed there
      * @param msg
      */
     public void tell(ACLMessage msg) {
-        
+
         MessageContentEncoder.decodeBody(msg.getBody(), msg.getEncoding());
-//        System.out.println("!!!!!!!!!!!!!!!!msg -> "+msg);
         this.mind.insert(msg);
         this.mind.fireAllRules();
     }
@@ -68,7 +57,7 @@ public class DroolsAgent {
      * Destructor
      */
     public void dispose() {
-        Map<String,StatefulKnowledgeSession> proxies = (Map<String,StatefulKnowledgeSession>) mind.getGlobal("proxies");
+        Map<String, StatefulKnowledgeSession> proxies = (Map<String, StatefulKnowledgeSession>) mind.getGlobal("proxies");
         if (proxies != null) {
             for (String sid : proxies.keySet()) {
                 StatefulKnowledgeSession subSession = proxies.get(sid);
@@ -84,7 +73,7 @@ public class DroolsAgent {
         if (sessionId == null) {
             return mind;
         } else {
-            Map<String,StatefulKnowledgeSession> proxies = (Map<String,StatefulKnowledgeSession>) mind.getGlobal("proxies");
+            Map<String, StatefulKnowledgeSession> proxies = (Map<String, StatefulKnowledgeSession>) mind.getGlobal("proxies");
             return proxies.get(sessionId);
         }
 
@@ -101,9 +90,4 @@ public class DroolsAgent {
     public DroolsAgentResponseInformer getResponseInformer() {
         return responseInformer;
     }
-
-
-
-
-
 }
