@@ -70,15 +70,16 @@ public class SynchronousRequestHelper {
             }
 
             if ( ! multiReturnValue ) {
-                returnBody = ((Inform) answers.get(1).getBody());
+                returnBody = answers.size() == 2 ? ((Inform) answers.get(1).getBody()) : null;
             } else {
-                returnBody = ((InformRef) answers.get(1).getBody());
+                returnBody = answers.size() == 2 ? ((InformRef) answers.get(1).getBody()) : null;
             }
 
         }
 
 
         public Object getReturn( boolean decode ) throws UnsupportedOperationException {
+            if (returnBody == null) return null;
             if ( decode ) {
                 MessageContentEncoder.decodeBody( returnBody, encode );
                 return ((Inform) returnBody).getProposition().getData();

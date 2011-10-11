@@ -116,6 +116,7 @@ public class SessionManager extends SessionTemplateManager {
 
         KnowledgeAgentConfiguration kaConfig = KnowledgeAgentFactory.newKnowledgeAgentConfiguration();
         kaConfig.setProperty("drools.agent.newInstance", "false");
+//        kaConfig.setProperty("drools.agent.useKBaseClassLoaderForCompiling","true");
         this.kAgent = KnowledgeAgentFactory.newKnowledgeAgent(id, kbase, kaConfig);
 
 //        ChangeSetImpl changeSet = new ChangeSetImpl();

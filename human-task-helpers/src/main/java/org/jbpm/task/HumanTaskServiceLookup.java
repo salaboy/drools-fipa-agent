@@ -14,20 +14,25 @@ import javax.naming.NamingException;
  */
 public class HumanTaskServiceLookup {
     private static HumanTaskServiceLookup instance;
-    
+
     public static HumanTaskServiceLookup getInstance(){
         if(instance == null){
             instance = new HumanTaskServiceLookup();
         }
         return instance;
     }
-    
-    public static TaskService lookup() throws NamingException{
-        Context initCtx = new InitialContext();
-        Context envCtx = (Context) initCtx.lookup("java:comp/env");
-        TaskService service = (TaskService) envCtx.lookup("bean/HumanTaskService");
-        System.out.println("GETTING JNDI TASK SERVICE INSTANCE = " + service);
-        return service;
+
+    public static TaskService lookup() {
+        try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            TaskService service = (TaskService) envCtx.lookup("bean/HumanTaskService");
+            System.out.println("GETTING JNDI TASK SERVICE INSTANCE = " + service);
+            return service;
+        } catch ( NamingException ne ) {
+            System.err.println(ne.getMessage());
+            return null;
+        }
     }
-    
+
 }
