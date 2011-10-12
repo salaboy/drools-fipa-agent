@@ -23,12 +23,40 @@
             <groupId>org.drools.fipa</groupId>
             <artifactId>drools-agent-core</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>drools-compiler</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>knowledge-api</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>drools-grid-impl</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
         <dependency>
             <groupId>org.drools.fipa</groupId>
             <artifactId>dss-agent-acl</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>knowledge-api</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
         <dependency>
