@@ -9,7 +9,7 @@
   </parent>
   <artifactId>drools-fipa-agent-reduced-client</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>Drools :: FIPA Agent Reduced Client </name>
+  <name>Drools :: FIPA Agent Reduced Client</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,12 +17,12 @@
   <dependencies>
       <dependency>
       <groupId>org.drools.fipa</groupId>
-      <artifactId>dss-agent-acl</artifactId>
+      <artifactId>drools-fipa-agent-acl</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
      <dependency>
       <groupId>org.drools.fipa</groupId>
-      <artifactId>dss-agent-util</artifactId>
+      <artifactId>drools-fipa-agent-util</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
      <dependency>

@@ -19,7 +19,7 @@
        
         <dependency>
             <groupId>org.drools.fipa</groupId>
-            <artifactId>drools-agent-service</artifactId>
+            <artifactId>drools-fipa-agent-service</artifactId>
             <version>${project.version}</version>
             <type>war</type>
         </dependency>
@@ -44,7 +44,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>dss-agent-custom-service</finalName>
+        <finalName>drools-fipa-agent-custom-service</finalName>
     </build>
 
     <repositories>

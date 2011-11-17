@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>dss-agent-util</artifactId>
+    <artifactId>drools-fipa-agent-util</artifactId>
   
     <name>Drools :: FIPA Agent Util</name>
     <url>http://maven.apache.org</url>
@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>org.drools.fipa</groupId>
-            <artifactId>dss-agent-acl</artifactId>
+            <artifactId>drools-fipa-agent-acl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

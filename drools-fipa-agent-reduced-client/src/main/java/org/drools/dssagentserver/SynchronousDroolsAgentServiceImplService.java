@@ -22,28 +22,28 @@ public class SynchronousDroolsAgentServiceImplService
     extends Service
 {
 
-    private final static URL SYNCHRONOUSDROOLSAGENTSERVICEIMPLSERVICE_WSDL_LOCATION;
+   // private final static URL SYNCHRONOUSDROOLSAGENTSERVICEIMPLSERVICE_WSDL_LOCATION = null;
     private final static Logger logger = Logger.getLogger(org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService.class.getName());
 
-    static {
-        URL url = null;
-        try {
-            URL baseUrl;
-            baseUrl = org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService.class.getResource(".");
-            url = new URL(baseUrl, "http://localhost:9944/clinical-decision-support-agent/service/SynchronousDroolsAgentService?wsdl");
-        } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'http://localhost:9944/clinical-decision-support-agent/service/SynchronousDroolsAgentService?wsdl', retrying as a local file");
-            logger.warning(e.getMessage());
-        }
-        SYNCHRONOUSDROOLSAGENTSERVICEIMPLSERVICE_WSDL_LOCATION = url;
-    }
+//    static {
+//        URL url = null;
+//        try {
+//            URL baseUrl;
+//            baseUrl = org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService.class.getResource(".");
+//            url = new URL(baseUrl, "http://localhost:9944/clinical-decision-support-agent/service/SynchronousDroolsAgentService?wsdl");
+//        } catch (MalformedURLException e) {
+//            logger.warning("Failed to create URL for the wsdl Location: 'http://localhost:9944/clinical-decision-support-agent/service/SynchronousDroolsAgentService?wsdl', retrying as a local file");
+//            logger.warning(e.getMessage());
+//        }
+//        SYNCHRONOUSDROOLSAGENTSERVICEIMPLSERVICE_WSDL_LOCATION = url;
+//    }
 
     public SynchronousDroolsAgentServiceImplService(URL wsdlLocation, QName serviceName) {
         super(wsdlLocation, serviceName);
     }
 
-    public SynchronousDroolsAgentServiceImplService() {
-        super(SYNCHRONOUSDROOLSAGENTSERVICEIMPLSERVICE_WSDL_LOCATION, new QName("http://dssagentserver.drools.org/", "SynchronousDroolsAgentServiceImplService"));
+    public SynchronousDroolsAgentServiceImplService(URL wsdlLocation) {
+        super(wsdlLocation, new QName("http://dssagentserver.drools.org/", "SynchronousDroolsAgentServiceImplService"));
     }
 
     /**

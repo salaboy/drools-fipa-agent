@@ -17,3 +17,7 @@
 /drools-fipa-agent-client-archetype/target/
 /human-task-helpers/target/
 /drools-fipa-agent-reduced-client/target/
+/drools-fipa-agent-acl/target/
+/drools-fipa-agent-core/target/
+/drools-fipa-agent-service/target/
+/drools-fipa-agent-util/target/

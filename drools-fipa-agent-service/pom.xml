@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>drools-agent-service</artifactId>
+    <artifactId>drools-fipa-agent-service</artifactId>
     <packaging>war</packaging>
     
 
@@ -21,42 +21,15 @@
     <dependencies>
         <dependency>
             <groupId>org.drools.fipa</groupId>
-            <artifactId>drools-agent-core</artifactId>
+            <artifactId>drools-fipa-agent-core</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>drools-core</artifactId>
-                    <groupId>org.drools</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>drools-compiler</artifactId>
-                    <groupId>org.drools</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>knowledge-api</artifactId>
-                    <groupId>org.drools</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>drools-grid-impl</artifactId>
-                    <groupId>org.drools</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         
         <dependency>
             <groupId>org.drools.fipa</groupId>
-            <artifactId>dss-agent-acl</artifactId>
+            <artifactId>drools-fipa-agent-acl</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>drools-core</artifactId>
-                    <groupId>org.drools</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>knowledge-api</artifactId>
-                    <groupId>org.drools</groupId>
-                </exclusion>
-            </exclusions>
+           
         </dependency>
         
         <dependency>
@@ -94,13 +67,7 @@
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
             <version>${cxf.version}</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>${cxf.version}</version>
-        </dependency>
-        
+       
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-common-utilities</artifactId>
@@ -157,7 +124,7 @@
                 </executions>
             </plugin>
         </plugins>
-        <finalName>dss-agent-service</finalName>
+        <finalName>drools-fipa-agent-service</finalName>
     </build>
     
     <repositories>

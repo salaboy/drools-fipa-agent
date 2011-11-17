@@ -279,7 +279,7 @@
   </wsdl:binding>
   <wsdl:service name="SynchronousDroolsAgentServiceImplService">
     <wsdl:port binding="tns:SynchronousDroolsAgentServiceImplServiceSoapBinding" name="SynchronousDroolsAgentServiceImplPort">
-      <soap:address location="http://localhost:8080/dss-agent-custom-service/service/SynchronousDroolsAgentService"/>
+      <soap:address location="http://localhost:8080/drools-fipa-agent-custom-service/service/SynchronousDroolsAgentService"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

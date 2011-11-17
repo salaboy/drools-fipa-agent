@@ -5,7 +5,7 @@
     <artifactId>drools-fipa-agent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Drools :: FIPA Agent Impl</name>
+    <name>Drools :: FIPA Agents</name>
     <properties>
         <project.version>1.0-SNAPSHOT</project.version>
         <drools.version>5.4.0-SNAPSHOT</drools.version>
@@ -15,15 +15,15 @@
         <cxf.version>2.4.2</cxf.version>
     </properties>
     <modules>
-        <module>dss-agent-core</module>
-        <module>dss-agent-service</module>
-        <module>dss-agent-acl</module>
-        <module>dss-agent-util</module>
+        <module>drools-fipa-agent-core</module>
+        <module>drools-fipa-agent-service</module>
+        <module>drools-fipa-agent-acl</module>
+        <module>drools-fipa-agent-util</module>
         <module>drools-fipa-agent-archetype</module>
         <module>drools-fipa-agent-client-archetype</module>
+        <module>drools-fipa-agent-reduced-client</module>
         <module>human-task-helpers</module>
-    <module>drools-fipa-agent-reduced-client</module>
-  </modules>
+    </modules>
   
     <repositories>
         <repository>

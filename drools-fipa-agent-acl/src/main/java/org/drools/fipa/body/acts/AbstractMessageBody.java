@@ -1,14 +1,22 @@
 package org.drools.fipa.body.acts;
 
 import java.io.Serializable;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import org.drools.fipa.Act;
 
 @XmlType(name = "AbstractMessageBody", namespace = "http://acts.body.fipa.drools.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso({
+    Inform.class,
+    RequestWhen.class,
+    InformIf.class,
+    InformRef.class,
+    Failure.class,
+    Request.class,
+    Agree.class,
+    QueryRef.class,
+    QueryIf.class
+})
 public abstract class AbstractMessageBody implements Serializable {
 
     @XmlElement(required = true)
