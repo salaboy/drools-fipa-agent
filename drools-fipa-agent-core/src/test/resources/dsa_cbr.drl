@@ -13,14 +13,14 @@ package org.drools.fipa;
 
 
 import org.drools.fipa.ACLMessage;
-import org.drools.fipa.ACLMessageFactory;
+import org.drools.fipa.util.ACLMessageFactory;
 import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.content.Info;
-import org.drools.fipa.InspectMessageHelper;
+import org.drools.fipa.util.InspectMessageHelper;
 import mock.MockFact;
 
 // ACL message factory, to generate responses
-global ACLMessageFactory aclFactory;
+global org.drools.fipa.util.ACLMessageFactory aclFactory;
 
 
 rule "Mapping"

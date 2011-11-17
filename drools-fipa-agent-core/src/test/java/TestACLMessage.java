@@ -3,7 +3,7 @@ import org.drools.fipa.body.acts.Inform;
 import mock.MockFact;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
-import org.drools.fipa.*;
+import org.drools.fipa.util.*;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.content.Ref;
@@ -16,6 +16,10 @@ import java.util.Collections;
 import java.util.Map;
 
 import static junit.framework.Assert.*;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.Act;
+import org.drools.fipa.AgentID;
+import org.drools.fipa.Encodings;
 
 public class TestACLMessage {
 

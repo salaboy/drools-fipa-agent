@@ -1,22 +1,27 @@
-package org.drools.dssagentserver.helpers;
+package org.drools.fipa.reduced.client.helpers;
+
+
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.drools.dssagentserver.SynchronousDroolsAgentServiceImpl;
-import org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService;
-import org.drools.fipa.*;
-import org.drools.fipa.body.acts.AbstractMessageBody;
-import org.drools.fipa.body.acts.Inform;
-import org.drools.fipa.body.acts.InformRef;
-import org.drools.fipa.body.content.Action;
-import org.drools.runtime.rule.Variable;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
-import org.drools.fipa.body.content.Info;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
+import org.drools.fipa.body.acts.AbstractMessageBody;
+import org.drools.fipa.body.acts.Inform;
+import org.drools.fipa.body.acts.InformRef;
+import org.drools.fipa.body.content.Action;
+import org.drools.fipa.reduced.client.SynchronousDroolsAgentServiceImpl;
+import org.drools.fipa.reduced.client.SynchronousDroolsAgentServiceImplService;
+import org.drools.fipa.util.ACLMessageFactory;
+import org.drools.fipa.util.MessageContentEncoder;
+import org.drools.fipa.util.MessageContentFactory;
+import org.drools.runtime.rule.Variable;
 
 public class SynchronousRequestHelper {
 
@@ -28,21 +33,21 @@ public class SynchronousRequestHelper {
 
     public SynchronousRequestHelper(String url, Encodings enc) {
         try {
-            this.endpointURL = new URL(org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService.class.getResource("."), url);
+            this.endpointURL = new URL(SynchronousDroolsAgentServiceImplService.class.getResource("."), url);
         } catch (MalformedURLException ex) {
             Logger.getLogger(SynchronousRequestHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.qname = new QName("http://dssagentserver.drools.org/", "SynchronousDroolsAgentServiceImplService");
+        this.qname = new QName("http://drools-fipa-agent.drools.org/", "SynchronousDroolsAgentServiceImplService");
         this.encode = enc;
     }
 
     public SynchronousRequestHelper(String url) {
         try {
-            this.endpointURL = new URL(org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService.class.getResource("."), url);
+            this.endpointURL = new URL(SynchronousDroolsAgentServiceImplService.class.getResource("."), url);
         } catch (MalformedURLException ex) {
             Logger.getLogger(SynchronousRequestHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.qname = new QName("http://dssagentserver.drools.org/", "SynchronousDroolsAgentServiceImplService");
+        this.qname = new QName("http://drools-fipa-agent.drools.org/", "SynchronousDroolsAgentServiceImplService");
 
     }
 

@@ -3,7 +3,7 @@ import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.acts.InformIf;
 import mock.MockFact;
 import org.drools.fipa.body.acts.Inform;
-import org.drools.fipa.*;
+import org.drools.fipa.util.*;
 import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Ref;
@@ -15,6 +15,7 @@ import org.drools.runtime.rule.Variable;
 import org.junit.*;
 
 import java.util.*;
+import org.drools.fipa.*;
 import org.drools.fipa.mappers.MyMapArgsEntryType;
 
 import static org.junit.Assert.*;

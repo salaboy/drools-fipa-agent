@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.drools.fipa;
+package org.drools.fipa.util;
 
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
 import org.drools.fipa.body.acts.AbstractMessageBody;
 import org.drools.fipa.body.acts.Agree;
 import org.drools.fipa.body.acts.Inform;

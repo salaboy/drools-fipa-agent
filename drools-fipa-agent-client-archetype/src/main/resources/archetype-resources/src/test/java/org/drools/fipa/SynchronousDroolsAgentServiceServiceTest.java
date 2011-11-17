@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.acts.InformIf;
 import mock.MockFact;
-import org.drools.dssagentserver.SynchronousDroolsAgentServiceImpl;
-import org.drools.dssagentserver.SynchronousDroolsAgentServiceImplService;
-
+import org.drools.fipa.reduced.client.SynchronousDroolsAgentServiceImpl;
+import org.drools.fipa.reduced.client.SynchronousDroolsAgentServiceImplService;
+import org.drools.fipa.util.*;
 import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.acts.QueryIf;
 import org.drools.fipa.body.content.Info;

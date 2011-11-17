@@ -6,7 +6,7 @@
    
     </sources>
     <resources>
-        <resource>src/main/resources/dss-agents.xml</resource>
+        <resource>src/main/resources/drools-fipa-agents.xml</resource>
         <resource>src/main/webapp/WEB-INF/web.xml</resource>
         <resource>src/main/webapp/META-INF/context.xml</resource>
     </resources>

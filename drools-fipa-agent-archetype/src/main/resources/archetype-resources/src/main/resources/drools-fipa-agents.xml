@@ -38,7 +38,7 @@
         <constructor-arg value="NOT_USED_YET"/>
     </bean>  
 
-    <bean id="syncResponseInformer" class="org.drools.dssagentserver.SynchronousDroolsAgentResponseInformer"/>
+    <bean id="syncResponseInformer" class="org.drools.fipa.reduced.client.SynchronousDroolsAgentResponseInformer"/>
 
     <bean id="agent1-configuration" class="org.drools.fipa.DroolsAgentConfiguration">
         <property name="agentId" value="Agent 1"/>

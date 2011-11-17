@@ -1,5 +1,6 @@
 package org.drools.fipa;
 
+import org.drools.fipa.util.MessageContentEncoder;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 import java.util.Map;

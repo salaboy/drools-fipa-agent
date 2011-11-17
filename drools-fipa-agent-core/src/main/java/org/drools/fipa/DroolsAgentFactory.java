@@ -1,5 +1,6 @@
 package org.drools.fipa;
 
+import org.drools.fipa.util.ACLMessageFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 

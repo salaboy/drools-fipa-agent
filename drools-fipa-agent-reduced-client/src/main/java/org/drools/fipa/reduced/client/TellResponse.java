@@ -1,5 +1,5 @@
 
-package org.drools.dssagentserver;
+package org.drools.fipa.reduced.client;
 
 import java.util.ArrayList;
 import java.util.List;

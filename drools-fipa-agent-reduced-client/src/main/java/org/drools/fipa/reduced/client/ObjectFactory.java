@@ -1,5 +1,5 @@
 
-package org.drools.dssagentserver;
+package org.drools.fipa.reduced.client;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -10,7 +10,7 @@ import javax.xml.namespace.QName;
 /**
  * This object contains factory methods for each 
  * Java content interface and Java element interface 
- * generated in the org.drools.dssagentserver package. 
+ * generated in the org.drools.fipa package. 
  * <p>An ObjectFactory allows you to programatically 
  * construct new instances of the Java representation 
  * for XML content. The Java representation of XML 
@@ -24,11 +24,11 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _TellResponse_QNAME = new QName("http://dssagentserver.drools.org/", "tellResponse");
-    private final static QName _Tell_QNAME = new QName("http://dssagentserver.drools.org/", "tell");
+    private final static QName _TellResponse_QNAME = new QName("http://drools-fipa-agent.drools.org/", "tellResponse");
+    private final static QName _Tell_QNAME = new QName("http://drools-fipa-agent.drools.org/", "tell");
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.drools.dssagentserver
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: org.drools.fipa
      * 
      */
     public ObjectFactory() {
@@ -54,7 +54,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link TellResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://dssagentserver.drools.org/", name = "tellResponse")
+    @XmlElementDecl(namespace = "http://drools-fipa-agent.drools.org/", name = "tellResponse")
     public JAXBElement<TellResponse> createTellResponse(TellResponse value) {
         return new JAXBElement<TellResponse>(_TellResponse_QNAME, TellResponse.class, null, value);
     }
@@ -63,7 +63,7 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link Tell }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://dssagentserver.drools.org/", name = "tell")
+    @XmlElementDecl(namespace = "http://drools-fipa-agent.drools.org/", name = "tell")
     public JAXBElement<Tell> createTell(Tell value) {
         return new JAXBElement<Tell>(_Tell_QNAME, Tell.class, null, value);
     }

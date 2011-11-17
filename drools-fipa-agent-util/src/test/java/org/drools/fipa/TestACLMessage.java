@@ -1,5 +1,9 @@
 package org.drools.fipa;
 
+import org.drools.fipa.util.MessageContentEncoder;
+import org.drools.fipa.util.MapArgsAdapterHelper;
+import org.drools.fipa.util.MessageContentFactory;
+import org.drools.fipa.util.ACLMessageFactory;
 import java.util.HashMap;
 import org.drools.fipa.body.acts.Inform;
 import mock.MockFact;

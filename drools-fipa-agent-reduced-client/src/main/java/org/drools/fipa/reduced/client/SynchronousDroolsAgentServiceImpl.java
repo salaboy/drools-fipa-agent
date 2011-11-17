@@ -1,5 +1,5 @@
 
-package org.drools.dssagentserver;
+package org.drools.fipa.reduced.client;
 
 import java.util.List;
 import javax.jws.WebMethod;
@@ -18,9 +18,9 @@ import org.drools.fipa.ACLMessage;
  * Generated source version: 2.1
  * 
  */
-@WebService(name = "SynchronousDroolsAgentServiceImpl", targetNamespace = "http://dssagentserver.drools.org/")
+@WebService(name = "SynchronousDroolsAgentServiceImpl", targetNamespace = "http://drools-fipa-agent.drools.org/")
 @XmlSeeAlso({
-    org.drools.dssagentserver.ObjectFactory.class
+    ObjectFactory.class
 })
 public interface SynchronousDroolsAgentServiceImpl {
 
@@ -33,8 +33,8 @@ public interface SynchronousDroolsAgentServiceImpl {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "tell", targetNamespace = "http://dssagentserver.drools.org/", className = "org.drools.dssagentserver.Tell")
-    @ResponseWrapper(localName = "tellResponse", targetNamespace = "http://dssagentserver.drools.org/", className = "org.drools.dssagentserver.TellResponse")
+    @RequestWrapper(localName = "tell", targetNamespace = "http://drools-fipa-agent.drools.org/", className = "org.drools.fipa.reduced.client.Tell")
+    @ResponseWrapper(localName = "tellResponse", targetNamespace = "http://drools-fipa-agent.drools.org/", className = "org.drools.fipa.reduced.client.TellResponse")
     public List<ACLMessage> tell(
         @WebParam(name = "arg0", targetNamespace = "")
         ACLMessage arg0);

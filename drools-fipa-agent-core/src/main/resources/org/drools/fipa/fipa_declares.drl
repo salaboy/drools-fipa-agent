@@ -15,7 +15,7 @@ import org.drools.fipa.body.content.Action;
 
 
 // ACL message factory, to generate responses
-global ACLMessageFactory aclFactory;
+global org.drools.fipa.util.ACLMessageFactory aclFactory;
 
 // Agent name
 global AgentID agentName;

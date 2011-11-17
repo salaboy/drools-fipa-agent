@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.drools.fipa;
+package org.drools.fipa.util;
 
 import com.jayway.jsonpath.JsonPath;
 import org.w3c.dom.Document;
@@ -18,6 +18,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.Act;
 import org.drools.fipa.body.acts.Agree;
 import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.acts.InformRef;

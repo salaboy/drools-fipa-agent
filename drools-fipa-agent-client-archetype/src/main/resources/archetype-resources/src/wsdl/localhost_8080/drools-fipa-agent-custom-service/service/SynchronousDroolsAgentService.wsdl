@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="SynchronousDroolsAgentServiceImplService" targetNamespace="http://dssagentserver.drools.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://dssagentserver.drools.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="SynchronousDroolsAgentServiceImplService" targetNamespace="http://drools-fipa-agent.drools.org/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://drools-fipa-agent.drools.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
 <xs:schema targetNamespace="http://mappers.fipa.drools.org/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:complexType name="MyMapReferenceEntryType">
@@ -79,7 +79,7 @@
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
-<xs:schema targetNamespace="http://dssagentserver.drools.org/" version="1.0" xmlns:ns1="http://fipa.drools.org/" xmlns:tns="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema targetNamespace="http://drools-fipa-agent.drools.org/" version="1.0" xmlns:ns1="http://fipa.drools.org/" xmlns:tns="http://drools-fipa-agent.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:import namespace="http://fipa.drools.org/"/>
 <xs:element name="tell" type="tns:tell"/>
 <xs:element name="tellResponse" type="tns:tellResponse"/>
@@ -101,9 +101,9 @@
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
-<xs:schema targetNamespace="http://content.body.fipa.drools.org/" version="1.0" xmlns:ns1="http://mappers.fipa.drools.org/" xmlns:ns2="http://dssagentserver.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema targetNamespace="http://content.body.fipa.drools.org/" version="1.0" xmlns:ns1="http://mappers.fipa.drools.org/" xmlns:ns2="http://drools-fipa-agent.drools.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:import namespace="http://mappers.fipa.drools.org/"/>
-<xs:import namespace="http://dssagentserver.drools.org/"/>
+<xs:import namespace="http://drools-fipa-agent.drools.org/"/>
 <xs:complexType name="Action">
     <xs:complexContent>
       <xs:extension base="ns2:abstractMessageContent">

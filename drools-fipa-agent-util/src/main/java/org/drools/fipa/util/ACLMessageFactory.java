@@ -1,4 +1,4 @@
-package org.drools.fipa;
+package org.drools.fipa.util;
 
 import org.drools.fipa.body.acts.*;
 import org.drools.fipa.body.content.*;
@@ -6,6 +6,10 @@ import org.drools.fipa.body.content.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.Act;
+import org.drools.fipa.AgentID;
+import org.drools.fipa.Encodings;
 
 /**
 

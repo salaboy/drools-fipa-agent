@@ -114,7 +114,7 @@
                             <goal>wsgen</goal>
                         </goals>
                         <configuration>
-                            <sei>org.drools.dssagentserver.SynchronousDroolsAgentServiceImpl</sei>
+                            <sei>org.drools.fipa.service.SynchronousDroolsAgentServiceImpl</sei>
                             
               
                             <genWsdl>true</genWsdl>           

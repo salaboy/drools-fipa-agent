@@ -1,5 +1,4 @@
-
-package org.drools.dssagentserver;
+package org.drools.fipa.reduced.client;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

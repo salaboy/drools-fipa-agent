@@ -14,8 +14,8 @@ import org.drools.runtime.rule.QueryResults;
 
 import org.drools.fipa.body.content.*;
 import org.drools.fipa.body.acts.*;
-import org.drools.fipa.MessageContentHelper;
-import org.drools.fipa.MessageContentFactory;
+import org.drools.fipa.util.MessageContentHelper;
+import org.drools.fipa.util.MessageContentFactory;
 
 import java.util.List;
 import java.util.ArrayList;
