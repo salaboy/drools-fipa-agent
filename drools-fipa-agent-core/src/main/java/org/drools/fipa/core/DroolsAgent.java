@@ -1,9 +1,11 @@
-package org.drools.fipa;
+package org.drools.fipa.core;
 
 import org.drools.fipa.util.MessageContentEncoder;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 import java.util.Map;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.AgentID;
 
 /**
  * First implementation of a drools-based intelligent, communicative agent. The

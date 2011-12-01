@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.drools.fipa;
+package org.drools.fipa.core;
 
 import org.drools.io.ResourceFactory;
 import org.mvel2.templates.*;

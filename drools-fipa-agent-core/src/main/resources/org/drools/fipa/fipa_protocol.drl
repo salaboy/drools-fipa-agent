@@ -4,7 +4,7 @@
     between two agents are conformant to the FIPA standards
 */
 
-package org.drools.fipa;
+package org.drools.fipa.core;
 
 import org.drools.fipa.util.ACLMessageFactory;
 import org.drools.fipa.util.MessageContentFactory;
@@ -12,8 +12,8 @@ import org.drools.fipa.ACLMessage;
 import org.drools.fipa.AgentID;
 import org.drools.fipa.body.content.*;
 import org.drools.fipa.body.acts.*;
-import org.drools.fipa.DroolsAgentResponseInformer;
-
+import org.drools.fipa.core.DroolsAgentResponseInformer;
+import org.drools.fipa.Act;
 
 global DroolsAgentResponseInformer responseInformer;
 

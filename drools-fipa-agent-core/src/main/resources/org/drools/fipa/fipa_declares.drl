@@ -2,7 +2,7 @@
     Common declarations for Drools Agents
 */
 
-package org.drools.fipa;
+package org.drools.fipa.core;
 
 import org.drools.command.Command;
 import org.drools.command.BatchExecutionCommand;
@@ -12,7 +12,7 @@ import java.util.Map;
 import org.drools.base.*;
 
 import org.drools.fipa.body.content.Action;
-
+import org.drools.fipa.AgentID;
 
 // ACL message factory, to generate responses
 global org.drools.fipa.util.ACLMessageFactory aclFactory;

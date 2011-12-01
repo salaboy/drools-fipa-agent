@@ -1,14 +1,11 @@
-package org.drools.fipa;
+package org.drools.fipa.core;
 
-import com.sun.org.apache.regexp.internal.RE;
-import org.apache.commons.io.IOUtils;
 import org.drools.*;
 import org.drools.agent.KnowledgeAgent;
 import org.drools.agent.KnowledgeAgentConfiguration;
 import org.drools.agent.KnowledgeAgentFactory;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.KnowledgeBuilderFactoryService;
 import org.drools.builder.ResourceType;
 import org.drools.conf.EventProcessingOption;
 import org.drools.grid.*;
@@ -26,12 +23,10 @@ import org.drools.io.Resource;
 import org.drools.io.impl.ByteArrayResource;
 import org.drools.io.impl.ChangeSetImpl;
 import org.drools.io.impl.ClassPathResource;
-import org.drools.io.internal.InternalResource;
 import org.drools.runtime.KnowledgeSessionConfiguration;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.conf.ClockTypeOption;
 
-import javax.xml.bind.annotation.XmlType;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;

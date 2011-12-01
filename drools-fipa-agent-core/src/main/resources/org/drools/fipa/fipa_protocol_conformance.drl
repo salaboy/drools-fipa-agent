@@ -1,6 +1,6 @@
 
 
-package org.drools.fipa;
+package org.drools.fipa.core;
 
 import org.drools.fipa.util.ACLMessageFactory;
 import org.drools.fipa.ACLMessage;
@@ -8,7 +8,7 @@ import org.drools.fipa.AgentID;
 import org.drools.fipa.body.content.*;
 import org.drools.fipa.body.acts.*;
 import org.drools.expectations.*;
-
+import org.drools.fipa.Act;
 
 
 rule "Request_Protocol_Initiator"

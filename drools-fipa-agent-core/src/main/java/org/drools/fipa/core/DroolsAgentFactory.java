@@ -1,4 +1,4 @@
-package org.drools.fipa;
+package org.drools.fipa.core;
 
 import org.drools.fipa.util.ACLMessageFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
@@ -7,6 +7,8 @@ import org.drools.runtime.StatefulKnowledgeSession;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.drools.fipa.AgentID;
+import org.drools.fipa.Encodings;
 
 
 /**

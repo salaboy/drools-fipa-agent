@@ -15,7 +15,10 @@ import org.drools.runtime.rule.Variable;
 import org.junit.*;
 
 import java.util.*;
-import org.drools.fipa.*;
+import org.drools.fipa.ACLMessage;
+import org.drools.fipa.Act;
+import org.drools.fipa.Encodings;
+import org.drools.fipa.core.*;
 import org.drools.fipa.mappers.MyMapArgsEntryType;
 
 import static org.junit.Assert.*;
