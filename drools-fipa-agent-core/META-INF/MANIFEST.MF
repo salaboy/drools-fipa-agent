@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Export-Package: org.drools.fipa.core;uses:="org.osgi.framework,org.mve
+ l2.templates";version="1.0.0.SNAPSHOT"
+Private-Package: org.drools.fipa.templates,org.mock,org.drools.fipa
+Built-By: salaboy
+Tool: Bnd-1.43.0
+Bundle-Name: Drools :: FIPA Agent Core
+Created-By: Apache Maven Bundle Plugin
+Require-Bundle: org.drools.api;org.drools.core;org.drools.compiler;vis
+ ibility:=reexport;bundle-version="${drools.osgi.version}"
+DynamicImport-Package: *
+Build-Jdk: 1.6.0_29
+Bundle-Version: 1.0.0.SNAPSHOT
+Bnd-LastModified: 1322753164547
+Bundle-ManifestVersion: 2
+Bundle-Activator: org.drools.fipa.core.Activator
+Import-Package: org.mvel2.templates;version="[2.1,3)",org.osgi.framewo
+ rk;version="[1.5,2)",org.osgi.util.tracker;version="[1.4,2)"
+Include-Resource: org/drools/fipa/fipa_changeset.xml=src/main/resource
+ s/org/drools/fipa/fipa_changeset.xml,org/drools/fipa/fipa_common.drl=
+ src/main/resources/org/drools/fipa/fipa_common.drl,org/drools/fipa/fi
+ pa_content_based_routing.drl=src/main/resources/org/drools/fipa/fipa_
+ content_based_routing.drl,org/drools/fipa/fipa_declares.drl=src/main/
+ resources/org/drools/fipa/fipa_declares.drl,org/drools/fipa/fipa_inte
+ rnal.drl=src/main/resources/org/drools/fipa/fipa_internal.drl,org/dro
+ ols/fipa/fipa_protocol.drl=src/main/resources/org/drools/fipa/fipa_pr
+ otocol.drl,org/drools/fipa/fipa_protocol_conformance.drl=src/main/res
+ ources/org/drools/fipa/fipa_protocol_conformance.drl,org/drools/fipa/
+ fipa_subsession_def_changeset.xml=src/main/resources/org/drools/fipa/
+ fipa_subsession_def_changeset.xml,org/drools/fipa/templates/requestWh
+ en.drlt=src/main/resources/org/drools/fipa/templates/requestWhen.drlt
+Bundle-SymbolicName: org.drools.fipa.drools-fipa-agent-core
+
