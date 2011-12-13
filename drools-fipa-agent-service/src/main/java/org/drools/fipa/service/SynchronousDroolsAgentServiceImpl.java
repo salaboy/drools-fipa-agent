@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 
 import org.drools.fipa.ACLMessage;
-import org.drools.fipa.DroolsAgent;
 import org.drools.fipa.body.acts.Agree;
 import org.drools.fipa.body.acts.Failure;
 import org.drools.fipa.body.acts.Inform;
@@ -27,6 +26,7 @@ import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.content.Ref;
 import org.drools.fipa.body.content.Rule;
+import org.drools.fipa.core.DroolsAgent;
 import org.drools.fipa.mappers.MyMapArgsEntryType;
 import org.drools.fipa.mappers.MyMapReferenceEntryType;
 

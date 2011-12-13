@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.drools.fipa.ACLMessage;
-import org.drools.fipa.DroolsAgentResponseInformer;
+import org.drools.fipa.core.DroolsAgentResponseInformer;
 
 /**
  *
