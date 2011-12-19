@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.drools.fipa.body.content.Action;
+import org.drools.fipa.body.content.Info;
 import org.drools.fipa.body.content.NamedVariable;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.mappers.MyMapArgsEntryType;
@@ -95,4 +96,11 @@ public class MessageContentFactory {
         }
         return query;
     }
+    
+    
+    public static Info newInfoContent(Object payload) {
+            Info info = new Info();
+            info.setData( payload );
+            return info;
+        }
 }

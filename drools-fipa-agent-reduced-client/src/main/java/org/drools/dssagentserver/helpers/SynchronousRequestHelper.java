@@ -9,6 +9,7 @@ import org.drools.fipa.body.acts.AbstractMessageBody;
 import org.drools.fipa.body.acts.Inform;
 import org.drools.fipa.body.acts.InformRef;
 import org.drools.fipa.body.content.Action;
+import org.drools.fipa.body.content.Info;
 import org.drools.runtime.rule.Variable;
 
 import java.util.LinkedHashMap;
@@ -40,12 +41,15 @@ public class SynchronousRequestHelper {
         try {
             return new URL( url );
         } catch (MalformedURLException e) {
-            return null;
+            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
+        return null;
     }
 
     public SynchronousRequestHelper(URL url) {
         if ( url == null ) {
+            System.err.println("FATAL : Creating helper with no remote endpoint ");
             return;
         }
         try {
@@ -53,7 +57,8 @@ public class SynchronousRequestHelper {
             this.qname = new QName("http://dssagentserver.drools.org/", "SynchronousDroolsAgentServiceImplService");
             initialized = true;
         } catch (Exception e ){
-
+            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -61,9 +66,16 @@ public class SynchronousRequestHelper {
         encode = enc;
     }
 
+    public boolean isInitialized() {
+        return initialized;
+    }
+
 
     public void invokeRequest( String methodName, LinkedHashMap<String,Object> args ) throws UnsupportedOperationException {
-        if ( !initialized) return;
+        if ( !initialized ) {
+            System.err.println( "FATAL ANOMALY, the helper can't connect to the remote endpoint" );
+            return;
+        }
         invokeRequest( "", "", methodName, args );
     }
 
@@ -77,12 +89,14 @@ public class SynchronousRequestHelper {
         }
         SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = null;
         try {
-            if(this.endpointURL == null || this.qname == null){
+            if( this.endpointURL == null || this.qname == null ){
                 synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
             } else{
                 synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService(this.endpointURL, this.qname).getSynchronousDroolsAgentServiceImplPort();
             }
         } catch ( Exception e ) {
+            System.err.println( e.getMessage() );
+            e.printStackTrace( System.out );
             initialized = false;
             return;
         }
@@ -108,14 +122,55 @@ public class SynchronousRequestHelper {
 
 
     public Object getReturn( boolean decode ) throws UnsupportedOperationException {
-        if ( !initialized) return "";
-        if (returnBody == null) return null;
+        if ( !initialized ) return "";
+        if ( returnBody == null ) return null;
         if ( decode ) {
+
             MessageContentEncoder.decodeBody( returnBody, encode );
-            return ((Inform) returnBody).getProposition().getData();
+            return ( (Inform) returnBody).getProposition().getData();
+
         } else {
-            return ((Inform) returnBody).getProposition().getEncodedContent();
+
+            return ( (Inform) returnBody).getProposition().getEncodedContent();
+
         }
+    }
+
+
+
+
+
+
+    public void invokeInform( Object payload ) throws UnsupportedOperationException {
+        if ( !initialized ) {
+            System.err.println( "FATAL ANOMALY, the helper can't connect to the remote endpoint" );
+            return;
+        }
+        invokeInform( "", "", payload );
+    }
+
+    public void invokeInform( String sender, String receiver, Object payload ) throws UnsupportedOperationException {
+
+        SynchronousDroolsAgentServiceImpl synchronousDroolsAgentServicePort = null;
+        try {
+            if( this.endpointURL == null || this.qname == null ){
+                synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService().getSynchronousDroolsAgentServiceImplPort();
+            } else{
+                synchronousDroolsAgentServicePort = new SynchronousDroolsAgentServiceImplService(this.endpointURL, this.qname).getSynchronousDroolsAgentServiceImplPort();
+            }
+        } catch ( Exception e ) {
+            System.err.println( e.getMessage() );
+            e.printStackTrace( System.out );
+            initialized = false;
+            return;
+        }
+        ACLMessageFactory factory = new ACLMessageFactory( encode );
+
+        Info info = MessageContentFactory.newInfoContent( payload );
+        ACLMessage inform = factory.newInformMessage( sender, receiver, info );
+
+        List<ACLMessage> answers = synchronousDroolsAgentServicePort.tell( inform );
+
     }
 
 

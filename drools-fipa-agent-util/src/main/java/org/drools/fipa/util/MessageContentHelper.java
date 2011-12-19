@@ -36,8 +36,11 @@ public class MessageContentHelper {
     }
 
     public static Ref getActionReferences(Action action, QueryResults results) {
+        if ( results.size() == 0 ) {
+            return null;
+        }
         Map<String, Object> map = new HashMap<String, Object>();
-        
+
         org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
 
         List<MyMapReferenceEntryType> pointers = action.getReferences();
@@ -55,9 +58,12 @@ public class MessageContentHelper {
     public static NamedVariable variable(String ref) {
         return new NamedVariable(ref);
     }
-    
+
     public static Ref getQueryReferences(Query query, QueryResults results) {
-       Map<String,Object> map = new HashMap<String,Object>();
+        if ( results.size() == 0 ) {
+            return null;
+        }
+        Map<String,Object> map = new HashMap<String,Object>();
         org.drools.QueryResults inner = ((NativeQueryResults) results).getResults();
         Declaration[] params = inner.getParameters();
 
@@ -68,7 +74,7 @@ public class MessageContentHelper {
 
         Ref ref = new Ref();
         ref.setReferences(MapArgsAdapterHelper.marshal(map));
-        
+
         return ref;
     }
 
