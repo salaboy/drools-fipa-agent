@@ -47,13 +47,21 @@ then
 
     retract($dst);
     retract($cmd);
+
     StatefulKnowledgeSession kSession = (StatefulKnowledgeSession) proxies.get($sessionId);
-    
-    org.drools.runtime.impl.ExecutionResultImpl result = (org.drools.runtime.impl.ExecutionResultImpl) kSession.execute($batch);
-   
-    ResponseContent response = new ResponseContent($msgId, result.getValue("$out_"+$msgId)); 
+    Object retVal = null;
+
+    try {
+        org.drools.runtime.impl.ExecutionResultImpl result = (org.drools.runtime.impl.ExecutionResultImpl) kSession.execute($batch);
+        retVal = result.getValue("$out_"+$msgId);
+    } catch ( Exception e ) {
+        insert( new PerformativeFail( $msgId, e ) );
+    }
+
+    ResponseContent response = new ResponseContent($msgId, retVal );
     insert( response );
-    
+
+
 end
 
 
@@ -71,9 +79,6 @@ then
     kSession.execute($act);
     kSession.execute(CommandFactory.newFireAllRules());
 end
-
-
-
 
 
 
@@ -117,10 +122,9 @@ salience 9999
 no-loop
 when
     $msg : ACLMessage( $msgId : id, performative == Act.QUERY_IF )
-    $cont : ResponseContent( messageId == $msgId, $data : data )
+    $cont : ResponseContent( messageId == $msgId, $data : data != null )
 then
     
-    System.out.println("LOGIC HERE3"+((QueryResults) $data).iterator().next().get("$queryIf"));
     $cont.setData(((QueryResults) $data).iterator().next().get("$queryIf"));
     update($cont);
 end
@@ -151,10 +155,9 @@ no-loop
 when
     $msg : ACLMessage( $msgId : id, performative == Act.QUERY_REF )
     QueryRef( $query : query ) from $msg.body
-    $cont : ResponseContent( messageId == $msgId, $data : data )
+    $cont : ResponseContent( messageId == $msgId, $data : data != null )
 then
     
-//    System.out.println("LOGIC HERE"+MessageContentHelper.getQueryReferences($query, (QueryResults) $data));
     $cont.setData(MessageContentHelper.getQueryReferences($query, (QueryResults) $data));
     update($cont);
 end
@@ -182,7 +185,7 @@ then
             list.add(CommandFactory.newInsert( $req.getAction() ));
             list.add(CommandFactory.newFireAllRules());
             
-            list.add(CommandFactory.newQuery( "$out_"+$msgId, $act.getActionName() , MessageContentHelper.getActionArgsArray( $req.getAction() )) );
+            list.add(CommandFactory.newQuery( "$out_"+$msgId, $act.getActionName() , MessageContentHelper.getActionArgsArray( $req.getAction() ) ) );
     BatchExecutionCommand batch = CommandFactory.newBatchExecution(list);
     insert( new MessageCommands( $msgId, batch ) );
 end
@@ -194,11 +197,9 @@ no-loop
 when
     $msg : ACLMessage( $msgId : id, performative == Act.REQUEST )
     $req : Request( $act : action, $actName : action.actionName ) from $msg.body
-    $cont : ResponseContent( messageId == $msgId, $data : data )
+    $cont : ResponseContent( messageId == $msgId, $data : data != null )
 then
-//    System.out.println("LOGIC HERE2"+MessageContentHelper.getActionReferences($act, (QueryResults) $data));
-
-   $cont.setData( MessageContentHelper.getActionReferences($act, (QueryResults) $data));
+    $cont.setData( MessageContentHelper.getActionReferences($act, (QueryResults) $data));
     update($cont);
 end
 
@@ -249,6 +250,21 @@ then
 end
 
 
+
+
+
+
+rule "Failed_Results"
+salience 9999
+no-loop
+when
+    $msg : ACLMessage( $msgId : id, performative == Act.REQUEST || == Act.REQUEST_WHEN || == Act.REQUEST_WHENEVER )
+    $req : Request( $act : action, $actName : action.actionName ) from $msg.body
+    $cnt : ResponseContent( messageId == $msgId, $data : data != null )
+then
+    PerformativeFail fail = new PerformativeFail( $msgId, new RuntimeException( $actName + " : No result is returned" ) );
+    insert( fail );
+end
 
 
 

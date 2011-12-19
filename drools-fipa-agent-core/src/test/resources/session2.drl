@@ -39,6 +39,10 @@ end
 
 
 
+
+
+
+
 declare MathResponse
     x : Double
     y : Double
@@ -48,17 +52,31 @@ end
 rule "Action_Request : squareRoot"
 when
     $a : Action( actionName == "squareRoot",
-                 keySet contains "x", $x : this["x"]  )
-
+                 keySet contains "x", $x : this["x"] >= 0 )
 then
     retract($a);
     System.out.println("Executing square root");
     insert( new MathResponse((Double) $x, Math.sqrt( (Double) $x), 0.0) );
 end
 
+
+rule "Action_Request : squareRoot_error"
+when
+    $a : Action( actionName == "squareRoot",
+                 keySet contains "x", $x : this["x"] < 0 )
+then
+    throw new IllegalArgumentException( "can't extract the square root of " + $x );
+end
+
 query squareRoot( Double $x, Double $return  )
     MathResponse( $x, $return ;)
 end
+
+
+
+
+
+
 
 
 

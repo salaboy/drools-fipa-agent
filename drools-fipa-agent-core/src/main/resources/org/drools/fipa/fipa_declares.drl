@@ -58,10 +58,15 @@ declare Destination
 end
 
 declare ResponseContent
+@typesafe(false)
     messageId : String
     data : Object
 end
 
+declare PerformativeFail
+    messageId : String
+    cause     : Exception
+end
 
 
 

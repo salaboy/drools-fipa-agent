@@ -1,4 +1,6 @@
 
+import org.drools.RuntimeDroolsException;
+import org.drools.fipa.body.acts.Failure;
 import org.drools.fipa.body.content.Query;
 import org.drools.fipa.body.acts.InformIf;
 import mock.MockFact;
@@ -83,7 +85,7 @@ public class TestAgent {
     }
 
     @Test
-    public void testInformAsTrigger() { 
+    public void testInformAsTrigger() {
         MockFact fact = new MockFact("patient1", 22);
         ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
 
@@ -283,10 +285,10 @@ public class TestAgent {
         boolean containsY = false;
         for(MyMapArgsEntryType entry : ref.getReferences()){
             if(entry.getKey().equals("?inc")){
-                 containsInc = true;
+                containsInc = true;
             }
             if(entry.getKey().equals("?y")){
-                 containsY = true;
+                containsY = true;
             }
         }
         assertTrue(containsInc);
@@ -322,6 +324,104 @@ public class TestAgent {
         assertTrue(target.getObjects().contains(fact2));
 
     }
+
+
+
+    @Test
+    public void testNotUnderstood() {
+
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        Action action = MessageContentFactory.newActionContent( "nonExistingRequest", new LinkedHashMap());
+        ACLMessage notUnd = factory.newRequestMessage("me", "you", action);
+        mainAgent.tell( notUnd );
+
+        assertEquals(Act.NOT_UNDERSTOOD, mainResponseInformer.getResponses(notUnd).get(0).getPerformative());
+
+    }
+
+
+
+    @Test
+    public void testImplicitRequestFailure() {
+
+        Double in = new Double( -9 );
+
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
+        args.put("x", in);
+
+        Action action = MessageContentFactory.newActionContent("errorSquareRoot", args);
+        ACLMessage req = factory.newRequestMessage("me", "you", action);
+        mainAgent.tell(req);
+
+        assertEquals( Act.AGREE, mainResponseInformer.getResponses( req ).get( 0 ).getPerformative() );
+        assertEquals( Act.FAILURE, mainResponseInformer.getResponses( req ).get( 1 ).getPerformative() );
+
+        Failure fail = (Failure) mainResponseInformer.getResponses( req ).get( 1 ).getBody();
+
+        try {
+            throw (RuntimeException) fail.getCause().getData();
+        } catch( RuntimeException re ) {
+            System.err.println( re.getMessage() );
+        }
+    }
+
+
+    @Test
+    public void testExplicitRequestFailure() {
+
+        Double in = new Double( -9 );
+
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        Map<String, Object> args = new LinkedHashMap<String, Object>();
+        args.put("x", in);
+
+        Action action = MessageContentFactory.newActionContent("squareRoot", args);
+        ACLMessage req = factory.newRequestMessage("me", "you", action );
+        mainAgent.tell(req);
+
+        assertEquals( Act.AGREE, mainResponseInformer.getResponses( req ).get( 0 ).getPerformative() );
+        assertEquals( Act.FAILURE, mainResponseInformer.getResponses( req ).get( 1 ).getPerformative() );
+
+        Failure fail = (Failure) mainResponseInformer.getResponses( req ).get( 1 ).getBody();
+        try {
+            throw (RuntimeException) fail.getCause().getData();
+        } catch( RuntimeException re ) {
+            System.err.println( re.getMessage() );
+        }
+
+    }
+
+
+
+
+    @Test
+    public void testQueryNotUnderstoodFailure() {
+
+        ACLMessageFactory factory = new ACLMessageFactory(Encodings.XML);
+
+        Query query = MessageContentFactory.newQueryContent("queryNonExists", new Object[0] );
+        ACLMessage qryref = factory.newQueryRefMessage("me", "you", query);
+        mainAgent.tell( qryref );
+
+        assertEquals( 1, mainResponseInformer.getResponses( qryref ).size() );
+        assertEquals( Act.NOT_UNDERSTOOD, mainResponseInformer.getResponses( qryref ).get( 0 ).getPerformative() );
+
+    }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 class MockResponseInformer implements DroolsAgentResponseInformer {
