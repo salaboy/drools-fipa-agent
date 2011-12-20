@@ -1,6 +1,6 @@
 
 
-package org.drools.fipa.core;
+package org.drools.fipa;
 
 import org.drools.fipa.util.ACLMessageFactory;
 import org.drools.fipa.ACLMessage;

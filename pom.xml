@@ -24,6 +24,8 @@
         <module>drools-fipa-agent-reduced-client</module>
         <module>drools-fipa-agent-pojo</module>    
         <module>human-task-helpers</module>
+        <module>drools-fipa-agent-merged-bundle</module>
+        <module>drools-5-merged-bundle</module>
     </modules>
   
     <repositories>

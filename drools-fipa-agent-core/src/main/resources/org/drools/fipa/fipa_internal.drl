@@ -4,7 +4,7 @@
     The actions will be executed on a target session, as decided by the routing rules
 */
 
-package org.drools.fipa.core;
+package org.drools.fipa;
 
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.fipa.ACLMessage;

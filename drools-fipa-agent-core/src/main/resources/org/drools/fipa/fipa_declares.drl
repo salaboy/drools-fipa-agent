@@ -2,7 +2,7 @@
     Common declarations for Drools Agents
 */
 
-package org.drools.fipa.core;
+package org.drools.fipa;
 
 import org.drools.command.Command;
 import org.drools.command.BatchExecutionCommand;

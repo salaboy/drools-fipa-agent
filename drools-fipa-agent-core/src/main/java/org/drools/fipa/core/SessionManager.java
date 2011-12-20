@@ -26,11 +26,15 @@ import org.drools.io.impl.ClassPathResource;
 import org.drools.runtime.KnowledgeSessionConfiguration;
 import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.runtime.conf.ClockTypeOption;
-
+import org.drools.builder.*;
+import org.drools.io.impl.*;
+import org.drools.*;
+import org.drools.runtime.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class SessionManager extends SessionTemplateManager {
 
@@ -85,15 +89,18 @@ public class SessionManager extends SessionTemplateManager {
 //        return kbase;
 //     }
     private static KnowledgeBase buildKnowledgeBase(String changeset, GridNode remoteNode) throws IOException {
-        KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-        kbuilder.add(new ClassPathResource(changeset), ResourceType.CHANGE_SET);
+        System.out.println("Building the Knowledge Base");
+       
+        KnowledgeBuilderConfiguration conf = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration(null, SessionManager.class.getClassLoader());
+        KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(conf);
+        kbuilder.add(new ClassPathResource(changeset, SessionManager.class.getClassLoader()), ResourceType.CHANGE_SET);
         if (kbuilder.hasErrors()) {
             System.err.println(kbuilder.getErrors());
             System.exit(-1);
         }
 //        kbuilder.add(new ByteArrayResource(IOUtils.toByteArray(new ClassPathResource(changeset).getInputStream())), ResourceType.CHANGE_SET);
 
-        RuleBaseConfiguration rbconf = new RuleBaseConfiguration();
+        RuleBaseConfiguration rbconf = new RuleBaseConfiguration(SessionManager.class.getClassLoader());
         rbconf.setEventProcessingMode(EventProcessingOption.STREAM);
         rbconf.setAssertBehaviour(RuleBaseConfiguration.AssertBehaviour.EQUALITY);
 
@@ -107,11 +114,11 @@ public class SessionManager extends SessionTemplateManager {
 
     protected SessionManager(String id, KnowledgeBase kbase) {
         super();
-        System.err.println("SessionManager : CREATING session " + id);
+        System.out.println("SessionManager : CREATING session " + id);
 
         KnowledgeAgentConfiguration kaConfig = KnowledgeAgentFactory.newKnowledgeAgentConfiguration();
         kaConfig.setProperty("drools.agent.newInstance", "false");
-//        kaConfig.setProperty("drools.agent.useKBaseClassLoaderForCompiling","true");
+       // kaConfig.setProperty("drools.agent.useKBaseClassLoaderForCompiling", "true");
         this.kAgent = KnowledgeAgentFactory.newKnowledgeAgent(id, kbase, kaConfig);
 
 //        ChangeSetImpl changeSet = new ChangeSetImpl();

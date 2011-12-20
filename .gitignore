@@ -22,3 +22,5 @@
 /drools-fipa-agent-service/target/
 /drools-fipa-agent-util/target/
 /drools-fipa-agent-pojo/target/
+/drools-fipa-agent-merged-bundle/target/
+/drools-5-merged-bundle/target/

@@ -1,6 +1,6 @@
 @declare{'requestWhenRule'}
 
-package org.drools.fipa.core;
+package org.drools.fipa;
 
 import org.drools.fipa.body.content.ActionHolder;
 import org.drools.fipa.body.content.Action;
