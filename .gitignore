@@ -25,4 +25,6 @@
 /drools-fipa-agent-merged-bundle/target/
 /drools-5-merged-bundle/target/
 /drools-5-merged-bundle/META-INF/
-.nbactions.xml
+nbactions.xml
+MANIFEST.MF
+catalog.xml
