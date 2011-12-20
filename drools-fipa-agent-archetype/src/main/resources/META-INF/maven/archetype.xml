@@ -8,9 +8,13 @@
         <source>src/main/java/org/drools/fipa/pojo/service/SynchronousDroolsAgentServiceImpl.java</source>
     </sources>
     <resources>
-        <resource>src/main/resources/drools-fipa-agents.xml</resource>
+        <resource>src/main/resources/actionAgent_changeset.xml</resource>
+        <resource>src/main/resources/actionAgent_defSession_changeset.xml</resource>
+        <resource>src/main/resources/applicationContext.xml</resource>
+        <resource>src/main/resources/knowledge/actionAgent_cbr.drl</resource>
+        <resource>src/main/resources/knowledge/agent-brain_hello-module.drl</resource>
         <resource>src/main/resources/log4j.xml</resource>
-        <resource>src/main/resources/META-INF/services.xml</resource>
+        <resource>src/main/resources/META-INF/drools.packagebuilder.conf</resource>
     </resources>
     <testSources>
     

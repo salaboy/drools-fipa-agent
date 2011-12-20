@@ -2,18 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.org.drools.fipa.pojo.service;
+package org.drools.fipa.pojo.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.drools.fipa.ACLMessage;
-import org.drools.fipa.DroolsAgentResponseInformer;
+import org.drools.fipa.core.DroolsAgentResponseInformer;
 
 /**
  *
  * @author esteban
+ * @author salaboy
  */
 public class SynchronousDroolsAgentResponseInformer implements DroolsAgentResponseInformer {
 
