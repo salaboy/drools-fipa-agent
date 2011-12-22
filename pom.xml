@@ -20,9 +20,7 @@
         <module>drools-fipa-agent-util</module>
         <module>drools-fipa-agent-archetype</module>
         <module>drools-fipa-agent-client-archetype</module>
-        <!--module>drools-fipa-agent-reduced-client</module>
-        <module>drools-fipa-agent-service</module>
-        <module>drools-fipa-agent-pojo</module-->    
+        <module>drools-fipa-agent-doc</module>    
         <module>human-task-helpers</module>
         <module>drools-fipa-agent-merged-bundle</module>
         <module>drools-5-merged-bundle</module>
