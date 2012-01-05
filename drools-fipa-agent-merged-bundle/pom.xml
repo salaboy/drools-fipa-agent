@@ -65,7 +65,7 @@
                 <executions>
                     <execution>
                         <id>manifest</id>
-                        <phase>process-classes</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>manifest</goal>
                         </goals>
