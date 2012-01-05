@@ -24,9 +24,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     
-    <artifactId>drools-fipa-agent-util</artifactId>
+    <artifactId>drools-mas-util</artifactId>
   
-    <name>Drools :: FIPA Agent Util</name>
+    <name>Drools :: MAS Util</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -18,10 +18,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.drools.fipa</groupId>
-    <artifactId>drools-fipa-agent</artifactId>
+    <artifactId>drools-mas</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Drools :: FIPA Agents</name>
+    <name>Drools :: MAS</name>
     <properties>
         <project.version>1.0-SNAPSHOT</project.version>
         <drools.version>5.4.0-SNAPSHOT</drools.version>
@@ -31,14 +31,13 @@
         <cxf.version>2.4.2</cxf.version>
     </properties>
     <modules>
-        <module>drools-fipa-agent-core</module>
-        <module>drools-fipa-agent-acl</module>
-        <module>drools-fipa-agent-util</module>
-        <module>drools-fipa-agent-archetype</module>
-        <module>drools-fipa-agent-client-archetype</module>
-        <module>drools-fipa-agent-doc</module>    
-        <module>human-task-helpers</module>
-        <module>drools-fipa-agent-merged-bundle</module>
+        <module>drools-mas-core</module>
+        <module>drools-mas-acl</module>
+        <module>drools-mas-util</module>
+        <module>drools-mas-archetype</module>
+        <module>drools-mas-client-archetype</module>
+        <module>drools-mas-doc</module>    
+        <module>drools-mas-merged-bundle</module>
         <module>drools-5-merged-bundle</module>
     </modules>
   

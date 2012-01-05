@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1325806029261
+Build-Jdk: 1.6.0_29
+Built-By: salaboy
+Bundle-ManifestVersion: 2
+Bundle-Name: drools-mas-merged-bundle
+Bundle-SymbolicName: drools-mas-merged-bundle
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+DynamicImport-Package: *
+Export-Package: org.drools.fipa.body.content;uses:="org.drools.fipa,org.
+ drools.fipa.mappers";version="1.0.0.SNAPSHOT",org.drools.fipa.templates
+ ;version="1.0.0.SNAPSHOT",org.drools.fipa.mappers;version="1.0.0.SNAPSH
+ OT",org.drools.fipa.util;uses:="org.drools.fipa.body.content,org.drools
+ .fipa.body.acts,org.drools.fipa,org.drools.fipa.mappers";version="1.0.0
+ .SNAPSHOT",org.drools.fipa.body.acts;uses:="org.drools.fipa.body.conten
+ t,org.drools.fipa.mappers,org.drools.fipa";version="1.0.0.SNAPSHOT",org
+ .drools.fipa.core;uses:="org.drools.fipa.util,org.drools.fipa.body.acts
+ ,org.drools.fipa";version="1.0.0.SNAPSHOT",org.drools.fipa;uses:="org.d
+ rools.fipa.body.content,org.drools.fipa.mappers,org.drools.fipa.body.ac
+ ts";version="1.0.0.SNAPSHOT"
+Originally-Created-By: Apache Maven Bundle Plugin
+Tool: Bnd-1.50.0

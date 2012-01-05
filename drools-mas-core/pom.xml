@@ -25,9 +25,9 @@
         <artifactId>drools-fipa-agent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>drools-fipa-agent-core</artifactId>
+    <artifactId>drools-mas-core</artifactId>
   
-    <name>Drools :: FIPA Agent Core</name>
+    <name>Drools :: MAS Core</name>
   
 
     <dependencies>

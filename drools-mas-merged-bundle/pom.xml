@@ -25,9 +25,9 @@
         <artifactId>drools-fipa-agent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>drools-fipa-agent-merged-bundle</artifactId>
+    <artifactId>drools-mas-merged-bundle</artifactId>
     <packaging>bundle</packaging>  
-    <name>Drools :: FIPA Agent OSGI Merged Bundle</name>
+    <name>Drools :: MAS OSGI Merged Bundle</name>
   
 
     <dependencies>

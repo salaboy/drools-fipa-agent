@@ -24,9 +24,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
   
-    <artifactId>drools-fipa-agent-acl</artifactId>
+    <artifactId>drools-mas-acl</artifactId>
  
-    <name>Drools :: FIPA Agent ACL</name>
+    <name>Drools :: MAS ACL</name>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

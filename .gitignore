@@ -30,3 +30,10 @@ MANIFEST.MF
 catalog.xml
 /temp/
 /drools-fipa-agent-doc/target/
+/drools-mas-util/target/
+/drools-mas-doc/target/
+/drools-mas-merged-bundle/target/
+/drools-mas-core/target/
+/drools-mas-client-archetype/target/
+/drools-mas-archetype/target/
+/drools-mas-acl/target/
