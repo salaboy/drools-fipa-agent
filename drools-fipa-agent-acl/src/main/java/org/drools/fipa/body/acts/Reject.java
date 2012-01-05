@@ -1,18 +1,17 @@
 package org.drools.fipa.body.acts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.Act;
-import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Info;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 5/7/11
- * Time: 8:03 PM
- */
+@XmlType(name = "Reject", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Reject extends AbstractMessageBody {
 
-   
     private Action call;
     private Action proposal;
     private Info cause;
@@ -20,14 +19,12 @@ public class Reject extends AbstractMessageBody {
     public Reject() {
     }
 
-    
     public Reject(Action call, Action proposal, Info cause) {
         this.call = call;
         this.proposal = proposal;
         this.cause = cause;
     }
 
-  
     @Override
     public String toString() {
         return "Reject{"
@@ -92,26 +89,5 @@ public class Reject extends AbstractMessageBody {
     public void setCause(Info cause) {
         this.cause = cause;
     }
-
-// THIS METHOD SHOULD GO TO A HELPER
-//    public Object[] getArguments() {
-//
-//        Object[] ans = new Object[proposal.getArgs().size() + call.getArgs().size() + 3];
-//
-//        Object[] proposalParams = proposal.getArgs().values().toArray();
-//        Object[] callParams = call.getArgs().values().toArray();
-//
-//        ans[0] = call.getActionName();
-//        for (int j = 0; j < callParams.length; j++) {
-//            ans[j + 1] = callParams[j];
-//        }
-//        ans[callParams.length + 1] = proposal.getActionName();
-//        for (int j = 0; j < proposalParams.length; j++) {
-//            ans[j + 1] = callParams[j];
-//        }
-//
-//
-//        ans[ans.length - 1] = cause.getData();
-//        return ans;
-//    }
+    
 }

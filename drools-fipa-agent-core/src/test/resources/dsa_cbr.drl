@@ -14,7 +14,7 @@ package org.drools.fipa; //this is completly wrong.. we need to use the same pac
 
 import org.drools.fipa.ACLMessage;
 import org.drools.fipa.util.ACLMessageFactory;
-import org.drools.fipa.body.acts.Inform;
+import org.drools.fipa.body.acts.*;
 import org.drools.fipa.body.content.Info;
 import org.drools.fipa.util.InspectMessageHelper;
 import mock.MockFact;

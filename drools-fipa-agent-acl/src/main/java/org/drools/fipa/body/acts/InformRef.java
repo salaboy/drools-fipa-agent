@@ -15,15 +15,9 @@ public class InformRef extends AbstractMessageBody {
     
     @XmlElement(required = true)
     private Ref references;
-
+    
     public InformRef() {
     }
-
-//    public InformRef(Ref references) {
-//        this.references = references;
-//    }
-
-   
 
     @Override
     public String toString() {
@@ -63,7 +57,4 @@ public class InformRef extends AbstractMessageBody {
         this.references = references;
     }
 
-//    public Object[] getArguments() {
-//        return new Object[]{references.getReferences()};
-//    }
 }

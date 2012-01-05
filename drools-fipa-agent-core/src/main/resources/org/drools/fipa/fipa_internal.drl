@@ -5,9 +5,8 @@
 */
 
 package org.drools.fipa;
-
-import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.fipa.ACLMessage;
+import org.drools.runtime.StatefulKnowledgeSession;
 import org.drools.command.CommandFactory;
 import org.drools.command.BatchExecutionCommand;
 import org.drools.runtime.rule.QueryResults;

@@ -1,19 +1,17 @@
 package org.drools.fipa.body.content;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Info", namespace="http://content.body.fipa.drools.org/")
 public class Info extends AbstractMessageContent  {
-
-    private transient Object data;
+    @XmlElement()
+    private Object data;
 
     public Info() {
     }
-    
-//    public Info(Object data) {
-//        this.data = data;
-//    }
-
 
     @Override
     public String toString() {

@@ -4,6 +4,7 @@
  */
 package org.drools.fipa.mappers;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -16,7 +17,7 @@ import javax.xml.bind.annotation.XmlValue;
  */
 @XmlType(name = "MyMapReferenceEntryType", namespace="http://mappers.fipa.drools.org/")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MyMapReferenceEntryType {
+public class MyMapReferenceEntryType implements Serializable{
 
     @XmlAttribute
     private Integer key;

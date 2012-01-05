@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
 import org.drools.fipa.body.content.Action;
 
 @XmlType(name = "Request", namespace = "http://acts.body.fipa.drools.org/")
@@ -12,16 +13,11 @@ public class Request extends AbstractMessageBody {
 
     @XmlElement(required = true)
     private Action action;
+    
 
     public Request() {
     }
 
-    
-//    public Request(Action action) {
-//        this.action = action;
-//    }
-
-   
     @Override
     public String toString() {
         return "Request{" +
@@ -54,16 +50,5 @@ public class Request extends AbstractMessageBody {
     public void setAction(Action action) {
         this.action = action;
     }
-// THIS METHOD SHOULD GO TO A HELPER
-//    public Object[] getArguments() {
-//        Object[] ans = new Object[action.getArgs().size()+2];
-//        Object[] actionParams = action.getArgs().values().toArray();
-//        ans[0] = action.getActionName();
-//        for (int j = 0; j < actionParams.length; j++) {
-//            ans[j+1] = actionParams[j];
-//        }
-//        return ans;
-//    }
-
 
 }

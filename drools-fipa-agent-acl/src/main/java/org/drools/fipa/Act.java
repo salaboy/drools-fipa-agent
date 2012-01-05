@@ -7,6 +7,8 @@ package org.drools.fipa;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -14,6 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author salaboy
  */
 @XmlType(name = "Act", namespace="http://fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public enum Act {
     ACCEPT              ("accept-proposal"),
         AGREE               ("agree"),

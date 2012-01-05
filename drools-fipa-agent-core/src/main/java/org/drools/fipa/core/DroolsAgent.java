@@ -29,8 +29,12 @@ public class DroolsAgent {
     /**
      * Response channel
      */
-    private final DroolsAgentResponseInformer responseInformer;
+    private DroolsAgentResponseInformer responseInformer;
 
+    public DroolsAgent() {
+    }
+
+    
     /**
      * Main constructor
      *
@@ -38,7 +42,7 @@ public class DroolsAgent {
      * @param session
      * @param responseInformer
      */
-    DroolsAgent(AgentID id, StatefulKnowledgeSession session, DroolsAgentResponseInformer responseInformer) {
+    public DroolsAgent(AgentID id, StatefulKnowledgeSession session, DroolsAgentResponseInformer responseInformer) {
         this.agentId = id;
         this.mind = session;
         this.responseInformer = responseInformer;

@@ -7,7 +7,7 @@
 package org.drools.test;
 
 import mock.MockFact;
-import org.drools.fipa.ACLMessage;
+import org.drools.fipa.body.acts.*;
 import org.drools.fipa.content.*;
 
 

@@ -1,10 +1,6 @@
 package org.drools.fipa.body.content;
 
-/**
- * Created by IntelliJ IDEA.
- * Date: 6/6/11
- * Time: 5:52 PM
- */
+
 public class ActionHolder {
 
     private String  refId;

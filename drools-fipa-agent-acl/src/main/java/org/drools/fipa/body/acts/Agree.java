@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Rule;
 
@@ -11,7 +12,6 @@ import org.drools.fipa.body.content.Rule;
 @XmlType(name = "Agree", namespace = "http://acts.body.fipa.drools.org/")
 public class Agree extends AbstractMessageBody {
 
-    
     @XmlElement(required = true)
     private Action action;
     @XmlElement(required = true)
@@ -24,8 +24,6 @@ public class Agree extends AbstractMessageBody {
         this.action = action;
         this.condition = condition;
     }
-
-   
 
     @Override
     public String toString() {
@@ -79,15 +77,5 @@ public class Agree extends AbstractMessageBody {
         this.condition = condition;
     }
 
-  
-//    public Object[] getArguments() {
-//        Object[] ans = new Object[action.getArgs().size() + 2];
-//        Object[] actionParams = action.getArgs().values().toArray();
-//        ans[0] = action.getActionName();
-//        for (int j = 0; j < actionParams.length; j++) {
-//            ans[j + 1] = actionParams[j];
-//        }
-//        ans[ans.length - 1] = condition.getDrl();
-//        return ans;
-//    }
+
 }

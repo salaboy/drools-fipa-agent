@@ -1,12 +1,17 @@
 package org.drools.fipa.body.acts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.Act;
 import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 
+@XmlType(name = "Cancel", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Cancel extends AbstractMessageBody {
 
-    
     private Action action;
 
     public Cancel() {
@@ -15,8 +20,6 @@ public class Cancel extends AbstractMessageBody {
     public Cancel(Action action) {
         this.action = action;
     }
-
-    
 
     @Override
     public String toString() {
@@ -55,14 +58,4 @@ public class Cancel extends AbstractMessageBody {
     public void setAction(Action action) {
         this.action = action;
     }
-// THIS METHOD SHOULD GO TO A HELPER
-//    public Object[] getArguments() {
-//        Object[] ans = new Object[action.getArgs().size() + 1];
-//        Object[] actionParams = action.getArgs().values().toArray();
-//        ans[0] = action.getActionName();
-//        for (int j = 0; j < actionParams.length; j++) {
-//            ans[j + 1] = actionParams[j];
-//        }
-//        return ans;
-//    }
 }

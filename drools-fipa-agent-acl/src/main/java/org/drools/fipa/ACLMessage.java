@@ -4,11 +4,15 @@ package org.drools.fipa;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
-import org.drools.fipa.body.acts.AbstractMessageBody;
+import javax.xml.bind.annotation.*;
+import org.drools.fipa.body.acts.*;
+import org.drools.fipa.body.content.Action;
+import org.drools.fipa.body.content.Info;
+import org.drools.fipa.body.content.Query;
+import org.drools.fipa.body.content.Ref;
+import org.drools.fipa.body.content.Rule;
+import org.drools.fipa.mappers.MyMapArgsEntryType;
+import org.drools.fipa.mappers.MyMapReferenceEntryType;
 
 
 
@@ -21,8 +25,15 @@ import org.drools.fipa.body.acts.AbstractMessageBody;
  * Other than that, the message will contain sender and receiver references, in addition to
  * context and metadata information
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+
 @XmlType(name = "ACLMessage", namespace="http://fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlSeeAlso(value={ Inform.class, QueryIf.class, InformIf.class, 
+                    Agree.class, Failure.class, Action.class, Rule.class, 
+                    QueryRef.class, Query.class, Info.class, Act.class,
+                    Ref.class, InformRef.class, Request.class, RequestWhen.class, Ref.class,
+                    Encodings.class,
+                    MyMapReferenceEntryType.class, MyMapArgsEntryType.class})
 public class ACLMessage implements Serializable {
 
     public static final String DEFAULT_FIPA_MESSAGE_TYPE = "DEFAULT_FIPA_MESSAGE_TYPE";
@@ -62,7 +73,7 @@ public class ACLMessage implements Serializable {
     private List<AgentID> replyTo;
     @XmlElement(required = true) 
     private Act performative;
-    @XmlElement(required = true) 
+    @XmlElement(required=true)
     private AbstractMessageBody body;
 
 
@@ -115,22 +126,6 @@ public class ACLMessage implements Serializable {
                 '}';
     }
 
-
-
-//    public String inspect(String path) throws ParseException, XPathExpressionException, ParserConfigurationException, IOException, SAXException {
-//        switch (encoding) {
-//            case JSON:
-//                Object res = JsonPath.read(getBody().getEncodedContent(),path);
-//                return (res != null) ? res.toString() : null;
-//            case XML:
-//                XPath accessor = XPathFactory.newInstance().newXPath();
-//                InputStream inStream = new ByteArrayInputStream(getBody().getEncodedContent().getBytes());
-//                Document dox = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inStream);
-//                return (String) accessor.evaluate(path, dox, XPathConstants.STRING);
-//            default :
-//                throw new ParseException("Unable to access byte-encoded message body",0);
-//        }
-//    }
 
     public String getId() {
         return id;

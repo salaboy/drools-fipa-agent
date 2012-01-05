@@ -5,10 +5,9 @@
 */
 
 package org.drools.fipa;
-
+import org.drools.fipa.ACLMessage;
 import org.drools.fipa.util.ACLMessageFactory;
 import org.drools.fipa.util.MessageContentFactory;
-import org.drools.fipa.ACLMessage;
 import org.drools.fipa.AgentID;
 import org.drools.fipa.body.content.*;
 import org.drools.fipa.body.acts.*;

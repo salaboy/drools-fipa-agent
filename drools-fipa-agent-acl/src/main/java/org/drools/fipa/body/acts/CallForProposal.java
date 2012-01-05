@@ -1,26 +1,28 @@
 package org.drools.fipa.body.acts;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.Act;
 import org.drools.fipa.Encodings;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Rule;
 
+@XmlType(name = "CallForProposal", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CallForProposal extends AbstractMessageBody {
 
-    
     private Action action;
     private Rule condition;
 
     public CallForProposal() {
     }
 
-    
     public CallForProposal(Action action, Rule condition) {
         this.action = action;
         this.condition = condition;
     }
-
-  
 
     @Override
     public String toString() {
@@ -74,15 +76,4 @@ public class CallForProposal extends AbstractMessageBody {
         this.condition = condition;
     }
 
-// THIS METHOD SHOULD GO TO A HELPER
-//    public Object[] getArguments() {
-//        Object[] ans = new Object[action.getArgs().size() + 2];
-//        Object[] actionParams = action.getArgs().values().toArray();
-//        ans[0] = action.getActionName();
-//        for (int j = 0; j < actionParams.length; j++) {
-//            ans[j + 1] = actionParams[j];
-//        }
-//        ans[ans.length - 1] = condition.getDrl();
-//        return ans;
-//    }
 }

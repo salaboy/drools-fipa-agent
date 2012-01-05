@@ -15,7 +15,7 @@ public class InformIf extends AbstractMessageBody {
     
     @XmlElement(required = true)
     private Info proposition;
-
+    
     public InformIf() {
     }
 

@@ -1,11 +1,16 @@
 package org.drools.fipa.body.content;
 
 import java.io.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.Encodings;
 
 /**
  * Actual mesasge content, i.e. the object of an ACL communicative act.
  */
+@XmlType(name = "AbstractMessageContent", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractMessageContent implements Serializable {
 
     private String encodedContent;

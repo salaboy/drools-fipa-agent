@@ -32,34 +32,6 @@ public class Action extends AbstractMessageContent implements Map<String, Object
 
 
 
-//    public Action(String name, Map<String,Object> args) {
-//        boolean hasOutputArg = false;
-//        this.actionName = name;
-//        this.args = args == null ? Collections.<String, Object>emptyMap() : new LinkedHashMap<String,Object>(args);
-//        this.references = new HashMap<Integer,String>();
-//        if (args != null) {
-//            int j = 0;
-//            for (String key : args.keySet()) {
-//                if (args.get(key) instanceof Variable) {
-//                    references.put(j,key);
-//                    hasOutputArg = true;
-//                }
-//                j++;
-//            }
-//        }
-//        if (! hasOutputArg && args != null) {
-//            references.put(this.args.size(),RETURN);
-//            this.args.put(RETURN, Variable.v);
-//        }
-//
-//    }
-//
-//    public Action(Action other) {
-//        this.actionName = other.getActionName();
-//        this.args = new LinkedHashMap<String,Object>(other.args);
-//        this.references = new HashMap<Integer,String>(other.references);
-//        this.setEncodedContent(other.getEncodedContent());
-//    }
 
 
     @Override
@@ -125,23 +97,6 @@ public class Action extends AbstractMessageContent implements Map<String, Object
   
     
 
-//    public void encode(Encodings encoding) {
-//        if (! isEncoded()) {
-//            setEncodedContent(encode(this,encoding));
-//            args = null;
-//            setEncoded(true);
-//        }
-//    }
-//
-//    public void decode(Encodings encoding) {
-//        if (isEncoded()) {
-//            Action act = (Action) decodeContent(getEncodedContent(),encoding);
-//            actionName = act.getActionName();
-//            args = act.getArgs();
-////            setEncodedContent(null);
-//            setEncoded(false);
-//        }
-//    }
 
     public List<MyMapReferenceEntryType> getReferences() {
         return references;

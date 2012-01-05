@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
 import org.drools.fipa.body.content.Info;
 
 @XmlType(name = "QueryIf", namespace = "http://acts.body.fipa.drools.org/")
@@ -13,7 +14,7 @@ public class QueryIf extends AbstractMessageBody {
     
     @XmlElement(required = true)
     private Info proposition;
-
+    
     public QueryIf() {
     }
 

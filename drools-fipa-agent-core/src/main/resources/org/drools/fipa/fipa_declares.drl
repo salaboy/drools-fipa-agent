@@ -3,14 +3,14 @@
 */
 
 package org.drools.fipa;
-
+import org.drools.fipa.ACLMessage;
 import org.drools.command.Command;
 import org.drools.command.BatchExecutionCommand;
 import org.drools.runtime.StatefulKnowledgeSession;
 import java.util.Map;
 
 import org.drools.base.*;
-
+import org.drools.fipa.body.acts.*;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.AgentID;
 

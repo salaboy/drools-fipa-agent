@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import org.drools.fipa.Act;
 import org.drools.fipa.body.content.Action;
 import org.drools.fipa.body.content.Rule;
 
@@ -14,7 +15,9 @@ public class RequestWhenever extends AbstractMessageBody {
     private Action action;
     @XmlElement(required = true)
     private Rule condition;
-
+    @XmlElement(required = true)
+    public Act performative;
+    
     public RequestWhenever() {
     }
 
@@ -74,15 +77,15 @@ public class RequestWhenever extends AbstractMessageBody {
     public void setCondition(Rule condition) {
         this.condition = condition;
     }
-// THIS METHOD SHOULD GO TO A HELPER
-//    public Object[] getArguments() {
-//        Object[] ans = new Object[action.getArgs().size() + 2];
-//        Object[] actionParams = action.getArgs().values().toArray();
-//        ans[0] = action.getActionName();
-//        for (int j = 0; j < actionParams.length; j++) {
-//            ans[j + 1] = actionParams[j];
-//        }
-//        ans[ans.length - 1] = condition.getDrl();
-//        return ans;
-//    }
+
+    public Act getPerformative() {
+        return performative;
+    }
+
+    public void setPerformative(Act performative) {
+        this.performative = performative;
+    }
+
+    
+    
 }

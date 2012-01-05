@@ -5,16 +5,21 @@ import org.drools.fipa.AgentID;
 import org.drools.fipa.body.content.Rule;
 
 import java.util.Arrays;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import org.drools.fipa.Act;
-import org.drools.fipa.Encodings;
 
+@XmlType(name = "Propagate", namespace = "http://acts.body.fipa.drools.org/")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Propagate extends AbstractMessageBody {
 
    
     private AgentID[] targets;
     private ACLMessage message;
     private Rule condition;
-
+    
     public Propagate(AgentID[] targets, ACLMessage message, Rule condition) {
         this.targets = targets;
         this.message = message;
@@ -94,5 +99,5 @@ public class Propagate extends AbstractMessageBody {
 
     public Object[] getArguments() {
         return new Object[]{targets, message, condition.getDrl()};
-    }
+    }    
 }
